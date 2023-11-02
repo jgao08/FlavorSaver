@@ -6,3 +6,18 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct SearchResultsView: View {
+  @Binding var selectedIngs: [String]
+  
+  var body: some View  {
+    VStack{
+      ForEach(selectedIngs, id: \.self){ ingredient in
+        Text(ingredient)
+      }
+    }
+    
+  }
+}
+
