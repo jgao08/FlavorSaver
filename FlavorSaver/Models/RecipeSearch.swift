@@ -2,70 +2,38 @@
 //  RecipeSearch.swift
 //  FlavorSaver
 //
-//  Created by Jacky Gao on 10/30/23.
+//  Created by Jacky Gao on 11/2/23.
 //
 
 import Foundation
 
+class RecipeSearch : APIManager{
+    var recipe : Recipe
+    var recipeInfo : Recipe_Info?
+    
+    init(_ reci : Recipe){
+        recipe = reci
+    }
+    
+    // Retrieves a Recipe_Info struct with the given Recipe from the API call in the form of
+    // https://api.spoonacular.com/recipes/RECIPE_ID/information?apiKey=APIKEY
 
-class RecipeSearch{
-    var selectedIngredients : [String] = []
-    var searchResults : Recipes?
-    
-    func addIngredient(_ ingredient : String) -> Void {
-        if (!selectedIngredients.contains(ingredient)){
-            selectedIngredients.append(ingredient)
-        }
-    }
-    func removeIngredient(_ ingredient : String) -> Void {
-        selectedIngredients = selectedIngredients.filter({$0 != ingredient})
-    }
-    
-    //    Executes the API call in the form of
-    //    https://api.spoonacular.com/recipes/complexSearch?query=QUERY&number=MAXRESULTS&apiKey=APIKEY
-    
-    func executeSearch(completion : @escaping (Bool) -> Void) -> Void {
-        if (selectedIngredients.isEmpty){
-            return
-        }
-        let queryRequest = selectedIngredients.joined(separator: ",")
-        
-        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
-           let dict = NSDictionary(contentsOfFile: path) as? [String: Any],
-           let apiKey = dict["SPOON_API"] as? String {
-            
-            let constants = Constants()
-            let urlRequest = "\(constants.apiLink)complexSearch?query=\(queryRequest)&number=\(constants.maxNumberRecipes)&apiKey=\(apiKey)"
-            sendAPIRequest(urlRequest, completion)
-        } else {
-            print("Failed to retrieve API Key from plist")
-            return
-        }
-    }
-    
-    private func sendAPIRequest(_ url : String, _ completion : @escaping (Bool) -> Void) -> Void{
-        let decoder = JSONDecoder()
-        if let apiRequest = URL(string: url) {
-            let task = URLSession.shared.dataTask(with: apiRequest) { data, response, error in
-                if let error = error {
-                    print("Error in sending API request: \(error)")
-                    return
+    func getRecipeInfo(completion : @escaping (Recipe_Info) -> Void) {
+        if (recipeInfo != nil){
+            completion(recipeInfo!)
+        }else{
+            let apiKey = getAPIKey()
+            let urlRequest = "\(apiLink)\(recipe.id)/information?apiKey=\(apiKey)"
+            sendAPIRequest(urlRequest, false, completion: { (result, success) in
+                if (success){
+                    self.recipeInfo = result as? Recipe_Info
+                    completion(self.recipeInfo!)
+                }else{
+                    // DANGEROUS
+                    completion(self.recipeInfo!)
                 }
-                
-                if let data = data {
-                    do {
-                        self.searchResults = try decoder.decode(Recipes.self, from: data)
-                        completion(true)
-                    } catch {
-                        print("Error in decoding the recipe JSON")
-                        completion(false)
-                    }
-                }
-            }
-            task.resume()
-        } else {
-            print("Invalid URL")
+            })
         }
-        
     }
+    
 }

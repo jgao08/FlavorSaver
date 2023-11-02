@@ -8,11 +8,11 @@
 import XCTest
 @testable import FlavorSaver
 
-final class RecipeSearchTests: XCTestCase {
+final class SearchTests: XCTestCase {
     
-    var recipe1 : RecipeSearch = RecipeSearch()
-    var recipe2 : RecipeSearch = RecipeSearch()
-    var recipe3 : RecipeSearch = RecipeSearch()
+    var recipe1 : Search = Search()
+    var recipe2 : Search = Search()
+    var recipe3 : Search = Search()
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -27,10 +27,11 @@ final class RecipeSearchTests: XCTestCase {
         recipe1.addIngredient("almond")
         
         
-        recipe1.executeSearch(completion: {success in
+        recipe1.getRecipes(completion: {recipe in
             
-            XCTAssert(success)
             let recipes : Recipes = self.recipe1.searchResults!
+            
+            XCTAssert(recipe.count == 21)
             
             XCTAssert(recipes.numberOfRecipes == 30)
             XCTAssert(recipes.totalRecipes == 21)

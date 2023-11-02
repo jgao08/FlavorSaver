@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct Constants {
-    let apiLink : String = "https://api.spoonacular.com/recipes/"
-    let maxNumberRecipes : Int = 30
-}
-
 struct Ingredient : Codable, Identifiable{
     let id : Int
     let name : String
