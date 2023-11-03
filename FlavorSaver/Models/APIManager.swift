@@ -9,7 +9,7 @@ import Foundation
 
 class APIManager {
     let apiLink : String = "https://api.spoonacular.com/recipes/"
-    let maxNumberRecipes : Int = 30
+    let maxNumberRecipes : Int = 5
     
     func getAPIKey() -> String {
         if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
@@ -23,7 +23,7 @@ class APIManager {
         }
     }
     
-    func sendAPIRequest(_ url : String, _ type : Bool, completion : @escaping ((Any,Bool)) -> Void){
+    func sendAPIRequest<T>(_ url : String, _ type : T.Type, completion : @escaping ((T,Bool)) -> Void) where T : Decodable{
         let decoder = JSONDecoder()
 
         if let apiRequest = URL(string: url) {
@@ -35,16 +35,13 @@ class APIManager {
                 
                 if let data = data {
                     do {
-                        if (type){
-                            let result = try decoder.decode(Recipes.self, from: data)
-                            completion((result, true))
-                        }else{
-                            let result = try decoder.decode(Recipe_Info.self, from: data)
-                            completion((result, true))
-                        }
+                        let result = try decoder.decode(type, from: data)
+                        completion((result, true))
+                        
                     } catch {
                         print("Error in decoding the recipe JSON")
-                        completion((data, false))
+                        // DANGEROUS
+                        completion((data as! T, false))
                     }
                 }
             }
