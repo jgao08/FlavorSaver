@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED482AF49214002904FE /* RecipeView.swift */; };
+		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
+		27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED4A2AF49214002904FE /* CookingModeView.swift */; };
+		27DAED4F2AF49351002904FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27DAED4E2AF49351002904FE /* GoogleService-Info.plist */; };
 		F935C4142AF17CB50010BB0C /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C4132AF17CB50010BB0C /* Structs.swift */; };
 		F991A88F2AEF879E00200104 /* RecipeCardSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */; };
 		F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8902AEF87A800200104 /* RecipeCardLarge.swift */; };
-		F991A8932AEF87B000200104 /* SavedRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8922AEF87B000200104 /* SavedRecipes.swift */; };
 		F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8942AEF87B900200104 /* SaveIcon.swift */; };
 		F991A8972AEF87C000200104 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8962AEF87C000200104 /* SaveButton.swift */; };
 		F991A8992AEF89E400200104 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8982AEF89E400200104 /* Search.swift */; };
@@ -23,7 +26,6 @@
 		F9ECAB342AEEF04600F951B0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECAB332AEEF04600F951B0 /* App.swift */; };
 		F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB372AEEF04800F951B0 /* Assets.xcassets */; };
 		F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */; };
-		F9ECAB442AEEF66B00F951B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB432AEEF66B00F951B0 /* GoogleService-Info.plist */; };
 		F9ECAB472AEEF6BD00F951B0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F9ECAB462AEEF6BD00F951B0 /* FirebaseAnalytics */; };
 		F9ECAB492AEEF6BD00F951B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = F9ECAB482AEEF6BD00F951B0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		F9ECAB4B2AEEF6BD00F951B0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F9ECAB4A2AEEF6BD00F951B0 /* FirebaseAnalyticsSwift */; };
@@ -68,10 +70,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27DAED482AF49214002904FE /* RecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
+		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
+		27DAED4A2AF49214002904FE /* CookingModeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookingModeView.swift; sourceTree = "<group>"; };
+		27DAED4E2AF49351002904FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F935C4132AF17CB50010BB0C /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardSmall.swift; sourceTree = "<group>"; };
 		F991A8902AEF87A800200104 /* RecipeCardLarge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardLarge.swift; sourceTree = "<group>"; };
-		F991A8922AEF87B000200104 /* SavedRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipes.swift; sourceTree = "<group>"; };
 		F991A8942AEF87B900200104 /* SaveIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveIcon.swift; sourceTree = "<group>"; };
 		F991A8962AEF87C000200104 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		F991A8982AEF89E400200104 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -86,7 +91,6 @@
 		F9ECAB332AEEF04600F951B0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F9ECAB372AEEF04800F951B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F9ECAB432AEEF66B00F951B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9ECAB7C2AEEF9F800F951B0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F9ECAB7F2AEF009800F951B0 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
@@ -172,7 +176,7 @@
 				F9ECAB412AEEF27000F951B0 /* Models */,
 				F9ECAB7C2AEEF9F800F951B0 /* ContentView.swift */,
 				F9ECAB372AEEF04800F951B0 /* Assets.xcassets */,
-				F9ECAB432AEEF66B00F951B0 /* GoogleService-Info.plist */,
+				27DAED4E2AF49351002904FE /* GoogleService-Info.plist */,
 				F9ECAB392AEEF04800F951B0 /* Preview Content */,
 			);
 			path = FlavorSaver;
@@ -202,13 +206,15 @@
 		F9ECAB7E2AEEFA9100F951B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
+				27DAED482AF49214002904FE /* RecipeView.swift */,
+				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
 				F9ECAB332AEEF04600F951B0 /* App.swift */,
 				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
 				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
 				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
 				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
 				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
-				F991A8922AEF87B000200104 /* SavedRecipes.swift */,
 				F991A8942AEF87B900200104 /* SaveIcon.swift */,
 				F991A8962AEF87C000200104 /* SaveButton.swift */,
 			);
@@ -336,7 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */,
-				F9ECAB442AEEF66B00F951B0 /* GoogleService-Info.plist in Resources */,
+				27DAED4F2AF49351002904FE /* GoogleService-Info.plist in Resources */,
 				F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,9 +365,9 @@
 			files = (
 				F991A8992AEF89E400200104 /* Search.swift in Sources */,
 				F9ECAB7D2AEEF9F800F951B0 /* ContentView.swift in Sources */,
+				27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */,
 				F9ECAB822AEF00B800F951B0 /* SearchResultsView.swift in Sources */,
 				F9ECAB842AEF00C000F951B0 /* ProfileView.swift in Sources */,
-				F991A8932AEF87B000200104 /* SavedRecipes.swift in Sources */,
 				F991A8972AEF87C000200104 /* SaveButton.swift in Sources */,
 				F991A89F2AEF8A9D00200104 /* User.swift in Sources */,
 				F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */,
@@ -369,6 +375,8 @@
 				F991A89D2AEF8A9400200104 /* SavedRecipesModel.swift in Sources */,
 				F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */,
 				F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */,
+				27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */,
+				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,
