@@ -10,7 +10,7 @@ import Foundation
 
 class Search : APIManager{
     // Currently Selected Ingredients from the user
-    private var selectedIngredients : [String] = []
+    var selectedIngredients : [String] = []
     
     // An instance of the Recipes struct if it has been requested
     var searchResults : Recipes?
@@ -37,18 +37,27 @@ class Search : APIManager{
     
     //    Executes the API call in the form of
     //    https://api.spoonacular.com/recipes/complexSearch?query=QUERY&number=MAXRESULTS&apiKey=APIKEY
-    func getRecipes(completion : @escaping ([Recipe]) -> Void){
+    func getRecipes(completion : @escaping ([Recipe_Info]) -> Void){
         if (!hasChanged){
-            return completion(searchResults!.recipes)
+            return completion(listOfRecipes)
         }
         let queryRequest = selectedIngredients.joined(separator: ",")
         let apiKey = getAPIKey()
-        let urlRequest = "\(apiKey)complexSearch?query=\(queryRequest)&number=\(maxNumberRecipes)&apiKey=\(apiKey)"
-        sendAPIRequest(urlRequest, true, completion: { (result, success) in
+        let urlRequest = "\(apiLink)complexSearch?query=\(queryRequest)&number=\(maxNumberRecipes)&apiKey=\(apiKey)"
+        sendAPIRequest(urlRequest, Recipes.self, completion: { (recipesRes, success) in
             if (success){
                 self.hasChanged = false;
-                self.searchResults = result as? Recipes
-                completion(self.searchResults!.recipes)
+                self.searchResults = recipesRes
+                let mappedIDS = recipesRes.recipes.map {
+                    String($0.id)
+                }
+                let joinedIDS = mappedIDS.joined(separator: ",")
+                let newUrlRequest = "\(self.apiLink)informationBulk?ids=\(joinedIDS)&=apiKey=\(apiKey)"
+                
+                self.sendAPIRequest(newUrlRequest, [Recipe_Info].self, completion: { (result, success) in
+                    self.listOfRecipes = result
+                    completion(self.listOfRecipes)
+                })
             }else{
                 completion([])
             }
@@ -60,3 +69,4 @@ class Search : APIManager{
     // Connecting search results to ingredients
     // list of recipes returned
 }
+

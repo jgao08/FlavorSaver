@@ -25,10 +25,10 @@ class RecipeSearch : APIManager{
         }else{
             let apiKey = getAPIKey()
             let urlRequest = "\(apiLink)\(recipe.id)/information?apiKey=\(apiKey)"
-            sendAPIRequest(urlRequest, false, completion: { (result, success) in
+            sendAPIRequest(urlRequest, Recipe_Info.self, completion: { (result, success) in
                 if (success){
-                    self.recipeInfo = result as? Recipe_Info
-                    completion(self.recipeInfo!)
+                    self.recipeInfo = result
+                    completion(result)
                 }else{
                     // DANGEROUS
                     completion(self.recipeInfo!)

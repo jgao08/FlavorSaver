@@ -27,12 +27,14 @@ final class SearchTests: XCTestCase {
         recipe1.addIngredient("almond")
         
         
-        recipe1.getRecipes(completion: {recipe in
+        recipe1.getRecipes(completion: {recipe_infos in
             
             let recipes : Recipes = self.recipe1.searchResults!
             
-            XCTAssert(recipe.count == 21)
+            print(recipe_infos)
+            print("hiiiiii")
             
+            XCTAssert(false)
             XCTAssert(recipes.numberOfRecipes == 30)
             XCTAssert(recipes.totalRecipes == 21)
             XCTAssert(recipes.offset == 0)
