@@ -73,6 +73,10 @@ struct Recipe_Instructions : Codable{
 
 
 struct Recipe_Info : Codable{
+    let name : String
+    let image : String
+    let imageType : String
+    
     let servings : Int
     let readyInMinutes : Int
     let author : String
@@ -86,6 +90,9 @@ struct Recipe_Info : Codable{
     let ingredientSteps : [Recipe_Instructions]
     
     enum CodingKeys: String, CodingKey{
+        case name = "title"
+        case image
+        case imageType
         case servings
         case readyInMinutes
         case author = "sourceName"

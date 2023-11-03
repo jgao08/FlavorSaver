@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Ideally instances of this class are kept in memory so subsequent access to recipes are already retrieved
 class RecipeSearch : APIManager{
     var recipe : Recipe
     var recipeInfo : Recipe_Info?
