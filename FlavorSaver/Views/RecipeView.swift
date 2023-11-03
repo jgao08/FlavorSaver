@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecipeView: View {
+  let sectionSpacing: CGFloat = 32
+  let paraSpacing: CGFloat = 16
   @State private var cookingMode = false
   let recipeSteps =
   """
@@ -34,8 +36,9 @@ struct RecipeView: View {
           Image("testimg2")
             .resizable()
             .frame(height: UIScreen.main.bounds.height / (3/2))
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
           
-          VStack{
+          VStack(spacing: paraSpacing){
             Spacer()
             HStack{
               Text("Recipe Title")
@@ -65,69 +68,73 @@ struct RecipeView: View {
               })
               Spacer()
             }
-            .padding()
+            .padding(.horizontal)
           }
+          .padding(.bottom, sectionSpacing)
         }
         
-        VStack{
-          Text(recipeDescription)
-            .padding()
-          
-          
-          HStack{
-            ForEach(tags, id: \.self) {tag in
-              Button(action: {}, label: {
-                Text(tag)
-              })
-              .buttonStyle(.bordered)
-            }
-            Spacer()
-          }
-          .padding(.horizontal)
-          
-          
-          HStack{
-            Text("by " + authorName)
-              .font(.caption)
-            Spacer()
-          }
-          .padding()
-        }
-        .padding(.vertical)
         
-        
-        HStack{
-          Text("Ingredients")
-            .font(.headline)
-          Spacer()
-        }
-        .padding(.horizontal)
-        
-        
-        VStack{
-          ForEach(recipeIngredients, id: \.self){ ing in
+        VStack(spacing: sectionSpacing){
+          VStack(spacing: paraSpacing){
+            Text(recipeDescription)
+            
+            
             HStack{
-              Text("• " + ing)
+              ForEach(tags, id: \.self) {tag in
+                Button(action: {}, label: {
+                  Text(tag)
+                })
+                .buttonStyle(.bordered)
+                .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                .foregroundStyle(Color.black)
+              }
+              Spacer()
+            }
+            
+            
+            HStack{
+              Text("by " + authorName)
+                .font(.caption)
+              Spacer()
+            }
+          }
+          
+          VStack(spacing: paraSpacing){
+            HStack{
+              Text("Ingredients")
+                .font(.headline)
+              Spacer()
+            }
+            
+            
+            VStack{
+              ForEach(recipeIngredients, id: \.self){ ing in
+                HStack{
+                  Text("• " + ing)
+                  Spacer()
+                }
+              }
+            }
+          }
+          
+          
+          VStack(spacing: paraSpacing){
+            HStack{
+              Text("Steps")
+                .font(.headline)
+              Spacer()
+            }
+            
+            
+            HStack{
+              Text(recipeSteps)
               Spacer()
             }
           }
         }
-        .padding()
-        
-        
-        HStack{
-          Text("Steps")
-            .font(.headline)
-          Spacer()
-        }
-        .padding(.horizontal)
-        
-          
-        HStack{
-          Text(recipeSteps)
-          Spacer()
-        }
-        .padding()
+        .padding(.bottom, sectionSpacing)
+        .padding(.top, paraSpacing)
+        .padding(.horizontal, paraSpacing)
       }
     }
     .edgesIgnoringSafeArea(.top)
