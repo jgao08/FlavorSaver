@@ -14,23 +14,54 @@ import SwiftUI
 struct RecipeCardSmall: View {
 //  @Binding var RecipeInfo: Recipe_Info
     
-//    let servings : Int
-//    let readyInMinutes : Int
-//    let author : String
-//    let authorURL : String
-//    let spoonURL : String
-//    let summary : String
-//    
-//    let cuisines : [String]
-//    let dishTypes : [String]
-//    let ingredientInfo : [Ingredient]
-//    let ingredientSteps : [Recipe_Instructions]
-    
     let imageURL = URL(string: "https://spoonacular.com/recipeImages/633975-556x370.jpg")
+    let recipeName = "Cheeseburger"
+    let readyInMinutes = 50
+    let cuisines = ["American, French"]
+    let author = "Gordon Ramsay"
   
   var body: some View  {
     ZStack{
         Image("ImageTest")
+            .renderingMode(.original)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 170, height: 230)
+            .clipped()
+            .cornerRadius(10)
+        
+        Rectangle()
+            .fill(LinearGradient(gradient: Gradient(colors: [.black.opacity(0.1), .black.opacity(0.6)]), startPoint: .top, endPoint: .bottom))
+            .frame(width: 170, height: 230)
+            .cornerRadius(10)
+
+
+        HStack() {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(recipeName)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                HStack(spacing: 4) {
+                    Text(String(readyInMinutes))
+                    Text("mins")
+                    Text("•")
+                    Text(arrayToString(array: cuisines))
+                        .lineLimit(1)
+                }
+                .font(.caption)
+                
+                Spacer()
+                
+                Text(author)
+                    .font(.caption)
+            }
+            .shadow(color: .black, radius: 8)
+            
+            Spacer()
+        }
+        .padding(16)
+        .foregroundStyle(.white)
+        .frame(width: 170, height: 230)
     }
   }
 }
