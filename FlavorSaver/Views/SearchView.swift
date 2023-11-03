@@ -14,60 +14,65 @@ struct SearchView: View {
   var ingredients = ["apple pie", "apple", "artichoke", "jellybean", "almond", "banana"]
   @State private var selectedIngs: [String] = []
   @State private var searchText = ""
+  @State public var selectedEmpty: Bool = true
 //  @State var  = Set<String>()
 
 
   var body: some View {
-    NavigationView{
+    NavigationStack{
       VStack{
-        //    MARK: Searched ingredient list
-        List(searchResults, id: \.self){ ingredient in
-          HStack{
-            Text(ingredient)
-            Spacer()
-            if selectedIngs.contains(ingredient) {
-              Image(systemName: "checkmark")
-                  .foregroundColor(.blue)
-            }
-          }
-          .onTapGesture{
-            toggleSelection(ingredient)
-          }
-        }
-        .searchable(text: $searchText)
-//        .environment(\.editMode, .constant(EditMode.active)) // Enable selection mode
-
         if searchText.isEmpty {
           Text("Search by ingredient, dish, or cuisine")
             .font(.title)
         }
-
-        //    MARK: selected ingredients and Done button
-        HStack{
-          ScrollView(.horizontal, showsIndicators: false){
+        
+        //    MARK: Searched ingredient list
+        List(searchResults, id: \.self){ ingredient in
+          Button(action: {
+            toggleSelection(ingredient)
+          }){
             HStack{
-              ForEach(selectedIngs, id: \.self){ ingredient in
-                Button(action: {
-                }, label: {
-                  HStack{
-                    Text(ingredient)
-                    Image(systemName: "xmark").onTapGesture {
-                      if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
-                        selectedIngs.remove(at: index)
-                      }
-                    }
-                  }
-                })
-                .buttonStyle(.bordered)
+              Text(ingredient)
+                .foregroundStyle(Color.black)
+              Spacer()
+              if selectedIngs.contains(ingredient) {
+                Image(systemName: "checkmark")
+                    .foregroundColor(.blue)
               }
             }
           }
-          Spacer()
-          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs),label: {Text("Done")} )
-            .buttonStyle(.borderedProminent)
-            .frame(alignment: .trailing)
         }
-        .padding()
+        .searchable(text: $searchText)
+        .navigationTitle(Text("Search"))
+
+        
+          //    MARK: selected ingredients and Done button
+        HStack{
+            ScrollView(.horizontal, showsIndicators: false){
+              HStack{
+                ForEach(selectedIngs, id: \.self){ ingredient in
+                  Button(action: {
+                  }, label: {
+                    HStack{
+                      Text(ingredient)
+                      Image(systemName: "xmark").onTapGesture {
+                        if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
+                          selectedIngs.remove(at: index)
+                        }
+                      }
+                    }
+                  })
+                  .buttonStyle(.bordered)
+                }
+              }
+            }
+            Spacer()
+          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs), label: {Text("Done")})
+              .buttonStyle(.borderedProminent)
+              .frame(alignment: .trailing)
+              .disabled(selectedIngs.isEmpty)
+          }
+          .padding()
       }
     }
   }
