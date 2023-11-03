@@ -3,6 +3,9 @@
 //  FlavorSaver
 //
 //  Created by Jacky Gao on 10/30/23.
+
+//  loading an image from URL reference
+//  https://www.hackingwithswift.com/example-code/uikit/how-to-load-a-remote-image-url-into-uiimageview
 //
 
 import Foundation
@@ -27,29 +30,11 @@ struct RecipeCardSmall: View {
   
   var body: some View  {
     ZStack{
-        DispatchQueue.global().async {
-                // Fetch Image Data
-                if let data = try? Data(contentsOf: imageURL) {
-                    DispatchQueue.main.async {
-                        // Create Image and Update Image View
-                        self.imageView.image = UIImage(data: data)
-                    }
-                }
-            }
+        Image("ImageTest")
     }
   }
 }
 
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
-    }
+#Preview {
+    RecipeCardSmall()
 }
