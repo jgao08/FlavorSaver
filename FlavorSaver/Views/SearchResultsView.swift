@@ -12,12 +12,17 @@ struct SearchResultsView: View {
   @Binding var selectedIngs: [String]
   
   var body: some View  {
-    VStack{
-      ForEach(selectedIngs, id: \.self){ ingredient in
-        Text(ingredient)
+    NavigationStack{
+      VStack{
+        ForEach(selectedIngs, id: \.self){ ingredient in
+          Text(ingredient)
+        }
+        NavigationLink(destination: RecipeView(), label: {
+            Text("Go to Recipe")
+        })
+        .buttonStyle(.bordered)
       }
     }
-    
   }
 }
 
