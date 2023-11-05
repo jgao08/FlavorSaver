@@ -15,21 +15,24 @@ struct SearchView: View {
   @State private var selectedIngs: [String] = []
   @State private var searchText = ""
   @State public var selectedEmpty: Bool = true
-//  @State var  = Set<String>()
-
-
+  
+  
   var body: some View {
     NavigationStack{
       VStack{
         if searchText.isEmpty {
-          Text("Search by ingredient, dish, or cuisine")
-            .font(.title)
+          HStack{
+            Text("Search by ingredient, dish, or cuisine")
+              .font(.title)
+          }
+          .transition(.opacity.animation(.spring(duration: 1.0)))
         }
         
         //    MARK: Searched ingredient list
         List(searchResults, id: \.self){ ingredient in
           Button(action: {
             toggleSelection(ingredient)
+            searchText = ""
           }){
             HStack{
               Text(ingredient)
@@ -37,42 +40,44 @@ struct SearchView: View {
               Spacer()
               if selectedIngs.contains(ingredient) {
                 Image(systemName: "checkmark")
-                    .foregroundColor(.blue)
+                  .foregroundColor(.blue)
               }
             }
           }
         }
         .searchable(text: $searchText)
         .navigationTitle(Text("Search"))
-
         
-          //    MARK: selected ingredients and Done button
+        
+        //    MARK: selected ingredients and Done button
         HStack{
-            ScrollView(.horizontal, showsIndicators: false){
-              HStack{
-                ForEach(selectedIngs, id: \.self){ ingredient in
-                  Button(action: {
-                  }, label: {
-                    HStack{
-                      Text(ingredient)
-                      Image(systemName: "xmark").onTapGesture {
-                        if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
-                          selectedIngs.remove(at: index)
-                        }
+          ScrollView(.horizontal, showsIndicators: false){
+            HStack{
+              ForEach(selectedIngs, id: \.self){ ingredient in
+                Button(action: {
+                }, label: {
+                  HStack{
+                    Text(ingredient)
+                    Image(systemName: "xmark").onTapGesture {
+                      if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
+                        selectedIngs.remove(at: index)
                       }
                     }
-                  })
-                  .buttonStyle(.bordered)
-                }
+                  }
+                })
+                .buttonStyle(.bordered)
+                .foregroundStyle(Color.black)
               }
             }
-            Spacer()
-          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs), label: {Text("Done")})
-              .buttonStyle(.borderedProminent)
-              .frame(alignment: .trailing)
-              .disabled(selectedIngs.isEmpty)
           }
-          .padding()
+          Spacer()
+          
+          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs), label: {Text("Done")})
+            .buttonStyle(.borderedProminent)
+            .frame(alignment: .trailing)
+            .disabled(selectedIngs.isEmpty)
+        }
+        .padding()
       }
     }
   }
@@ -81,11 +86,11 @@ struct SearchView: View {
   }
   
   func toggleSelection(_ ingredient: String) {
-      if selectedIngs.contains(ingredient) {
-          selectedIngs.removeAll(where: { $0 == ingredient })
-      } else {
-        selectedIngs.append(ingredient)
-      }
+    if selectedIngs.contains(ingredient) {
+      selectedIngs.removeAll(where: { $0 == ingredient })
+    } else {
+      selectedIngs.append(ingredient)
+    }
   }
 }
 
