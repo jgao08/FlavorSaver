@@ -18,6 +18,8 @@ class Ingredients {
 //        oldRequest = ""
 //    }
     
+    // MAKE IT LOWERCASED
+    
     func filterIngredients(_ input : String) -> [String]{
         return allIngredients.filter({$0.contains(input)})
     }

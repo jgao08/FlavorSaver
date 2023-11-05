@@ -20,33 +20,28 @@ class FirebaseManager {
         userDocument = db.collection("users").document(userID)
     }
     
-    func retrieveSavedRecipes(completion : @escaping ([Recipe]) -> Void){
-        userDocument.getDocument(completion: {(document, error) in
-            if let document = document, document.exists {
-                let data = document.data()
-                let savedRecipes = data?["savedRecipeIDs"] as? [String] ?? []
-                
-                self.recipeCollection.whereField(FieldPath.documentID(), in: savedRecipes).getDocuments { (querySnapshot, error) in
-                    if let error = error {
-                        print("Error: \(error.localizedDescription)")
-                    } else {
-                        var result : [Recipe] = []
-                        for document in querySnapshot!.documents {
-                            do {
-                                let recipe = try document.data(as: Recipe.self)
-                                result.append(recipe)
-                            } catch {
-                                print("Error decoding document: \(error.localizedDescription)")
-                            }
-                        }
-                        completion(result)
-                        return
-                    }
-                }
-            }else{
-                print("Document does not exist. Could be wrong userID.")
+    func retrieveSavedRecipes() async throws -> [Recipe] {
+        let document = try await userDocument.getDocument()
+        
+        if document.exists {
+            let data = document.data()
+            let savedRecipes = data?["savedRecipeIDs"] as? [String] ?? []
+            
+            let querySnapshot = try await recipeCollection.whereField(FieldPath.documentID(), in: savedRecipes).getDocuments()
+            
+            var result: [Recipe] = []
+            
+            for document in querySnapshot.documents {
+                let recipe = try document.data(as: Recipe.self)
+                result.append(recipe)
             }
-        })
+            
+            return result
+        } else {
+            print("Document does not exist. Could be the wrong userID.")
+            return []
+        }
+        
     }
     
     private func recipeInSavedList(recipeID : Int, completion : @escaping (Bool) -> Void){
