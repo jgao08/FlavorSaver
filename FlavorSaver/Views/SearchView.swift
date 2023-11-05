@@ -11,10 +11,9 @@ import SwiftUI
 
 struct SearchView: View {
   @Environment(\.editMode) private var editMode
-  var ingredients = ["apple pie", "apple", "artichoke", "jellybean", "almond", "banana"]
-  @State private var selectedIngs: [String] = []
   @State private var searchText = ""
   @State public var selectedEmpty: Bool = true
+  var recipes : Search = Search()
 
   var body: some View {
     NavigationStack{
@@ -52,14 +51,14 @@ struct SearchView: View {
         HStack{
           ScrollView(.horizontal, showsIndicators: false){
             HStack{
-              ForEach(selectedIngs, id: \.self){ ingredient in
+              ForEach(self.recipes.selectedIngredients, id: \.self){ ingredient in
                 Button(action: {
                 }, label: {
                   HStack{
                     Text(ingredient)
                     Image(systemName: "xmark").onTapGesture {
-                      if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
-                        selectedIngs.remove(at: index)
+                      if let index = self.recipes.selectedIngredients.firstIndex(where:{$0 == ingredient}){
+                        self.recipes.selectedIngredients.remove(at: index)
                       }
                     }
                   }
@@ -71,24 +70,24 @@ struct SearchView: View {
           }
           Spacer()
           
-          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs), label: {Text("Done")})
+          NavigationLink(destination: SearchResultsView(inputs: recipes), label: {Text("Done")})
             .buttonStyle(.borderedProminent)
             .frame(alignment: .trailing)
-            .disabled(selectedIngs.isEmpty)
+            .disabled(self.recipes.selectedIngredients.isEmpty)
         }
         .padding()
       }
     }
   }
   var searchResults: [String] { // change to [Ingredient] in future?
-    return ingredients.filter{ $0.contains(searchText.lowercased()) }
+    return recipes.getIngredients(searchText)
   }
   
   func toggleSelection(_ ingredient: String) {
-    if selectedIngs.contains(ingredient) {
-      selectedIngs.removeAll(where: { $0 == ingredient })
+    if recipes.selectedIngredients.contains(ingredient)  {
+      recipes.removeIngredient(ingredient)
     } else {
-      selectedIngs.append(ingredient)
+      recipes.addIngredient(ingredient)
     }
   }
 }
