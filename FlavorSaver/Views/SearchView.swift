@@ -15,6 +15,7 @@ struct SearchView: View {
   @State private var selectedIngs: [String] = []
   @State private var searchText = ""
   @State public var selectedEmpty: Bool = true
+    @State private var recipes : Search = Search()
 //  @State var  = Set<String>()
 
 
@@ -35,7 +36,7 @@ struct SearchView: View {
               Text(ingredient)
                 .foregroundStyle(Color.black)
               Spacer()
-              if selectedIngs.contains(ingredient) {
+              if self.recipes.selectedIngredients.contains(ingredient) {
                 Image(systemName: "checkmark")
                     .foregroundColor(.blue)
               }
@@ -50,14 +51,14 @@ struct SearchView: View {
         HStack{
             ScrollView(.horizontal, showsIndicators: false){
               HStack{
-                ForEach(selectedIngs, id: \.self){ ingredient in
+                ForEach(self.recipes.selectedIngredients, id: \.self){ ingredient in
                   Button(action: {
                   }, label: {
                     HStack{
                       Text(ingredient)
                       Image(systemName: "xmark").onTapGesture {
-                        if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
-                          selectedIngs.remove(at: index)
+                        if let index = self.recipes.selectedIngredients.firstIndex(where:{$0 == ingredient}){
+                            self.recipes.selectedIngredients.remove(at: index)
                         }
                       }
                     }
@@ -67,10 +68,10 @@ struct SearchView: View {
               }
             }
             Spacer()
-          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs), label: {Text("Done")})
+          NavigationLink(destination: SearchResultsView(selectedIngs: self.$recipes.selectedIngredients), label: {Text("Done")})
               .buttonStyle(.borderedProminent)
               .frame(alignment: .trailing)
-              .disabled(selectedIngs.isEmpty)
+              .disabled(self.recipes.selectedIngredients.isEmpty)
           }
           .padding()
       }
@@ -82,9 +83,11 @@ struct SearchView: View {
   
   func toggleSelection(_ ingredient: String) {
       if selectedIngs.contains(ingredient) {
-          selectedIngs.removeAll(where: { $0 == ingredient })
+          //selectedIngs.removeAll(where: { $0 == ingredient })
+          recipes.removeIngredient(ingredient)
       } else {
-        selectedIngs.append(ingredient)
+        //selectedIngs.append(ingredient)
+          recipes.addIngredient(ingredient)
       }
   }
 }

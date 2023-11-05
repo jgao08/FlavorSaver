@@ -8,7 +8,7 @@
 import Foundation
 
 
-class Search : APIManager{
+class Search{
     // Currently Selected Ingredients from the user
     var selectedIngredients : [String] = []
     
@@ -16,10 +16,11 @@ class Search : APIManager{
     var searchResults : Recipes?
     
     // List of the recipes returned from the given search query
-    var listOfRecipes : [Recipe_Info] = []
+    var listOfRecipes : [Recipe] = []
     
-    
+    private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
+    private var apiManager = APIManager()
     
     func addIngredient(_ ingredient : String) -> Void {
         if (!selectedIngredients.contains(ingredient)){
@@ -37,14 +38,14 @@ class Search : APIManager{
     
     //    Executes the API call in the form of
     //    https://api.spoonacular.com/recipes/complexSearch?query=QUERY&number=MAXRESULTS&apiKey=APIKEY
-    func getRecipes(completion : @escaping ([Recipe_Info]) -> Void){
+    func getRecipes(completion : @escaping ([Recipe]) -> Void){
         if (!hasChanged){
             return completion(listOfRecipes)
         }
         let queryRequest = selectedIngredients.joined(separator: ",")
-        let apiKey = getAPIKey()
-        let urlRequest = "\(apiLink)complexSearch?query=\(queryRequest)&number=\(maxNumberRecipes)&apiKey=\(apiKey)"
-        sendAPIRequest(urlRequest, Recipes.self, completion: { (recipesRes, success) in
+        let apiKey = apiManager.getAPIKey()
+        let urlRequest = "\(apiManager.apiLink)complexSearch?query=\(queryRequest)&number=\(APIManager.maxNumberRecipes)&apiKey=\(apiKey)"
+        apiManager.sendAPIRequest(urlRequest, Recipes.self, completion: { (recipesRes, success) in
             if (success){
                 self.hasChanged = false;
                 self.searchResults = recipesRes
@@ -52,9 +53,9 @@ class Search : APIManager{
                     String($0.id)
                 }
                 let joinedIDS = mappedIDS.joined(separator: ",")
-                let newUrlRequest = "\(self.apiLink)informationBulk?ids=\(joinedIDS)&=apiKey=\(apiKey)"
+                let newUrlRequest = "\(self.apiManager.apiLink)informationBulk?ids=\(joinedIDS)&apiKey=\(apiKey)"
                 
-                self.sendAPIRequest(newUrlRequest, [Recipe_Info].self, completion: { (result, success) in
+                self.apiManager.sendAPIRequest(newUrlRequest, [Recipe].self, completion: { (result, success) in
                     self.listOfRecipes = result
                     completion(self.listOfRecipes)
                 })
@@ -64,9 +65,11 @@ class Search : APIManager{
         })
     }
     
-    // TODO: Create function which retrieves list of ingredients from firebase based on given ingredient input (closest match)
-    
-    // Connecting search results to ingredients
-    // list of recipes returned
+    func getIngredients(_ input : String) -> [String] {
+        if (input.isEmpty){
+            return []
+        }
+        return ingredientFinder.filterIngredients(input)
+    }
 }
 
