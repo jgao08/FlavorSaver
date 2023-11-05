@@ -13,12 +13,13 @@ import SwiftUI
 
 struct RecipeCardSmall: View {
 //  @Binding var RecipeInfo: Recipe_Info
+    var recipe: Recipe
     
-    let imageURL = URL(string: "https://spoonacular.com/recipeImages/633975-556x370.jpg")
-    let recipeName = "Cheeseburger"
-    let readyInMinutes = 50
-    let cuisines = ["American, French"]
-    let author = "Gordon Ramsay"
+//    let imageURL = URL(string: "https://spoonacular.com/recipeImages/633975-556x370.jpg")
+//    let recipeName = "Cheeseburger"
+//    let readyInMinutes = 50
+//    let cuisines = ["American, French"]
+//    let author = "Gordon Ramsay"
   
   var body: some View  {
     ZStack{
@@ -38,21 +39,21 @@ struct RecipeCardSmall: View {
 
         HStack() {
             VStack(alignment: .leading, spacing: 4) {
-                Text(recipeName)
+                Text(recipe.name)
                     .font(.headline)
                     .fontWeight(.bold)
                 HStack(spacing: 4) {
-                    Text(String(readyInMinutes))
+                    Text(String(recipe.readyInMinutes))
                     Text("mins")
                     Text("•")
-                    Text(arrayToString(array: cuisines))
+                    Text(arrayToString(array: recipe.cuisines))
                         .lineLimit(1)
                 }
                 .font(.caption)
                 
                 Spacer()
                 
-                Text(author)
+                Text(recipe.author)
                     .font(.caption)
             }
             .shadow(color: .black, radius: 8)
@@ -66,6 +67,6 @@ struct RecipeCardSmall: View {
   }
 }
 
-#Preview {
-    RecipeCardSmall()
-}
+//#Preview {
+//    RecipeCardSmall()
+//}

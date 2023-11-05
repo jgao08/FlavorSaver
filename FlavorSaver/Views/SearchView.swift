@@ -37,7 +37,7 @@ struct SearchView: View {
               Text(ingredient)
                 .foregroundStyle(Color.black)
               Spacer()
-              if self.recipes.selectedIngredients.contains(ingredient) {
+              if self.selectedIngs.contains(ingredient) {
                 Image(systemName: "checkmark")
                   .foregroundColor(.blue)
               }

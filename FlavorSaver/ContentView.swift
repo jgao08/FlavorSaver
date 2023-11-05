@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var user: User
+
     var body: some View {
-        SearchView()
+        SavedRecipesView().environmentObject(user)
     }
 }
 // Test for commit

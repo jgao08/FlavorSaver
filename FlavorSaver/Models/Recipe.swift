@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Recipe : Codable, Equatable{
+struct Recipe : Codable, Equatable, Hashable {
     let id : Int
     let name : String
     let image : String
@@ -94,7 +94,7 @@ struct Recipe : Codable, Equatable{
 }
 
 
-struct Ingredient : Codable, Identifiable{
+struct Ingredient : Codable, Identifiable, Hashable{
     let id : Int
     let name : String
     let amount : Float
@@ -114,7 +114,7 @@ struct Ingredient : Codable, Identifiable{
 }
 
 
-struct Step_Ingredient : Codable {
+struct Step_Ingredient : Codable, Hashable {
     let id : Int
     let name : String
     
@@ -124,7 +124,7 @@ struct Step_Ingredient : Codable {
     }
 }
 
-struct Step_Equipment : Codable {
+struct Step_Equipment : Codable, Hashable {
     let id : Int
     let name : String
     
@@ -134,7 +134,7 @@ struct Step_Equipment : Codable {
     }
 }
 
-struct Recipe_Step : Codable{
+struct Recipe_Step : Codable, Hashable {
     let number : Int
     let step : String
     let ingredients : [Step_Ingredient]
@@ -147,7 +147,7 @@ struct Recipe_Step : Codable{
         case equipment
     }
 }
-struct Recipe_Instructions : Codable{
+struct Recipe_Instructions : Codable, Hashable {
     let name : String
     let steps : [Recipe_Step]
     
