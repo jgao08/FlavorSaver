@@ -69,7 +69,7 @@ class Search{
         if (input.isEmpty){
             return []
         }
-        return ingredientFinder.filterIngredients(input)
+        return ingredientFinder.filterIngredients(input.lowercased())
     }
 }
 

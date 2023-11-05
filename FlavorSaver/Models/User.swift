@@ -8,7 +8,7 @@
 import Foundation
 
 // An instance of this class should be created for every user, and maintained throughout the lifetime of the app
-class User{
+class User : ObservableObject{
     // TODO: Make static versions of checking if recipe is saved or not by pre-loading the user's saved recipe data
     private var userid : Int
         
@@ -29,15 +29,17 @@ class User{
         return userid
     }
     
-    func getSavedRecipes(completion : @escaping ([Recipe]) -> Void){
+    func getSavedRecipes() async -> [Recipe]{
         if (isSynced){
-            completion(localSavedRecipes)
-            return
+            return localSavedRecipes
         }
-        dbManager.retrieveSavedRecipes(completion: {result in
-            self.isSynced = true
-            completion(result)
-        })
+        do{
+            let result = try await dbManager.retrieveSavedRecipes()
+            return result
+        } catch{
+            print("Could not retrieve saved recipes")
+            return []
+        }
     }
     
     func isRecipeSaved(recipeID : Int) -> Bool{
