@@ -9,7 +9,7 @@ import Foundation
 
 class APIManager {
     let apiLink : String = "https://api.spoonacular.com/recipes/"
-    let maxNumberRecipes : Int = 5
+    static var maxNumberRecipes : Int = 5
     
     func getAPIKey() -> String {
         if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
@@ -25,7 +25,7 @@ class APIManager {
     
     func sendAPIRequest<T>(_ url : String, _ type : T.Type, completion : @escaping ((T,Bool)) -> Void) where T : Decodable{
         let decoder = JSONDecoder()
-
+        //print("URL REQUEST: " + url)
         if let apiRequest = URL(string: url) {
             let task = URLSession.shared.dataTask(with: apiRequest) { data, response, error in
                 if let error = error {

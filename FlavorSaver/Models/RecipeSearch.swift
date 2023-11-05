@@ -7,25 +7,35 @@
 
 import Foundation
 
-// Ideally instances of this class are kept in memory so subsequent access to recipes are already retrieved
-class RecipeSearch : APIManager{
-    var recipe : Recipe
-    var recipeInfo : Recipe_Info?
+// Used
+class RecipeSearch{
+    private var id : Int
+    private var recipeInfo : Recipe?
+    private var apiManager : APIManager
     
-    init(_ reci : Recipe){
-        recipe = reci
+    init(_ recipeID : Int){
+        id = recipeID
+        apiManager = APIManager()
     }
     
+    func setRecipe(_ recipeID : Int){
+        id = recipeID
+        recipeInfo = nil
+    }
+    
+    func getRecipeID() -> Int{
+        return id
+    }
     // Retrieves a Recipe_Info struct with the given Recipe from the API call in the form of
     // https://api.spoonacular.com/recipes/RECIPE_ID/information?apiKey=APIKEY
 
-    func getRecipeInfo(completion : @escaping (Recipe_Info) -> Void) {
+    func getRecipeInfo(completion : @escaping (Recipe) -> Void) {
         if (recipeInfo != nil){
             completion(recipeInfo!)
         }else{
-            let apiKey = getAPIKey()
-            let urlRequest = "\(apiLink)\(recipe.id)/information?apiKey=\(apiKey)"
-            sendAPIRequest(urlRequest, Recipe_Info.self, completion: { (result, success) in
+            let apiKey = apiManager.getAPIKey()
+            let urlRequest = "\(apiManager.apiLink)\(id)/information?apiKey=\(apiKey)"
+            apiManager.sendAPIRequest(urlRequest, Recipe.self, completion: { (result, success) in
                 if (success){
                     self.recipeInfo = result
                     completion(result)
