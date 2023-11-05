@@ -10,12 +10,12 @@ import XCTest
 
 final class SearchTests: XCTestCase {
     
-    var recipe1 : Search = Search()
-    var recipe2 : Search = Search()
-    var recipe3 : Search = Search()
+    var bananaAlmond : Search = Search()
+    var vodka : Search = Search()
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        APIManager.maxNumberRecipes = 5
     }
     
     override func tearDownWithError() throws {
@@ -23,40 +23,65 @@ final class SearchTests: XCTestCase {
     }
     
     func testExample() throws {
-        recipe1.addIngredient("banana")
-        recipe1.addIngredient("almond")
+        bananaAlmond.addIngredient("banana")
+        bananaAlmond.addIngredient("almond")
+        let expectation = self.expectation(description: "Async Test")
         
-        
-        recipe1.getRecipes(completion: {recipe_infos in
+        bananaAlmond.getRecipes(completion: {recipe_infos in
             
-            let recipes : Recipes = self.recipe1.searchResults!
+            let recipes : Recipes = self.bananaAlmond.searchResults!
             
-            print(recipe_infos)
-            print("hiiiiii")
-            
-            XCTAssert(false)
-            XCTAssert(recipes.numberOfRecipes == 30)
+            XCTAssert(recipes.numberOfRecipes == 5)
             XCTAssert(recipes.totalRecipes == 21)
             XCTAssert(recipes.offset == 0)
             
-            XCTAssert(recipes.recipes.first != nil)
-            let firstRecipe : Recipe = recipes.recipes.first!
-            XCTAssert(firstRecipe.title == "Matcha Smoothie")
-            XCTAssert(firstRecipe.image == "https://spoonacular.com/recipeImages/1095931-312x231.jpg")
             
-            XCTAssert(recipes.recipes.count > 2)
-            let thirdRecipe : Recipe = recipes.recipes[2]
-            XCTAssert(thirdRecipe.title == "Banana Almond Cake")
-            XCTAssert(thirdRecipe.image == "https://spoonacular.com/recipeImages/633975-312x231.jpg")
+            for i in 0...4 {
+                XCTAssert(recipes.recipes[i].id == recipe_infos[i].id, "Failed because \(recipes.recipes[i].id) != \(recipe_infos[i].id)")
+                XCTAssert(recipes.recipes[i].title == recipe_infos[i].name, "Failed because \(recipes.recipes[i].title) != \(recipe_infos[i].name)")
+                XCTAssert(recipes.recipes[i].imageType == recipe_infos[i].imageType, "Failed because \(recipes.recipes[i].imageType) != \(recipe_infos[i].imageType)")
+            }
+            expectation.fulfill()
+        })
+        waitForExpectations(timeout: 10)
+        
+        // should already exist and stored, so not necessary to reask. Should be instant.
+        bananaAlmond.getRecipes(completion: {recipe_infos in
             
+            let recipes : Recipes = self.bananaAlmond.searchResults!
+            
+            XCTAssert(recipes.numberOfRecipes == 5)
+            XCTAssert(recipes.totalRecipes == 21)
+            XCTAssert(recipes.offset == 0)
+            
+            
+            for i in 0...4 {
+                XCTAssert(recipes.recipes[i].id == recipe_infos[i].id, "Failed because \(recipes.recipes[i].id) != \(recipe_infos[i].id)")
+                XCTAssert(recipes.recipes[i].title == recipe_infos[i].name, "Failed because \(recipes.recipes[i].title) != \(recipe_infos[i].name)")
+                XCTAssert(recipes.recipes[i].imageType == recipe_infos[i].imageType, "Failed because \(recipes.recipes[i].imageType) != \(recipe_infos[i].imageType)")
+            }
         })
     }
     
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func test2() throws {
+        vodka.addIngredient("vodka")
+        let expectation = self.expectation(description: "Async Test")
+        
+        vodka.getRecipes(completion: {recipe_infos in
+            let recipes : Recipes = self.vodka.searchResults!
+            
+            XCTAssert(recipes.numberOfRecipes == 5)
+            XCTAssert(recipes.totalRecipes == 1)
+            XCTAssert(recipes.offset == 0)
+            
+            
+            for i in 0...0 {
+                XCTAssert(recipes.recipes[i].id == recipe_infos[i].id, "Failed because \(recipes.recipes[i].id) != \(recipe_infos[i].id)")
+                XCTAssert(recipes.recipes[i].title == recipe_infos[i].name, "Failed because \(recipes.recipes[i].title) != \(recipe_infos[i].name)")
+                XCTAssert(recipes.recipes[i].imageType == recipe_infos[i].imageType, "Failed because \(recipes.recipes[i].imageType) != \(recipe_infos[i].imageType)")
+            }
+            expectation.fulfill()
+        })
+        waitForExpectations(timeout: 10)
     }
-    
 }

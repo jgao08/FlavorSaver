@@ -15,8 +15,7 @@ struct SearchView: View {
   @State private var selectedIngs: [String] = []
   @State private var searchText = ""
   @State public var selectedEmpty: Bool = true
-  
-  
+
   var body: some View {
     NavigationStack{
       VStack{
@@ -38,7 +37,7 @@ struct SearchView: View {
               Text(ingredient)
                 .foregroundStyle(Color.black)
               Spacer()
-              if selectedIngs.contains(ingredient) {
+              if self.recipes.selectedIngredients.contains(ingredient) {
                 Image(systemName: "checkmark")
                   .foregroundColor(.blue)
               }
