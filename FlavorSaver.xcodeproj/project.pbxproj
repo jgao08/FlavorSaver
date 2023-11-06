@@ -22,10 +22,10 @@
 		F991A8972AEF87C000200104 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8962AEF87C000200104 /* SaveButton.swift */; };
 		F991A8992AEF89E400200104 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8982AEF89E400200104 /* Search.swift */; };
 		F991A89F2AEF8A9D00200104 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A89E2AEF8A9D00200104 /* User.swift */; };
-		F9B659552AF382E00080B480 /* FlavorSaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B659542AF382E00080B480 /* FlavorSaverTests.swift */; };
 		F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595B2AF383DA0080B480 /* SearchTests.swift */; };
 		F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */; };
 		F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595F2AF42BAB0080B480 /* APIManager.swift */; };
+		F9BAA99C2AF98722004919CC /* RecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BAA99B2AF98722004919CC /* RecipeTests.swift */; };
 		F9ECAB342AEEF04600F951B0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECAB332AEEF04600F951B0 /* App.swift */; };
 		F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB372AEEF04800F951B0 /* Assets.xcassets */; };
 		F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */; };
@@ -89,10 +89,10 @@
 		F991A8982AEF89E400200104 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		F991A89E2AEF8A9D00200104 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F9B659522AF382E00080B480 /* FlavorSaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlavorSaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9B659542AF382E00080B480 /* FlavorSaverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlavorSaverTests.swift; sourceTree = "<group>"; };
 		F9B6595B2AF383DA0080B480 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
 		F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearch.swift; sourceTree = "<group>"; };
 		F9B6595F2AF42BAB0080B480 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		F9BAA99B2AF98722004919CC /* RecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTests.swift; sourceTree = "<group>"; };
 		F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlavorSaver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9ECAB332AEEF04600F951B0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F9ECAB372AEEF04800F951B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,12 +148,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F96C7C712AF96DD0005B6FA1 /* InternalModels */ = {
+			isa = PBXGroup;
+			children = (
+				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
+				F92B12E22AF8092C003C2474 /* FirebaseManager.swift */,
+				F935C4132AF17CB50010BB0C /* Structs.swift */,
+				F909172F2AF7394600DAA43A /* Ingredients.swift */,
+			);
+			path = InternalModels;
+			sourceTree = "<group>";
+		};
 		F9B659532AF382E00080B480 /* FlavorSaverTests */ = {
 			isa = PBXGroup;
 			children = (
-				F9B659542AF382E00080B480 /* FlavorSaverTests.swift */,
 				F9B6595B2AF383DA0080B480 /* SearchTests.swift */,
 				F92B12E02AF790AA003C2474 /* UserTest.swift */,
+				F9BAA99B2AF98722004919CC /* RecipeTests.swift */,
 			);
 			path = FlavorSaverTests;
 			sourceTree = "<group>";
@@ -200,14 +211,11 @@
 		F9ECAB412AEEF27000F951B0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
-				F92B12E22AF8092C003C2474 /* FirebaseManager.swift */,
 				F991A8982AEF89E400200104 /* Search.swift */,
-				F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */,
 				F991A89E2AEF8A9D00200104 /* User.swift */,
-				F935C4132AF17CB50010BB0C /* Structs.swift */,
 				F94C7A9E2AF59DEF00155131 /* Recipe.swift */,
-				F909172F2AF7394600DAA43A /* Ingredients.swift */,
+				F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */,
+				F96C7C712AF96DD0005B6FA1 /* InternalModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -363,9 +371,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9B659552AF382E00080B480 /* FlavorSaverTests.swift in Sources */,
 				F92B12E12AF790AA003C2474 /* UserTest.swift in Sources */,
 				F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */,
+				F9BAA99C2AF98722004919CC /* RecipeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
