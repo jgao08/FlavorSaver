@@ -11,8 +11,7 @@ import Foundation
 class User : ObservableObject{
     // TODO: Make static versions of checking if recipe is saved or not by pre-loading the user's saved recipe data
     private var userid : Int
-        
-    private var isSynced : Bool
+    
     private var localSavedRecipes : [Recipe]
     
     // Most of the database work happens in this class
@@ -20,26 +19,19 @@ class User : ObservableObject{
     
     init(userID : Int){
         userid = userID
-        isSynced = false
         localSavedRecipes = []
         dbManager = FirebaseManager(userID: String(userid))
+        Task(priority: .high){
+            localSavedRecipes = await dbManager.retrieveSavedRecipes()
+        }
     }
     
     func getUserID() -> Int{
         return userid
     }
     
-    func getSavedRecipes() async -> [Recipe]{
-        if (isSynced){
-            return localSavedRecipes
-        }
-        do{
-            let result = try await dbManager.retrieveSavedRecipes()
-            return result
-        } catch{
-            print("Could not retrieve saved recipes")
-            return []
-        }
+    func getSavedRecipes() -> [Recipe]{
+        return localSavedRecipes
     }
     
     func isRecipeSaved(recipeID : Int) -> Bool{
@@ -52,9 +44,9 @@ class User : ObservableObject{
             print("Recipe already added to local version of the list")
             return
         }
-        
         localSavedRecipes.append(recipe)
         dbManager.addRecipeToUser(recipe: recipe)
+        
     }
     
     func removeSavedRecipe(recipe : Recipe){
@@ -68,6 +60,7 @@ class User : ObservableObject{
         }
         localSavedRecipes = localSavedRecipes.filter({$0.id != recipeID})
         dbManager.removeRecipeFromUser(recipeID: recipeID)
+        
     }
     
     //TODO: Make future updates/calls to firebase only fire when the user logs out or exits out of the app.

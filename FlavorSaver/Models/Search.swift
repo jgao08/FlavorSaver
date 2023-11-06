@@ -10,24 +10,27 @@ import Foundation
 
 class Search{
     // Currently Selected Ingredients from the user
-    var selectedIngredients : [String] = []
+    private var selectedIngredients : [String] = []
     
     // An instance of the Recipes struct if it has been requested
-    var searchResults : Recipes?
+    private var searchResults : Recipes_MetaData?
     
     // List of the recipes returned from the given search query
-    var listOfRecipes : [Recipe] = []
+    private var listOfRecipes : [Recipe] = []
     
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
     private var apiManager = APIManager()
     
+    // Add an ingredient to the search request
     func addIngredient(_ ingredient : String) -> Void {
         if (!selectedIngredients.contains(ingredient)){
             selectedIngredients.append(ingredient)
             hasChanged = true
         }
     }
+    
+    // Remove an ingredient from the search request
     func removeIngredient(_ ingredient : String) -> Void {
         let newIngredients = selectedIngredients.filter({$0 != ingredient})
         if (newIngredients != selectedIngredients){
@@ -36,40 +39,49 @@ class Search{
         }
     }
     
-    //    Executes the API call in the form of
-    //    https://api.spoonacular.com/recipes/complexSearch?query=QUERY&number=MAXRESULTS&apiKey=APIKEY
-    func getRecipes(completion : @escaping ([Recipe]) -> Void){
+    // Get back to current list of selected ingredients
+    func getCurrentSelectedIngredients() -> [String]{
+        return selectedIngredients
+    }
+    
+    // Retrieves a list of the recipes from the given search parameter
+    // ASYNC Function
+    func getRecipes() async -> [Recipe]{
         if (!hasChanged){
-            return completion(listOfRecipes)
+            return listOfRecipes
         }
         let queryRequest = selectedIngredients.joined(separator: ",")
         let apiKey = apiManager.getAPIKey()
         let urlRequest = "\(apiManager.apiLink)complexSearch?query=\(queryRequest)&number=\(APIManager.maxNumberRecipes)&apiKey=\(apiKey)"
-        apiManager.sendAPIRequest(urlRequest, Recipes.self, completion: { (recipesRes, success) in
-            if (success){
-                self.hasChanged = false;
-                self.searchResults = recipesRes
-                let mappedIDS = recipesRes.recipes.map {
-                    String($0.id)
-                }
-                let joinedIDS = mappedIDS.joined(separator: ",")
-                let newUrlRequest = "\(self.apiManager.apiLink)informationBulk?ids=\(joinedIDS)&apiKey=\(apiKey)"
-                
-                self.apiManager.sendAPIRequest(newUrlRequest, [Recipe].self, completion: { (result, success) in
-                    self.listOfRecipes = result
-                    completion(self.listOfRecipes)
-                })
-            }else{
-                completion([])
-            }
-        })
+        
+        do{
+            let request = try await apiManager.sendAPIRequest(urlRequest, Recipes_MetaData.self)
+            self.searchResults = request
+            let mappedIDS = request.recipes.map {String($0.id)}
+            let joinedIDS = mappedIDS.joined(separator: ",")
+            let newUrlRequest = "\(self.apiManager.apiLink)informationBulk?ids=\(joinedIDS)&apiKey=\(apiKey)"
+            
+            let bulkRequest = try await apiManager.sendAPIRequest(newUrlRequest, [Recipe].self)
+            self.listOfRecipes = bulkRequest
+            self.hasChanged = false;
+            return self.listOfRecipes
+        }catch{
+            print("Error retrieving the recipes in Search.swift getRecipes()")
+            return []
+        }
     }
     
-    func getIngredients(_ input : String) -> [String] {
-        if (input.isEmpty){
+    // Retrieves a list of ingredients corresponding to the input search parameter
+    func getIngredientOptions(_ input : String) -> [String] {
+        if (input.isEmpty || !input.first!.isASCII){
             return []
         }
         return ingredientFinder.filterIngredients(input.lowercased())
+    }
+    
+    // TESTING FUNCTION. Not needed to be used regularly
+    func getMetaData() -> Recipes_MetaData {
+        return searchResults!
     }
 }
 
