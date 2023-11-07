@@ -76,6 +76,7 @@ class FirebaseManager {
 //        })
 //    }
     
+    // Need some sort of lock for race-condition adds to database
     func addRecipeToUser(recipe : Recipe){
         userDocument.getDocument(completion: {(document, error) in
             if let document = document, document.exists {

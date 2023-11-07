@@ -21,6 +21,7 @@ final class UserTest: XCTestCase {
         
     }
     
+    // Sometimes passes sometimes fails
     func testExample() async throws {
         let vodka : Search = Search()
         //user = User(userID: 0)
@@ -42,6 +43,9 @@ final class UserTest: XCTestCase {
         XCTAssert(recipes.count == 1)
         let recipeAgain = savedRecipes.first!
         
+//        print(recipeAgain)
+//        print("---------------------")
+//        print(firstRecipe)
         XCTAssert(recipeAgain == firstRecipe)
     }
     
