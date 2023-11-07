@@ -11,17 +11,13 @@ import SwiftUI
 struct RecipeCardLarge: View {
 //  @Binding var RecipeInfo: Recipe_Info
     
-    let imageURL = URL(string: "https://spoonacular.com/recipeImages/633975-556x370.jpg")
-    let recipeName = "Cheeseburger"
-    let readyInMinutes = 50
-    let cuisines = ["American, French"]
-    let author = "Gordon Ramsay"
+    var recipe: Recipe
   
   var body: some View  {
     ZStack{
-        Image("ImageTest")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+        AsyncImage(url: URL(string: recipe.image))
+//            .resizable()
+//            .aspectRatio(contentMode: .fill)
             .frame(width: 300, height: 400)
             .clipped()
             .cornerRadius(10)
@@ -35,23 +31,25 @@ struct RecipeCardLarge: View {
         HStack() {
             VStack(alignment: .leading, spacing: 4) {
                 HStack() {
-                    Text(recipeName)
+                    Text(recipe.name)
                         .font(.title3)
                         .fontWeight(.bold)
+                        .multilineTextAlignment(.leading)
+
                     Spacer()
                     SaveIcon()
                 }
                 HStack(spacing: 4) {
-                    Text(String(readyInMinutes))
+                    Text(String(recipe.readyInMinutes))
                     Text("mins")
                     Text("•")
-                    Text(cuisines.joined(separator: ", "))
+                    Text(recipe.cuisines.joined(separator: ", "))
                 }
                 .font(.caption)
                 
                 Spacer()
                 
-                Text(author)
+                Text(recipe.author)
                     .font(.caption)
             }
             .shadow(color: .black, radius: 8)
@@ -65,6 +63,6 @@ struct RecipeCardLarge: View {
   }
 }
 
-#Preview {
-    RecipeCardLarge()
-}
+//#Preview {
+////    RecipeCardLarge()
+//}

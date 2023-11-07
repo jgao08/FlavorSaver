@@ -25,7 +25,6 @@ struct SavedRecipesView: View {
                 }
             }
             .padding(.horizontal)
-            .padding()
         }
     }
 }
