@@ -20,7 +20,7 @@ struct RecipeView: View {
         ZStack{
           AsyncImage(url: URL(string: recipe.image))
 //            .resizable()
-            .frame(height: UIScreen.main.bounds.height / (3/2))
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / (3/2))
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
           
           VStack(spacing: paraSpacing){
@@ -49,7 +49,7 @@ struct RecipeView: View {
               .foregroundStyle(Color.black)
               .shadow(radius: 10)
               .sheet(isPresented: $cookingMode, content: {
-                CookingModeView()
+                  CookingModeView(recipe: recipe)
               })
               Spacer()
             }

@@ -40,26 +40,22 @@ struct SearchResultsView: View {
         }
         .padding()
         
+//        ScrollView {
+          VStack{
+            List(search.getRecipes(), id: \.self){ recipe in
+              RecipeCardLarge(recipe: recipe)
+            }
+          }
+//        }
         
-//        VStack{
-//          ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-              ForEach(search.getRecipes(), id: \.id) { recipe in
-                NavigationLink(destination: RecipeView(recipe: recipe), label:{
-                  RecipeCardLarge()
-                })
-              }
-              .task {
-                await search.executeSearch()
-                print(search.getRecipes())
-              }
-//            }
-//          }
-        }
       }
-      .buttonStyle(.bordered)
     }
     .navigationBarBackButtonHidden()
     .navigationBarTitleDisplayMode(.inline)
   }
+}
+
+
+#Preview {
+  SearchView()
 }
