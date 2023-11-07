@@ -11,11 +11,11 @@ struct CookingModeView: View {
     @State var recipe : Recipe
     var body: some View {
         TabView {
-            VStack {
                 ForEach(recipe.getRecipeSteps(), id: \.0){ step, ingredients in
                     VStack{
                         HStack{
                             Text(step)
+                                .font(.title)
                             Spacer()
                         }
                         HStack{
@@ -34,10 +34,10 @@ struct CookingModeView: View {
                             }
                         }
                     }
-                }
-                Spacer()
+                    .padding(.horizontal, 16)
             }
         }
+        .tabViewStyle(.page)
     }
 }
 

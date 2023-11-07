@@ -45,7 +45,7 @@ struct SearchResultsView: View {
         
         List(search.getRecipes(), id: \.id) { recipe in
           NavigationLink(destination: RecipeView(recipe: recipe), label:{
-            RecipeCardLarge()
+              RecipeCardLarge(recipe: recipe)
           })
         }
         .task {

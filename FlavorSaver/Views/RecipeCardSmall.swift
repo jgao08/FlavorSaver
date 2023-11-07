@@ -15,7 +15,7 @@ struct RecipeCardSmall: View {
     var recipe: Recipe
   
     var body: some View  {
-        NavigationLink (destination: RecipeView(recipeSearch: recipe), label: {
+        NavigationLink (destination: RecipeView(recipe: recipe), label: {
             
             ZStack{
                 AsyncImage(url: URL(string: recipe.image))
@@ -37,6 +37,8 @@ struct RecipeCardSmall: View {
                         Text(recipe.name)
                             .font(.headline)
                             .fontWeight(.bold)
+                            .multilineTextAlignment(.leading)
+
                         HStack(spacing: 4) {
                             Text(String(recipe.readyInMinutes))
                             Text("mins")
