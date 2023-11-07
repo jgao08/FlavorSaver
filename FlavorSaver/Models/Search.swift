@@ -66,7 +66,7 @@ class Search : ObservableObject{
             self.hasChanged = false;
             return self.listOfRecipes
         }catch{
-            print("Error retrieving the recipes in Search.swift getRecipes()")
+            print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")
             return []
         }
     }

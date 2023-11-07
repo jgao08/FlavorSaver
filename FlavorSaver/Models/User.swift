@@ -23,7 +23,7 @@ class User : ObservableObject{
         dbManager = FirebaseManager(userID: String(userid))
         Task(priority: .high){
             let recipes = await dbManager.retrieveSavedRecipes()
-            DispatchQueue.main.async { // Ensure the update happens on the main thread
+            DispatchQueue.main.async {
                 self.localSavedRecipes = recipes
             }
         }
