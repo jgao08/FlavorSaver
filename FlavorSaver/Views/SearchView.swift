@@ -71,7 +71,7 @@ struct SearchView: View {
           }
           Spacer()
           
-          NavigationLink(destination: SearchResultsView(inputs: search, ingredients: selectedIngredients), label: {Text("Done")})
+            NavigationLink(destination: SearchResultsView(search: search), label: {Text("Done")})
             .buttonStyle(.borderedProminent)
             .frame(alignment: .trailing)
             .disabled(selectedIngredients.isEmpty)
@@ -87,10 +87,10 @@ struct SearchView: View {
   func toggleSelection(_ ingredient: String) {
     if selectedIngredients.contains(ingredient)  {
       selectedIngredients = selectedIngredients.filter{ $0 != ingredient }
-//      recipes.removeIngredient(ingredient)
+      search.removeIngredient(ingredient)
     } else {
       selectedIngredients.append(ingredient)
-//      recipes.addIngredient(ingredient)
+      search.addIngredient(ingredient)
     }
   }
 }
