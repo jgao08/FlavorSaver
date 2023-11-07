@@ -19,11 +19,10 @@ struct SearchView: View {
     NavigationStack{
       VStack{
         if searchText.isEmpty {
-          HStack{
             Text("Search by ingredient, dish, or cuisine")
               .font(.title)
-          }
-          .transition(.opacity.animation(.spring(duration: 1.0)))
+              .foregroundStyle(Color.gray)
+              .transition(.opacity.animation(.spring(duration: 1.0)))
         }
         
         //    MARK: Searched ingredient list
@@ -58,7 +57,7 @@ struct SearchView: View {
                   HStack{
                     Text(ingredient)
                     Button(action: {
-                      selectedIngredients = selectedIngredients.filter{ $0 != ingredient}
+                      toggleSelection(ingredient)
                     }, label: {
                       Image(systemName: "xmark")
                     })
@@ -79,8 +78,9 @@ struct SearchView: View {
         .padding()
       }
     }
+    .ignoresSafeArea(.all)
   }
-  var searchResults: [String] { // change to [Ingredient] in future?
+  var searchResults: [String] { 
     return search.getIngredientOptions(searchText)
   }
   
