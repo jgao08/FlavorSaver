@@ -23,10 +23,10 @@ struct RecipeCardSmall: View {
   
   var body: some View  {
     ZStack{
-        Image("ImageTest")
-            .renderingMode(.original)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+        AsyncImage(url: URL(string: recipe.image))
+//            .renderingMode(.original)
+//            .resizable()
+//            .aspectRatio(contentMode: .fill)
             .frame(width: 170, height: 230)
             .clipped()
             .cornerRadius(10)
@@ -70,3 +70,7 @@ struct RecipeCardSmall: View {
 //#Preview {
 //    RecipeCardSmall()
 //}
+
+func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+    URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+}

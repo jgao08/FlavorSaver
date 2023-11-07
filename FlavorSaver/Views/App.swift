@@ -29,7 +29,20 @@ struct FlavorSaverApp: App {
         
         WindowGroup {
             NavigationView {
-                ContentView().environmentObject(user)
+                TabView {
+                    SearchView()
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
+                        }
+                    SavedRecipesView()
+                        .environmentObject(user)
+                        .tabItem {
+                            Image(systemName: "heart")
+                            Text("Saved")
+                        }
+
+                }
             }
         }
     }
