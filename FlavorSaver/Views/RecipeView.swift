@@ -18,8 +18,8 @@ struct RecipeView: View {
     ScrollView{
       VStack{
         ZStack{
-          Image("testimg2")
-            .resizable()
+          AsyncImage(url: URL(string: recipe.image))
+//            .resizable()
             .frame(height: UIScreen.main.bounds.height / (3/2))
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
           
