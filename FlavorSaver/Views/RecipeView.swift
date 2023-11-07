@@ -14,7 +14,7 @@ struct RecipeView: View {
   let paraSpacing: CGFloat = 16
   @State private var cookingMode = false
   @State var recipe : Recipe? = nil
-  @State var recipeSteps : [(String, [String])] = []
+  @State var recipeSteps : [(String, [String])] = [("In a large heavy-bottomed French or Dutch oven, heat the oil over medium high heat.", ["cooking oil"]), ("Add the garlic and shallots and gently saute for 3-5 minutes, stirring constantly until fragrant and translucent. Lower the heat if the garlic starts to brown.", ["shallot", "garlic"]), ("Add the piment dEspelette or red pepper flakes, if using.", ["red pepper flakes"]), ("Pour in the vodka and let reduce by half, another 3-5 minutes.", ["vodka"]), ("Add in the tomatoes and a sprinkling of salt. Bring to a boil and let simmer, uncovered, stirring often to break up the tomatoes, until sauce is thick, about 15 minutes.", ["tomato", "sauce", "salt"]), ("Meanwhile, bring a large stockpot of water to a boil over high heat. Once the water boils, salt the water and cook penne until just under al dente, about 9 minutes and then drain in a colander.", ["penne", "water", "salt"]), ("While the pasta cooks, stir cream into the thickened tomato sauce. Bring to a boil and lower heat to a simmer. Season again with salt and pepper to taste.", ["salt and pepper", "tomato sauce", "cream", "pasta"]), ("Add the drained pasta to the tomato sauce and stir to coat the pasta with the sauce. The sauce should be thick enough to coat the pasta; continue to stir and reduce if needed.", ["tomato sauce", "pasta", "sauce"]), ("Turn off the heat and sprinkle Parmigiano-Reggiano over the pasta and toss to coat evenly.", ["parmigiano reggiano", "pasta"]), ("Just before serving, thinly slice or tear up the basil leaves. Divide pasta among 4 serving platters.", ["fresh basil", "pasta"]), ("Garnish with a sprinkling of Parmigiano-Reggiano and basil.", ["parmigiano reggiano", "basil"])]
   @State var recipeIngredients : [String] = []
   @State var recipeDescription : String = ""
   @State var tags : [String] = []
@@ -22,7 +22,7 @@ struct RecipeView: View {
 
   func fetchRecipe() {
     Task {
-      print("Starting search...")
+      print("Starting search on \(recipeSearch.getRecipeID())...")
       recipe = await recipeSearch.getRecipeInfo()
       if let recipeResult = recipe {
         print("Success!")
@@ -132,11 +132,27 @@ struct RecipeView: View {
             }
             
             
-            HStack{
+            VStack{
               ForEach(recipeSteps, id: \.0){ step, ingredients in
-                Text(step)
-                ForEach(ingredients, id: \.self){ ingredient in
-                    Text(ingredient)
+                VStack{
+                  HStack{
+                    Text(step)
+                    Spacer()
+                  }
+                  HStack{
+                    VStack{
+                      ForEach(ingredients, id: \.self){ ingredient in
+                        HStack{
+                          Button(action: {}, label: {
+                            Text(ingredient)
+                          })
+                          .disabled(true)
+                          .buttonStyle(.bordered)
+                          Spacer()
+                        }
+                      }
+                    }
+                  }
                 }
               }
               Spacer()
