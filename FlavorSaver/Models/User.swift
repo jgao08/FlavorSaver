@@ -12,7 +12,7 @@ class User : ObservableObject{
     // TODO: Make static versions of checking if recipe is saved or not by pre-loading the user's saved recipe data
     private var userid : Int
     
-    private var localSavedRecipes : [Recipe]
+    @Published private var localSavedRecipes : [Recipe]
     
     // Most of the database work happens in this class
     private var dbManager : FirebaseManager
@@ -22,7 +22,10 @@ class User : ObservableObject{
         localSavedRecipes = []
         dbManager = FirebaseManager(userID: String(userid))
         Task(priority: .high){
-            localSavedRecipes = await dbManager.retrieveSavedRecipes()
+            let recipes = await dbManager.retrieveSavedRecipes()
+            DispatchQueue.main.async { // Ensure the update happens on the main thread
+                self.localSavedRecipes = recipes
+            }
         }
     }
     

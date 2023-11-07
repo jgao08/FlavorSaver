@@ -45,7 +45,7 @@ struct RecipeCardLarge: View {
                     Text(String(readyInMinutes))
                     Text("mins")
                     Text("•")
-                    Text(arrayToString(array: cuisines))
+                    Text(cuisines.joined(separator: ", "))
                 }
                 .font(.caption)
                 
@@ -63,16 +63,6 @@ struct RecipeCardLarge: View {
         .frame(width: 300, height: 400)
     }
   }
-}
-
-func arrayToString(array: [String]) -> String {
-    var str = ""
-    for arr in array {
-        str.append(arr)
-        str.append(",")
-    }
-    str.removeLast()
-    return str
 }
 
 #Preview {

@@ -46,7 +46,7 @@ struct RecipeCardSmall: View {
                     Text(String(recipe.readyInMinutes))
                     Text("mins")
                     Text("•")
-                    Text(arrayToString(array: recipe.cuisines))
+                    Text(recipe.cuisines.joined(separator: ", "))
                         .lineLimit(1)
                 }
                 .font(.caption)
