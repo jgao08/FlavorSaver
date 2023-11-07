@@ -8,26 +8,32 @@
 import SwiftUI
 
 struct RecipeView: View {
+//  let vodkaSearch = RecipeSearch(recipeID: 640026)
+  @State var recipeSearch : RecipeSearch
   let sectionSpacing: CGFloat = 32
   let paraSpacing: CGFloat = 16
   @State private var cookingMode = false
-  let recipeSteps =
-  """
-  1. Melt 1/4 cup of the butter. Pour 2 tablespoons of the melted butter into an 8-cup bundt pan; brush the butter over pan sides and bottom. Mix together the brown sugar, cinnamon, nutmeg, and almonds. Sprinkle bottom of pan with half the brown sugar mixture; combine the remaining mixture with the remaining melted butter; set aside.
-  
-  2. In a large bowl, beat remaining 1/4 cup butter with granulated sugar until blended. Beat in eggs, 1 at a time, until blended. Beat in orange peel and banana.
-  
-  3. Mix all-purpose and whole-wheat flours, baking powder, soda, and salt. Add to banana mixture along with the buttermilk; stir until well blended.
-  
-  4. Pour half the batter into prepared pan. Spoon remaining brown sugar mixture evenly over top; cover with remaining batter.
-  
-  5. Bake in a 350° oven until a long wood skewer inserted into the thickest part of the cake comes out clean, about 50 minutes. Cool the cake on a rack about 5 minutes, then invert cake onto a serving plate. Serve the cake warm or cool.
-  """
-  let recipeIngredients = ["1 potato", "1 orange", "2 jellybeans", "1 pizza", "2L Mist Twist"]
-  let recipeDescription = "A bag of ripe bananas inspired Jan McHargue to create this coffee cake. You can enjoy the banana cake with its spicy brown sugar-almond topping and filling for brunch, with coffee, or for dessert."
-  let tags = ["1 hour", "dessert", "brunch"]
-  let authorName = "Your Mom"
+  @State var recipe : Recipe? = nil
+  @State var recipeSteps : [(String, [String])] = []
+  @State var recipeIngredients : [String] = []
+  @State var recipeDescription : String = ""
+  @State var tags : [String] = []
+  @State var authorName : String = ""
 
+  func fetchRecipe() {
+    Task {
+      print("Starting search...")
+      recipe = await recipeSearch.getRecipeInfo()
+      if let recipeResult = recipe {
+        print("Success!")
+        recipeSteps = recipeResult.getRecipeSteps()
+        recipeIngredients = recipeResult.getIngredientsWithAmounts()
+        recipeDescription = recipeResult.summary
+        tags = recipeResult.dishTypes
+        authorName = recipeResult.author
+      }
+    }
+  }
   
   var body: some View {
     ScrollView{
@@ -127,7 +133,12 @@ struct RecipeView: View {
             
             
             HStack{
-              Text(recipeSteps)
+              ForEach(recipeSteps, id: \.0){ step, ingredients in
+                Text(step)
+                ForEach(ingredients, id: \.self){ ingredient in
+                    Text(ingredient)
+                }
+              }
               Spacer()
             }
           }
@@ -138,11 +149,15 @@ struct RecipeView: View {
       }
     }
     .edgesIgnoringSafeArea(.top)
+    .task {
+      fetchRecipe()
+    }
   }
+  
 }
 
 
 
-#Preview {
-    RecipeView()
-}
+//#Preview {
+//    RecipeView()
+//}

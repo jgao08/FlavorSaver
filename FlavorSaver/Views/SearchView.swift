@@ -11,10 +11,9 @@ import SwiftUI
 
 struct SearchView: View {
   @Environment(\.editMode) private var editMode
-  var ingredients = ["apple pie", "apple", "artichoke", "jellybean", "almond", "banana"]
-  @State private var selectedIngs: [String] = []
   @State private var searchText = ""
-  @State public var selectedEmpty: Bool = true
+  @State var selectedIngredients : [String] = []
+  var search : Search = Search()
 
   var body: some View {
     NavigationStack{
@@ -37,7 +36,8 @@ struct SearchView: View {
               Text(ingredient)
                 .foregroundStyle(Color.black)
               Spacer()
-              if self.selectedIngs.contains(ingredient) {
+
+              if selectedIngredients.contains(ingredient) {
                 Image(systemName: "checkmark")
                   .foregroundColor(.blue)
               }
@@ -52,16 +52,16 @@ struct SearchView: View {
         HStack{
           ScrollView(.horizontal, showsIndicators: false){
             HStack{
-              ForEach(selectedIngs, id: \.self){ ingredient in
+              ForEach(selectedIngredients, id: \.self){ ingredient in
                 Button(action: {
                 }, label: {
                   HStack{
                     Text(ingredient)
-                    Image(systemName: "xmark").onTapGesture {
-                      if let index = selectedIngs.firstIndex(where:{$0 == ingredient}){
-                        selectedIngs.remove(at: index)
-                      }
-                    }
+                    Button(action: {
+                      selectedIngredients = selectedIngredients.filter{ $0 != ingredient}
+                    }, label: {
+                      Image(systemName: "xmark")
+                    })
                   }
                 })
                 .buttonStyle(.bordered)
@@ -71,24 +71,26 @@ struct SearchView: View {
           }
           Spacer()
           
-          NavigationLink(destination: SearchResultsView(selectedIngs: self.$selectedIngs), label: {Text("Done")})
+            NavigationLink(destination: SearchResultsView(search: search), label: {Text("Done")})
             .buttonStyle(.borderedProminent)
             .frame(alignment: .trailing)
-            .disabled(selectedIngs.isEmpty)
+            .disabled(selectedIngredients.isEmpty)
         }
         .padding()
       }
     }
   }
   var searchResults: [String] { // change to [Ingredient] in future?
-    return ingredients.filter{ $0.contains(searchText.lowercased()) }
+    return search.getIngredientOptions(searchText)
   }
   
   func toggleSelection(_ ingredient: String) {
-    if selectedIngs.contains(ingredient) {
-      selectedIngs.removeAll(where: { $0 == ingredient })
+    if selectedIngredients.contains(ingredient)  {
+      selectedIngredients = selectedIngredients.filter{ $0 != ingredient }
+      search.removeIngredient(ingredient)
     } else {
-      selectedIngs.append(ingredient)
+      selectedIngredients.append(ingredient)
+      search.addIngredient(ingredient)
     }
   }
 }

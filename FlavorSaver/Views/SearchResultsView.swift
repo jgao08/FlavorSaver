@@ -9,20 +9,26 @@ import Foundation
 import SwiftUI
 
 struct SearchResultsView: View {
-  @Binding var selectedIngs: [String]
-  
-  var body: some View  {
-    NavigationStack{
-      VStack{
-        ForEach(selectedIngs, id: \.self){ ingredient in
-          Text(ingredient)
+    @ObservedObject var search: Search
+
+    var body: some View  {
+        NavigationStack {
+            VStack {
+                Text("Fetched Data:")
+                List(search.getRecipes(), id: \.id) { recipe in
+                    Text(recipe.name)
+                }
+                .task {
+                    await search.executeSearch()
+                }
+            }
+
+            NavigationLink(destination: RecipeView(recipeSearch: RecipeSearch(recipeID: 640026)), label: {
+                Text("Go to Recipe")
+            })
+            .buttonStyle(.bordered)
         }
-        NavigationLink(destination: RecipeView(), label: {
-            Text("Go to Recipe")
-        })
-        .buttonStyle(.bordered)
-      }
     }
-  }
 }
+
 
