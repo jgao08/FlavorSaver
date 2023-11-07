@@ -58,7 +58,7 @@ struct SearchView: View {
                   HStack{
                     Text(ingredient)
                     Button(action: {
-                      selectedIngredients = selectedIngredients.filter{ $0 != ingredient}
+                      toggleSelection(ingredient)
                     }, label: {
                       Image(systemName: "xmark")
                     })
@@ -80,7 +80,7 @@ struct SearchView: View {
       }
     }
   }
-  var searchResults: [String] { // change to [Ingredient] in future?
+  var searchResults: [String] { 
     return search.getIngredientOptions(searchText)
   }
   
