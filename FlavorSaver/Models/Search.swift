@@ -8,7 +8,7 @@
 import Foundation
 
 
-class Search{
+class Search : ObservableObject{
     // Currently Selected Ingredients from the user
     private var selectedIngredients : [String] = []
     
@@ -16,7 +16,7 @@ class Search{
     private var searchResults : Recipes_MetaData?
     
     // List of the recipes returned from the given search query
-    private var listOfRecipes : [Recipe] = []
+    @Published private var listOfRecipes : [Recipe] = []
     
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true

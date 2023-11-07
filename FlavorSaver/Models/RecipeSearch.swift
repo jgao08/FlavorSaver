@@ -8,7 +8,7 @@
 import Foundation
 
 // Currently has no use
-class RecipeSearch{
+class RecipeSearch : ObservableObject{
     private var id : Int
     private var recipeInfo : Recipe?
     private var apiManager : APIManager
