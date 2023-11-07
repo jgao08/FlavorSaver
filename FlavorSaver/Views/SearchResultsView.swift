@@ -9,29 +9,53 @@ import Foundation
 import SwiftUI
 
 struct SearchResultsView: View {
-    @ObservedObject var search: Search
-
-    var body: some View  {
-        NavigationStack {
-            VStack {
-                Text("Fetched Data:")
-                List(search.getRecipes(), id: \.id) { recipe in
-                  NavigationLink(destination: RecipeView(recipe: recipe), label:{
-                    Text(recipe.name)
-                  })
-                }
-                .task {
-                    await search.executeSearch()
-                  print(search.getCurrentSelectedIngredients())
-                }
+  @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+  @ObservedObject var search: Search
+  
+  var body: some View  {
+    NavigationStack {
+      VStack {
+        HStack{
+          ScrollView(.horizontal, showsIndicators: false){
+            HStack{
+              ForEach(search.getCurrentSelectedIngredients(), id: \.self){ ingredient in
+                Button(action: {
+                }, label: {
+                  Text(ingredient)
+                })
+                .buttonStyle(.bordered)
+                .foregroundStyle(Color.black)
+              }
             }
-
-//            NavigationLink(destination: RecipeView(recipeSearch: search), label: {
-//                Text("Go to Recipe")
-//            })
-            .buttonStyle(.bordered)
+          }
+          Spacer()
+          
+          Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+          }, label: {
+            Text("Edit")
+          })
+          .buttonStyle(.borderedProminent)
+          .frame(alignment: .trailing)
         }
+        .padding()
+        
+        
+        
+        
+        List(search.getRecipes(), id: \.id) { recipe in
+          NavigationLink(destination: RecipeView(recipe: recipe), label:{
+            RecipeCardLarge()
+          })
+        }
+        .task {
+          await search.executeSearch()
+          print(search.getCurrentSelectedIngredients())
+        }
+      }
+      .buttonStyle(.bordered)
     }
+    .navigationBarBackButtonHidden()
+    .navigationBarTitleDisplayMode(.inline)
+  }
 }
-
-

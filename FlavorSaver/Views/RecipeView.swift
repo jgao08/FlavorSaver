@@ -114,28 +114,17 @@ struct RecipeView: View {
             
             
             VStack{
-              ForEach(recipe.getRecipeSteps(), id: \.0){ step, ingredients in
+              ForEach(recipe.getRecipeSteps().indices, id: \.self){ index in
+                let step = recipe.getRecipeSteps()[index]
+                let stepInstruction = step.0
+
                 VStack{
                   HStack{
-                    Text(step)
+                    Text("\(index + 1). \(stepInstruction)")
                     Spacer()
                   }
-                  HStack{
-                    VStack{
-                      ForEach(ingredients, id: \.self){ ingredient in
-                        HStack{
-                          Button(action: {}, label: {
-                            Text(ingredient)
-                          })
-                          .disabled(true)
-                          .buttonStyle(.bordered)
-                          .foregroundStyle(Color.black)
-                          Spacer()
-                        }
-                      }
-                    }
-                  }
                 }
+                .padding(.vertical, 4)
               }
               Spacer()
             }
@@ -153,7 +142,7 @@ struct RecipeView: View {
     })
 //    .navigationBarItems(leading: Spacer(minLength: 500))
 //    .navigationBarTitleDisplayMode(.inline)
-    .edgesIgnoringSafeArea(.top)
+    .edgesIgnoringSafeArea(.all)
   }
   
 }
