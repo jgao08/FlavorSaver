@@ -16,16 +16,19 @@ struct SearchResultsView: View {
             VStack {
                 Text("Fetched Data:")
                 List(search.getRecipes(), id: \.id) { recipe in
+                  NavigationLink(destination: RecipeView(recipe: recipe), label:{
                     Text(recipe.name)
+                  })
                 }
                 .task {
                     await search.executeSearch()
+                  print(search.getCurrentSelectedIngredients())
                 }
             }
 
-            NavigationLink(destination: RecipeView(recipeSearch: RecipeSearch(recipeID: 640026)), label: {
-                Text("Go to Recipe")
-            })
+//            NavigationLink(destination: RecipeView(recipeSearch: search), label: {
+//                Text("Go to Recipe")
+//            })
             .buttonStyle(.bordered)
         }
     }
