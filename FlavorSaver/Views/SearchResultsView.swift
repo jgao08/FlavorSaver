@@ -9,39 +9,26 @@ import Foundation
 import SwiftUI
 
 struct SearchResultsView: View {
-  @State var inputs: Search
-  @State var ingredients: [String]
-  
-  
-  var body: some View  {
-    var recipes : [Recipe] = []
-    let search : Search = enterIngredientsToSearch()
+    @ObservedObject var search: Search
 
-    NavigationStack{
-      VStack{
-        Text("Fetched Data: ")
-        List(recipes, id: \.id){ recipe in
-          Text(recipe.name)
+    var body: some View  {
+        NavigationStack {
+            VStack {
+                Text("Fetched Data:")
+                List(search.getRecipes(), id: \.id) { recipe in
+                    Text(recipe.name)
+                }
+                .task {
+                    await search.executeSearch()
+                }
+            }
+
+            NavigationLink(destination: RecipeView(recipeSearch: RecipeSearch(recipeID: 640026)), label: {
+                Text("Go to Recipe")
+            })
+            .buttonStyle(.bordered)
         }
-        .task {
-          recipes = await search.getRecipes()
-//          print(search.getMetaData().offset)
-        }
-      }
-      NavigationLink(destination: RecipeView(recipeSearch: RecipeSearch(recipeID: 640026)), label: {
-        Text("Go to Recipe")
-      })
-      .buttonStyle(.bordered)
     }
-  }
-  
-  func enterIngredientsToSearch() -> Search {
-    ingredients.forEach{ ingredient in
-      inputs.addIngredient(ingredient)
-    }
-    return inputs
-  }
 }
-
 
 

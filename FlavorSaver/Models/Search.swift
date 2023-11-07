@@ -45,10 +45,14 @@ class Search : ObservableObject{
     }
     
     // Retrieves a list of the recipes from the given search parameter
-    // ASYNC Function
-    func getRecipes() async -> [Recipe]{
+    func getRecipes() -> [Recipe]{
+        return listOfRecipes
+    }
+    
+    // ASYNC Function. Executes the search
+    func executeSearch() async{
         if (!hasChanged){
-            return listOfRecipes
+            return
         }
         let queryRequest = selectedIngredients.joined(separator: ",")
         let apiKey = apiManager.getAPIKey()
@@ -64,10 +68,8 @@ class Search : ObservableObject{
             let bulkRequest = try await apiManager.sendAPIRequest(newUrlRequest, [Recipe].self)
             self.listOfRecipes = bulkRequest
             self.hasChanged = false;
-            return self.listOfRecipes
         }catch{
             print("Error retrieving the recipes in Search.swift getRecipes()")
-            return []
         }
     }
     
