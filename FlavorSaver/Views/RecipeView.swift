@@ -6,34 +6,13 @@
 //
 
 import SwiftUI
+//import SwiftUITrackableScrollView
 
 struct RecipeView: View {
-//  let vodkaSearch = RecipeSearch(recipeID: 640026)
-  @State var recipeSearch : RecipeSearch
   let sectionSpacing: CGFloat = 32
   let paraSpacing: CGFloat = 16
   @State private var cookingMode = false
-  @State var recipe : Recipe? = nil
-  @State var recipeSteps : [(String, [String])] = []
-  @State var recipeIngredients : [String] = []
-  @State var recipeDescription : String = ""
-  @State var tags : [String] = []
-  @State var authorName : String = ""
-
-  func fetchRecipe() {
-    Task {
-      print("Starting search...")
-      recipe = await recipeSearch.getRecipeInfo()
-      if let recipeResult = recipe {
-        print("Success!")
-        recipeSteps = recipeResult.getRecipeSteps()
-        recipeIngredients = recipeResult.getIngredientsWithAmounts()
-        recipeDescription = recipeResult.summary
-        tags = recipeResult.dishTypes
-        authorName = recipeResult.author
-      }
-    }
-  }
+  @State var recipe : Recipe
   
   var body: some View {
     ScrollView{
@@ -47,7 +26,7 @@ struct RecipeView: View {
           VStack(spacing: paraSpacing){
             Spacer()
             HStack{
-              Text("Recipe Title")
+              Text(recipe.name)
                 .font(.largeTitle)
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .foregroundStyle(Color.white)
@@ -70,7 +49,7 @@ struct RecipeView: View {
               .foregroundStyle(Color.black)
               .shadow(radius: 10)
               .sheet(isPresented: $cookingMode, content: {
-                CookingModeView()
+                  CookingModeView(recipe: recipe)
               })
               Spacer()
             }
@@ -82,24 +61,26 @@ struct RecipeView: View {
         
         VStack(spacing: sectionSpacing){
           VStack(spacing: paraSpacing){
-            Text(recipeDescription)
+            Text(recipe.summary.replacingOccurrences(of: "<.*?>", with: "", options: .regularExpression)
+)
             
-            
-            HStack{
-              ForEach(tags, id: \.self) {tag in
-                Button(action: {}, label: {
-                  Text(tag)
-                })
-                .buttonStyle(.bordered)
-                .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-                .foregroundStyle(Color.black)
+            ScrollView(.horizontal){
+              HStack{
+                ForEach(recipe.dishTypes, id: \.self) {tag in
+                  Button(action: {}, label: {
+                    Text(tag)
+                  })
+                  .buttonStyle(.bordered)
+                  .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                  .foregroundStyle(Color.black)
+                }
+                Spacer()
               }
-              Spacer()
             }
             
             
             HStack{
-              Text("by " + authorName)
+              Text("by " + recipe.author)
                 .font(.caption)
               Spacer()
             }
@@ -114,7 +95,7 @@ struct RecipeView: View {
             
             
             VStack{
-              ForEach(recipeIngredients, id: \.self){ ing in
+              ForEach(recipe.getIngredientsWithAmounts(), id: \.self){ ing in
                 HStack{
                   Text("• " + ing)
                   Spacer()
@@ -132,12 +113,18 @@ struct RecipeView: View {
             }
             
             
-            HStack{
-              ForEach(recipeSteps, id: \.0){ step, ingredients in
-                Text(step)
-                ForEach(ingredients, id: \.self){ ingredient in
-                    Text(ingredient)
+            VStack{
+              ForEach(recipe.getRecipeSteps().indices, id: \.self){ index in
+                let step = recipe.getRecipeSteps()[index]
+                let stepInstruction = step.0
+
+                VStack{
+                  HStack{
+                    Text("\(index + 1). \(stepInstruction)")
+                    Spacer()
+                  }
                 }
+                .padding(.vertical, 4)
               }
               Spacer()
             }
@@ -148,10 +135,14 @@ struct RecipeView: View {
         .padding(.horizontal, paraSpacing)
       }
     }
-    .edgesIgnoringSafeArea(.top)
-    .task {
-      fetchRecipe()
-    }
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationTitle(recipe.name)
+    .toolbar(content: {
+      SaveIcon()
+    })
+//    .navigationBarItems(leading: Spacer(minLength: 500))
+//    .navigationBarTitleDisplayMode(.inline)
+    .edgesIgnoringSafeArea(.all)
   }
   
 }
@@ -159,5 +150,5 @@ struct RecipeView: View {
 
 
 //#Preview {
-//    RecipeView()
+//  RecipeView(recipe: )
 //}
