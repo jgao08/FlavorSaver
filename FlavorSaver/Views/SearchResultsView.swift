@@ -11,6 +11,9 @@ import SwiftUI
 struct SearchResultsView: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   @ObservedObject var search: Search
+  @State var recipes : [Recipe] = []
+  @EnvironmentObject var user: User
+
   
   var body: some View  {
     NavigationStack {
@@ -40,14 +43,29 @@ struct SearchResultsView: View {
         }
         .padding()
         
-//        ScrollView {
-          VStack{
-            List(search.getRecipes(), id: \.self){ recipe in
-              RecipeCardLarge(recipe: recipe)
+        HStack{
+          Text("Recipes")
+            .font(.title)
+          Spacer()
+        }
+        
+        
+        HStack {
+          ScrollView (.horizontal, showsIndicators: false ){
+            HStack{
+//              replace user.getSavedRecipes() with search.getRecipes(), but search.getRecipes() doesn't show anything
+              ForEach(user.getSavedRecipes(), id: \.self){ recipe in
+                RecipeCardLarge(recipe: recipe)
+              }
+              .task{
+                await search.executeSearch()
+                recipes = search.getRecipes()
+                print(recipes)
+              }
             }
           }
-//        }
-        
+        }.padding(.horizontal)
+        Spacer()
       }
     }
     .navigationBarBackButtonHidden()
