@@ -31,6 +31,7 @@ struct FlavorSaverApp: App {
             NavigationView {
                 TabView {
                     SearchView()
+                        .environmentObject(user)
                         .tabItem {
                             Image(systemName: "magnifyingglass")
                             Text("Search")

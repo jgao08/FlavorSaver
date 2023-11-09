@@ -11,6 +11,9 @@ import SwiftUI
 struct SearchResultsView: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   @ObservedObject var search: Search
+  @State var recipes : [Recipe] = []
+  @EnvironmentObject var user: User
+
   
   var body: some View  {
     NavigationStack {
@@ -40,22 +43,39 @@ struct SearchResultsView: View {
         }
         .padding()
         
-        
-        
-        
-        List(search.getRecipes(), id: \.id) { recipe in
-          NavigationLink(destination: RecipeView(recipe: recipe), label:{
-              RecipeCardLarge(recipe: recipe)
-          })
+        HStack{
+          Text("Recipes")
+            .font(.title)
+          Spacer()
         }
-        .task {
-          await search.executeSearch()
-          print(search.getCurrentSelectedIngredients())
-        }
+        .padding(.horizontal)
+        
+        
+        HStack {
+          ScrollView (.horizontal, showsIndicators: false ){
+            HStack{
+              ForEach(recipes, id: \.self){ recipe in
+                NavigationLink(destination: RecipeView(recipe: recipe), label: {
+                  RecipeCardLarge(recipe: recipe)
+                })
+              }
+            }
+            .task{
+              await search.executeSearch()
+              recipes = search.getRecipes()
+//              print(recipes)
+            }
+          }
+        }.padding(.horizontal)
+        Spacer()
       }
-      .buttonStyle(.bordered)
     }
     .navigationBarBackButtonHidden()
     .navigationBarTitleDisplayMode(.inline)
   }
+}
+
+
+#Preview {
+  SearchView()
 }
