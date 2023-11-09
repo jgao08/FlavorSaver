@@ -20,10 +20,26 @@ struct RecipeView: View {
     ScrollView{
       VStack{
         ZStack{
-          AsyncImage(url: URL(string: recipe.image))
-//            .resizable()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / (3/2))
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+            AsyncImage(url: URL(string: recipe.image)) { phase in
+                switch phase {
+                case .empty:
+                    Image(systemName: "photo")
+                case .success(let image):
+                    image.resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / (3/2))
+                        .clipped()
+                        .cornerRadius(10)
+                case .failure:
+                    Image(systemName: "photo")
+                @unknown default:
+                    // Since the AsyncImagePhase enum isn't frozen,
+                    // we need to add this currently unused fallback
+                    // to handle any new cases that might be added
+                    // in the future:
+                    EmptyView()
+                }
+            }
           
           VStack(spacing: paraSpacing){
             Spacer()

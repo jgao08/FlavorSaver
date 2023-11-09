@@ -45,7 +45,7 @@ struct RecipeCardLarge: View {
 
         HStack() {
             VStack(alignment: .leading, spacing: 4) {
-                HStack() {
+                HStack(alignment: .top) {
                     Text(recipe.name)
                         .font(.title3)
                         .fontWeight(.bold)
@@ -57,7 +57,9 @@ struct RecipeCardLarge: View {
                 HStack(spacing: 4) {
                     Text(String(recipe.readyInMinutes))
                     Text("mins")
-                    Text("•")
+                    if recipe.cuisines != [] {
+                        Text("•")
+                    }
                     Text(recipe.cuisines.joined(separator: ", "))
                 }
                 .font(.caption)

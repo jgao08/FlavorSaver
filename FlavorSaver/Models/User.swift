@@ -48,6 +48,8 @@ class User : ObservableObject{
             return
         }
         localSavedRecipes.append(recipe)
+        print("saved recipe added")
+        print(localSavedRecipes.last!.name)
         dbManager.addRecipeToUser(recipe: recipe)
         
     }

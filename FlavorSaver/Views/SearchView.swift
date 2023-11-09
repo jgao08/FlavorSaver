@@ -19,8 +19,8 @@ struct SearchView: View {
 
 
   var body: some View {
-    NavigationStack{
-      VStack{
+      NavigationStack {
+        VStack {
         if searchText.isEmpty {
             Text("Search by ingredient, dish, or cuisine")
               .font(.title)
@@ -79,7 +79,7 @@ struct SearchView: View {
             .disabled(selectedIngredients.isEmpty)
         }
         .padding()
-      }
+      }.padding(.vertical, 32)
     }
     .ignoresSafeArea(.all)
   }
