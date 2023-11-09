@@ -16,7 +16,6 @@ struct SearchView: View {
   @State private var searchText = ""
   @State var selectedIngredients : [String] = []
   var search : Search = Search()
-  @EnvironmentObject var user: User
 
 
   var body: some View {
