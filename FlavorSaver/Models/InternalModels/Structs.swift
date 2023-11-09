@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Recipes_MetaData: Codable, Identifiable{
+struct RecipesMetaData: Codable, Identifiable{
     let id = UUID()
     let offset : Int
     let numberOfRecipes : Int
     let totalRecipes : Int
-    let recipes : [Recipe_Lite]
+    let recipes : [RecipeLite]
     
     
     enum CodingKeys: String, CodingKey {
@@ -23,7 +23,7 @@ struct Recipes_MetaData: Codable, Identifiable{
     }
 }
 
-struct Recipe_Lite : Codable, Identifiable{
+struct RecipeLite : Codable, Identifiable{
     let id : Int
     let title : String
     let image : String
@@ -58,9 +58,9 @@ struct Ingredient : Codable, Identifiable, Hashable{
 }
 
 // Used in Recipe struct in Recipe.swift
-struct Recipe_Instructions : Codable, Hashable {
+struct RecipeInstructions : Codable, Hashable {
     let name : String
-    let steps : [Recipe_Step]
+    let steps : [RecipeStep]
     
     enum CodingKeys: String, CodingKey{
         case name
@@ -68,11 +68,11 @@ struct Recipe_Instructions : Codable, Hashable {
     }
 }
 
-// Used in Recipe_Instructions
-struct Recipe_Step : Codable, Hashable {
+// Used in RecipeInstructions
+struct RecipeStep : Codable, Hashable {
     let number : Int
     let step : String
-    let ingredients : [Step_Ingredient]
+    let ingredients : [StepIngredient]
     
     enum CodingKeys: String, CodingKey{
         case number
@@ -81,8 +81,8 @@ struct Recipe_Step : Codable, Hashable {
     }
 }
 
-// Used in Recipe_Step
-struct Step_Ingredient : Codable, Hashable {
+// Used in RecipeStep
+struct StepIngredient : Codable, Hashable {
     let id : Int
     let name : String
     

@@ -66,10 +66,12 @@ class Search : ObservableObject{
             let newUrlRequest = "\(self.apiManager.apiLink)informationBulk?ids=\(joinedIDS)&apiKey=\(apiKey)"
             
             let bulkRequest = try await apiManager.sendAPIRequest(newUrlRequest, [Recipe].self)
-            self.listOfRecipes = bulkRequest
+            DispatchQueue.main.async {
+                self.listOfRecipes = bulkRequest
+            }
             self.hasChanged = false;
         }catch{
-            print("Error retrieving the recipes in Search.swift getRecipes()")
+            print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")
         }
     }
     
