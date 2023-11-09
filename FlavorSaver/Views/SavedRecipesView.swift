@@ -19,9 +19,9 @@ struct SavedRecipesView: View {
     var body: some View  {
         ScrollView {
             Text("Saved Recipes")
-            LazyVGrid(columns: columns, spacing: 4) {
+            LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(user.getSavedRecipes(), id: \.self) { recipe in
-                    RecipeCardSmall(recipe: recipe)
+                    RecipeCardSmall(recipe: recipe).environmentObject(user)
                 }
             }
             .padding(.horizontal)

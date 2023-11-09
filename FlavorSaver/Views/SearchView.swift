@@ -10,6 +10,8 @@ import SwiftUI
 
 
 struct SearchView: View {
+    @EnvironmentObject var user: User
+
   @Environment(\.editMode) private var editMode
   @State private var searchText = ""
   @State var selectedIngredients : [String] = []
@@ -72,7 +74,7 @@ struct SearchView: View {
           }
           Spacer()
           
-            NavigationLink(destination: SearchResultsView(search: search), label: {Text("Done")})
+            NavigationLink(destination: SearchResultsView(search: search).environmentObject(user), label: {Text("Done")})
             .buttonStyle(.borderedProminent)
             .frame(alignment: .trailing)
             .disabled(selectedIngredients.isEmpty)

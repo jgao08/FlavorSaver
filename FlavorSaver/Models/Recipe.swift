@@ -36,6 +36,26 @@ struct Recipe : Codable, Equatable, Hashable {
         return result
     }
     
+    // @returns : A list of tuples representing the (Instruction, [Ingredients]) of a particular step
+    // The list is returned in the order of the steps.
+    func getRecipeStepsWithAmounts() -> [(String,[String])] {
+        var result : [(String,[String])] = []
+        var ingredientsWithAmounts = getIngredientsWithAmounts()
+        
+        for ingredientStep in ingredientSteps {
+            for step in ingredientStep.steps {
+                let stepSentences = step.step
+                var stepIngredients : [String] = []
+                for ingredient in step.ingredients {
+                    let ingredientWithAmount: String = ingredientsWithAmounts.filter{ $0.lowercased().contains(ingredient.name) }.first ?? ingredient.name
+                    stepIngredients.append(ingredientWithAmount)
+                }
+                result.append((stepSentences, stepIngredients))
+            }
+        }
+        return result
+    }
+    
     let id : Int
     let name : String
     let image : String

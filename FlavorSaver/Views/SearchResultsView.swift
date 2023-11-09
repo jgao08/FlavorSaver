@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct SearchResultsView: View {
+    
+    @EnvironmentObject var user: User
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   @ObservedObject var search: Search
   @State var recipes : [Recipe] = []
@@ -55,7 +57,7 @@ struct SearchResultsView: View {
           ScrollView (.horizontal, showsIndicators: false ){
             HStack{
               ForEach(recipes, id: \.self){ recipe in
-                NavigationLink(destination: RecipeView(recipe: recipe), label: {
+                NavigationLink(destination: RecipeView(recipe: recipe).environmentObject(user), label: {
                   RecipeCardLarge(recipe: recipe)
                 })
               }
