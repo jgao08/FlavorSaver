@@ -48,20 +48,22 @@ struct SearchResultsView: View {
             .font(.title)
           Spacer()
         }
+        .padding(.horizontal)
         
         
         HStack {
           ScrollView (.horizontal, showsIndicators: false ){
             HStack{
-//              replace user.getSavedRecipes() with search.getRecipes(), but search.getRecipes() doesn't show anything
-              ForEach(user.getSavedRecipes(), id: \.self){ recipe in
-                RecipeCardLarge(recipe: recipe)
+              ForEach(recipes, id: \.self){ recipe in
+                NavigationLink(destination: RecipeView(recipe: recipe), label: {
+                  RecipeCardLarge(recipe: recipe)
+                })
               }
-              .task{
-                await search.executeSearch()
-                recipes = search.getRecipes()
-                print(recipes)
-              }
+            }
+            .task{
+              await search.executeSearch()
+              recipes = search.getRecipes()
+//              print(recipes)
             }
           }
         }.padding(.horizontal)
