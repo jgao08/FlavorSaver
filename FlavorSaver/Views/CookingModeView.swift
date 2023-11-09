@@ -11,7 +11,7 @@ struct CookingModeView: View {
     @State var recipe : Recipe
     var body: some View {
         TabView {
-                ForEach(recipe.getRecipeSteps(), id: \.0){ step, ingredients in
+                ForEach(recipe.getRecipeStepsWithAmounts(), id: \.0){ step, ingredients in
                     VStack{
                         HStack{
                             Text(step)
@@ -24,6 +24,7 @@ struct CookingModeView: View {
                                     HStack{
                                         Button(action: {}, label: {
                                             Text(ingredient)
+                                                .multilineTextAlignment(.leading)
                                         })
                                         .disabled(true)
                                         .buttonStyle(.bordered)

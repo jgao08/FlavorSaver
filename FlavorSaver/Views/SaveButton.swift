@@ -9,21 +9,18 @@ import Foundation
 import SwiftUI
 
 struct SaveButton: View {
-    //  @Binding var RecipeInfo: Recipe_Info
-    
-    @State var saved: Bool = false
-    @State var favorites: [String] = ["banana almond cake", "cheeseburger"]
-    var recipeName = "cheeseburger"
+    @EnvironmentObject var user: User
+    var recipe: Recipe
     
     var body: some View  {
         Button(action: {
-            if favorites.contains(recipeName) {
-                favorites.removeLast()
+            if user.isRecipeSaved(recipeID: recipe.id) {
+                user.removeSavedRecipe(recipe: recipe)
             } else {
-                favorites.append(recipeName)
+                user.addSavedRecipe(recipe: recipe)
             }
         }, label: {
-            if favorites.contains(recipeName) {
+            if user.isRecipeSaved(recipeID: recipe.id) {
                 Image(systemName: "heart.fill")
                 Text("Recipe Saved")
             } else {
@@ -31,7 +28,7 @@ struct SaveButton: View {
                 Text("Save Recipe")
             }
         })
-        .tint(favorites.contains(recipeName) ? .orange : .white)
+        .tint(user.isRecipeSaved(recipeID: recipe.id) ? .orange : .white)
         .controlSize(.large)
         .buttonStyle(.borderedProminent)
         .foregroundStyle(Color.black)
@@ -39,6 +36,6 @@ struct SaveButton: View {
     }
 }
 
-#Preview {
-    SaveButton()
-}
+//#Preview {
+//    SaveButton()
+//}

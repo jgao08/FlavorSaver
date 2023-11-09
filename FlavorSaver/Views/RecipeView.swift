@@ -9,6 +9,8 @@ import SwiftUI
 //import SwiftUITrackableScrollView
 
 struct RecipeView: View {
+    @EnvironmentObject var user: User
+
   let sectionSpacing: CGFloat = 32
   let paraSpacing: CGFloat = 16
   @State private var cookingMode = false
@@ -138,7 +140,7 @@ struct RecipeView: View {
     .navigationBarTitleDisplayMode(.inline)
     .navigationTitle(recipe.name)
     .toolbar(content: {
-      SaveIcon()
+        SaveIcon(recipe: recipe).environmentObject(user)
     })
 //    .navigationBarItems(leading: Spacer(minLength: 500))
 //    .navigationBarTitleDisplayMode(.inline)

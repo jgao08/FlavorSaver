@@ -12,10 +12,11 @@ import Foundation
 import SwiftUI
 
 struct RecipeCardSmall: View {
+    @EnvironmentObject var user: User
     var recipe: Recipe
   
     var body: some View  {
-        NavigationLink (destination: RecipeView(recipe: recipe), label: {
+        NavigationLink (destination: RecipeView(recipe: recipe).environmentObject(user), label: {
             
             ZStack{
                 AsyncImage(url: URL(string: recipe.image))
