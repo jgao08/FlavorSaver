@@ -13,7 +13,7 @@ class Search : ObservableObject{
     private var selectedIngredients : [String] = []
     
     // An instance of the Recipes struct if it has been requested
-    private var searchResults : Recipes_MetaData?
+    private var searchResults : RecipesMetaData?
     
     // List of the recipes returned from the given search query
     @Published private var listOfRecipes : [Recipe] = []
@@ -59,7 +59,7 @@ class Search : ObservableObject{
         let urlRequest = "\(apiManager.apiLink)complexSearch?query=\(queryRequest)&number=\(APIManager.maxNumberRecipes)&apiKey=\(apiKey)"
         
         do{
-            let request = try await apiManager.sendAPIRequest(urlRequest, Recipes_MetaData.self)
+            let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
             self.searchResults = request
             let mappedIDS = request.recipes.map {String($0.id)}
             let joinedIDS = mappedIDS.joined(separator: ",")
@@ -84,7 +84,7 @@ class Search : ObservableObject{
     }
     
     // TESTING FUNCTION. Not needed to be used regularly
-    func getMetaData() -> Recipes_MetaData {
+    func getMetaData() -> RecipesMetaData {
         return searchResults!
     }
 }

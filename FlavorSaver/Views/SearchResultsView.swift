@@ -14,7 +14,6 @@ struct SearchResultsView: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   @ObservedObject var search: Search
   @State var recipes : [Recipe] = []
-  @EnvironmentObject var user: User
 
   
   var body: some View  {
