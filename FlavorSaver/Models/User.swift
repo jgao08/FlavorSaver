@@ -48,10 +48,7 @@ class User : ObservableObject{
             return
         }
         localSavedRecipes.append(recipe)
-        print("saved recipe added")
-        print(localSavedRecipes.last!.name)
         dbManager.addRecipeToUser(recipe: recipe)
-        
     }
     
     func removeSavedRecipe(recipe : Recipe){
@@ -65,7 +62,6 @@ class User : ObservableObject{
         }
         localSavedRecipes = localSavedRecipes.filter({$0.id != recipeID})
         dbManager.removeRecipeFromUser(recipeID: recipeID)
-        
     }
     
     //TODO: Make future updates/calls to firebase only fire when the user logs out or exits out of the app.

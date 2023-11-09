@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Recipe : Codable, Equatable, Hashable {
+struct Recipe : Codable, Equatable, Hashable, Identifiable {
     // Retrieves the ingredients with just their name (without amounts)
     func getIngredients() -> [String]{
         return ingredientInfo.map{$0.originalName}
@@ -40,7 +40,7 @@ struct Recipe : Codable, Equatable, Hashable {
     // The list is returned in the order of the steps.
     func getRecipeStepsWithAmounts() -> [(String,[String])] {
         var result : [(String,[String])] = []
-        var ingredientsWithAmounts = getIngredientsWithAmounts()
+        let ingredientsWithAmounts = getIngredientsWithAmounts()
         
         for ingredientStep in ingredientSteps {
             for step in ingredientStep.steps {

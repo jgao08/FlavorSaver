@@ -15,7 +15,7 @@ struct SearchView: View {
   @Environment(\.editMode) private var editMode
   @State private var searchText = ""
   @State var selectedIngredients : [String] = []
-  var search : Search = Search()
+  @State var search : Search = Search()
 
 
   var body: some View {
