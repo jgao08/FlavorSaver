@@ -22,10 +22,14 @@ struct SearchView: View {
       NavigationStack {
         VStack {
         if searchText.isEmpty {
+          HStack {
             Text("Search by ingredient, dish, or cuisine")
               .font(.title)
               .foregroundStyle(Color.gray)
               .transition(.opacity.animation(.spring(duration: 1.0)))
+            Spacer()
+          }
+          .padding(.horizontal)
         }
         
         //    MARK: Searched ingredient list
@@ -79,7 +83,7 @@ struct SearchView: View {
             .disabled(selectedIngredients.isEmpty)
         }
         .padding()
-      }.padding(.vertical, 32)
+      }/*.padding(.vertical, 32)*/
     }
     .ignoresSafeArea(.all)
   }
