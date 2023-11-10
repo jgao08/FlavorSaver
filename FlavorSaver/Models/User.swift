@@ -48,20 +48,21 @@ class User : ObservableObject{
             return
         }
         localSavedRecipes.append(recipe)
-        dbManager.addRecipeToUser(recipe: recipe)
+        Task(priority: .medium){
+            await dbManager.addRecipeToUser(recipe: recipe)
+        }
     }
     
     func removeSavedRecipe(recipe : Recipe){
-        removeSavedRecipe(recipeID: recipe.id)
-    }
-    
-    func removeSavedRecipe(recipeID : Int){
+        let recipeID = recipe.id
         if (!isRecipeSaved(recipeID: recipeID)){
             print("Recipe already removed from local version of list")
             return
         }
         localSavedRecipes = localSavedRecipes.filter({$0.id != recipeID})
-        dbManager.removeRecipeFromUser(recipeID: recipeID)
+        Task(priority: .medium){
+            await dbManager.removeRecipeFromUser(recipeID: recipeID)
+        }
     }
     
     //TODO: Make future updates/calls to firebase only fire when the user logs out or exits out of the app.
