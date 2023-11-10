@@ -13,7 +13,7 @@ class Search : ObservableObject{
     private var selectedIngredients : [String] = []
     
     // An instance of the Recipes struct if it has been requested
-    private var searchResults : RecipesMetaData?
+    @Published private var searchResults : RecipesMetaData = RecipesMetaData(offset: 0, numberOfRecipes: 0, totalRecipes: 0, recipes: [])
     
     // List of the recipes returned from the given search query
     @Published private var listOfRecipes : [Recipe] = []
@@ -25,14 +25,14 @@ class Search : ObservableObject{
     // Add an ingredient to the search request
     func addIngredient(_ ingredient : String) -> Void {
         if (!selectedIngredients.contains(ingredient)){
-            selectedIngredients.append(ingredient)
+            selectedIngredients.append(ingredient.lowercased())
             hasChanged = true
         }
     }
     
     // Remove an ingredient from the search request
     func removeIngredient(_ ingredient : String) -> Void {
-        let newIngredients = selectedIngredients.filter({$0 != ingredient})
+        let newIngredients = selectedIngredients.filter({$0 != ingredient.lowercased()})
         if (newIngredients != selectedIngredients){
             selectedIngredients = newIngredients
             hasChanged = true;
@@ -54,22 +54,17 @@ class Search : ObservableObject{
         if (!hasChanged){
             return
         }
-        let queryRequest = selectedIngredients.joined(separator: ",")
-        let apiKey = apiManager.getAPIKey()
-        let urlRequest = "\(apiManager.apiLink)complexSearch?query=\(queryRequest)&number=\(APIManager.maxNumberRecipes)&apiKey=\(apiKey)"
-        
+        let queryRequest : String = selectedIngredients.joined(separator: ",")
+        let cuisineRequest : String = selectedIngredients.filter({ingredientFinder.cuisines.contains($0)}).joined(separator: ",")
+        let mealTypeRequest : String = selectedIngredients.filter({ingredientFinder.mealTypes.contains($0)}).joined(separator: ",")
+                
+        let urlRequest = "\(apiManager.complexSearchParams)&query=\(queryRequest)&cuisine=\(cuisineRequest)&type=\(mealTypeRequest)"
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
-            self.searchResults = request
-            let mappedIDS = request.recipes.map {String($0.id)}
-            let joinedIDS = mappedIDS.joined(separator: ",")
-            let newUrlRequest = "\(self.apiManager.apiLink)informationBulk?ids=\(joinedIDS)&apiKey=\(apiKey)"
-            
-            let bulkRequest = try await apiManager.sendAPIRequest(newUrlRequest, [Recipe].self)
-            DispatchQueue.main.async {
-                self.listOfRecipes = bulkRequest
+            DispatchQueue.main.async{
+                self.searchResults = request
+                self.listOfRecipes = request.recipes
             }
-            self.listOfRecipes = bulkRequest
             self.hasChanged = false;
         }catch{
             print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")
@@ -86,7 +81,7 @@ class Search : ObservableObject{
     
     // TESTING FUNCTION. Not needed to be used regularly
     func getMetaData() -> RecipesMetaData {
-        return searchResults!
+        return searchResults
     }
 }
 

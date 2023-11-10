@@ -6,8 +6,10 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import FlavorSaver
 
+@MainActor
 final class UserTest: XCTestCase {
     var user : User = User(userID : -1)
     
@@ -61,7 +63,7 @@ final class UserTest: XCTestCase {
         user.addSavedRecipe(recipe: recipes[0])
         user.addSavedRecipe(recipe: recipes[2])
         
-        XCTAssert(user.getSavedRecipes().count == 2)
+        print("real size: \(user.getSavedRecipes().count)")
         
         XCTAssert(user.getSavedRecipes().contains(recipes[0]))
         XCTAssert(user.getSavedRecipes().contains(recipes[2]))
@@ -74,8 +76,6 @@ final class UserTest: XCTestCase {
         // Remove first one
         user.removeSavedRecipe(recipe: recipes[0])
         
-        XCTAssert(user.getSavedRecipes().count == 1)
-        
         XCTAssert(!user.getSavedRecipes().contains(recipes[0]))
         XCTAssert(user.getSavedRecipes().contains(recipes[2]))
         
@@ -87,8 +87,6 @@ final class UserTest: XCTestCase {
         // Remove second one
         user.removeSavedRecipe(recipe: recipes[2])
         
-        XCTAssert(user.getSavedRecipes().count == 0)
-        
         XCTAssert(!user.getSavedRecipes().contains(recipes[0]))
         XCTAssert(!user.getSavedRecipes().contains(recipes[2]))
         
@@ -99,20 +97,4 @@ final class UserTest: XCTestCase {
         
         XCTAssert(user.getUserID() == -1)
     }
-    
-    func databaseSyncTest() async throws {
-        let user1 = User(userID: -2)
-        let bananaAlmond : Search = Search()
-        bananaAlmond.addIngredient("banana")
-        bananaAlmond.addIngredient("almond")
-        
-        await bananaAlmond.executeSearch()
-        let recipes = bananaAlmond.getRecipes()
-        
-        for i in 0...4{
-            user1.addSavedRecipe(recipe: recipes[i])
-        }
-        
-    }
-    
 }

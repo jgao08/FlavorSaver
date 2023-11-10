@@ -15,7 +15,6 @@ class FirebaseManager {
     private var db = Firestore.firestore()
     private var recipeCollection : CollectionReference
     private var userDocument : DocumentReference
-    private var lock = NSLock()
     
     init(userID : String){
         recipeCollection = db.collection("recipes")
@@ -62,10 +61,6 @@ class FirebaseManager {
         
     // Need some sort of lock for race-condition adds to database
     func addRecipeToUser(recipe : Recipe) async {
-        lock.lock()
-        defer{
-            lock.unlock()
-        }
         do{
             let document = try await userDocument.getDocument()
             guard document.exists else{
@@ -93,10 +88,6 @@ class FirebaseManager {
     }
     
     func removeRecipeFromUser(recipeID : Int) async {
-        lock.lock()
-        defer{
-            lock.unlock()
-        }
         do{
             let document = try await userDocument.getDocument()
             guard document.exists else {
