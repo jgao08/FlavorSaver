@@ -1,5 +1,5 @@
 //
-//  RecipeSearch.swift
+//  Search.swift
 //  FlavorSaver
 //
 //  Created by Jacky Gao on 10/30/23.
@@ -69,6 +69,7 @@ class Search : ObservableObject{
             DispatchQueue.main.async {
                 self.listOfRecipes = bulkRequest
             }
+            self.listOfRecipes = bulkRequest
             self.hasChanged = false;
         }catch{
             print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")

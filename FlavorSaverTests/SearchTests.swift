@@ -1,5 +1,5 @@
 //
-//  RecipeSearchTests.swift
+//  SearchTests.swift
 //  FlavorSaverTests
 //
 //  Created by Jacky Gao on 11/2/23.
@@ -24,7 +24,8 @@ final class SearchTests: XCTestCase {
         bananaAlmond.addIngredient("banana")
         bananaAlmond.addIngredient("almond")
         
-        var recipes = await bananaAlmond.getRecipes()
+        await bananaAlmond.executeSearch()
+        var recipes = bananaAlmond.getRecipes()
         
         var recipe_meta = bananaAlmond.getMetaData()
         
@@ -40,7 +41,8 @@ final class SearchTests: XCTestCase {
         
         // should already exist and stored, so not necessary to reask. Should be instant.
         
-        recipes = await bananaAlmond.getRecipes()
+        await bananaAlmond.executeSearch()
+        recipes = bananaAlmond.getRecipes()
         
         recipe_meta = bananaAlmond.getMetaData()
         
@@ -59,7 +61,8 @@ final class SearchTests: XCTestCase {
         let vodka : Search = Search()
         vodka.addIngredient("vodka")
         
-        let recipes = await vodka.getRecipes()
+        await vodka.executeSearch()
+        let recipes = vodka.getRecipes()
         let recipe_meta = vodka.getMetaData()
         
         
