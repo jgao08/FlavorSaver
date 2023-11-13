@@ -10,6 +10,7 @@ import Foundation
 class APIManager {
     let apiLink : String = "https://api.spoonacular.com/recipes/"
     static var maxNumberRecipes : Int = 5
+    var complexSearchParams : String {"\(apiLink)complexSearch?addRecipeInformation=true&fillIngredients=true&number=\(APIManager.maxNumberRecipes)&apiKey=\(getAPIKey())"}
     
     func getAPIKey() -> String {
         if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
@@ -26,20 +27,10 @@ class APIManager {
     func sendAPIRequest<T>(_ url: String, _ type: T.Type) async throws -> T where T: Decodable {
         let decoder = JSONDecoder()
         
-        guard let apiRequest = URL(string: url) else {
-            throw APIError.invalidURL
-        }
+        let apiRequest = URL(string: url)
 
-        do {
-            let (data, _) = try await URLSession.shared.data(from: apiRequest)
-            let result = try decoder.decode(type, from: data)
-            return result
-        } catch {
-            throw error
-        }
+        let (data, _) = try await URLSession.shared.data(from: apiRequest!)
+        let result = try decoder.decode(type, from: data)
+        return result
     }
-}
-
-enum APIError : Error {
-    case invalidURL
 }

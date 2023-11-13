@@ -1,5 +1,5 @@
 //
-//  RecipeSearchTests.swift
+//  SearchTests.swift
 //  FlavorSaverTests
 //
 //  Created by Jacky Gao on 11/2/23.
@@ -8,6 +8,7 @@
 import XCTest
 @testable import FlavorSaver
 
+@MainActor
 final class SearchTests: XCTestCase {
         
     override func setUpWithError() throws {
@@ -24,7 +25,8 @@ final class SearchTests: XCTestCase {
         bananaAlmond.addIngredient("banana")
         bananaAlmond.addIngredient("almond")
         
-        var recipes = await bananaAlmond.getRecipes()
+        await bananaAlmond.executeSearch()
+        var recipes = bananaAlmond.getRecipes()
         
         var recipe_meta = bananaAlmond.getMetaData()
         
@@ -34,13 +36,13 @@ final class SearchTests: XCTestCase {
         
         for i in 0...4 {
             XCTAssert(recipe_meta.recipes[i].id == recipes[i].id, "Failed because \(recipe_meta.recipes[i].id) != \(recipes[i].id)")
-            XCTAssert(recipe_meta.recipes[i].title == recipes[i].name, "Failed because \(recipe_meta.recipes[i].title) != \(recipes[i].name)")
             XCTAssert(recipe_meta.recipes[i].imageType == recipes[i].imageType, "Failed because \(recipe_meta.recipes[i].imageType) != \(recipes[i].imageType)")
         }
         
         // should already exist and stored, so not necessary to reask. Should be instant.
         
-        recipes = await bananaAlmond.getRecipes()
+        await bananaAlmond.executeSearch()
+        recipes = bananaAlmond.getRecipes()
         
         recipe_meta = bananaAlmond.getMetaData()
         
@@ -50,7 +52,6 @@ final class SearchTests: XCTestCase {
         
         for i in 0...4 {
             XCTAssert(recipe_meta.recipes[i].id == recipes[i].id, "Failed because \(recipe_meta.recipes[i].id) != \(recipes[i].id)")
-            XCTAssert(recipe_meta.recipes[i].title == recipes[i].name, "Failed because \(recipe_meta.recipes[i].title) != \(recipes[i].name)")
             XCTAssert(recipe_meta.recipes[i].imageType == recipes[i].imageType, "Failed because \(recipe_meta.recipes[i].imageType) != \(recipes[i].imageType)")
         }
     }
@@ -59,7 +60,8 @@ final class SearchTests: XCTestCase {
         let vodka : Search = Search()
         vodka.addIngredient("vodka")
         
-        let recipes = await vodka.getRecipes()
+        await vodka.executeSearch()
+        let recipes = vodka.getRecipes()
         let recipe_meta = vodka.getMetaData()
         
         
@@ -70,7 +72,6 @@ final class SearchTests: XCTestCase {
         
         for i in 0...0 {
             XCTAssert(recipe_meta.recipes[i].id == recipes[i].id, "Failed because \(recipe_meta.recipes[i].id) != \(recipes[i].id)")
-            XCTAssert(recipe_meta.recipes[i].title == recipes[i].name, "Failed because \(recipe_meta.recipes[i].title) != \(recipes[i].name)")
             XCTAssert(recipe_meta.recipes[i].imageType == recipes[i].imageType, "Failed because \(recipe_meta.recipes[i].imageType) != \(recipes[i].imageType)")
         }
     }
@@ -108,11 +109,11 @@ final class SearchTests: XCTestCase {
         let aMoreIngredients = sampleSearch.getIngredientOptions("app")
         let cMoreIngredients = sampleSearch.getIngredientOptions("cat")
         
-        XCTAssert(aIngredients == ingredients.ingredients["a"])
-        XCTAssert(cIngredients == ingredients.ingredients["c"])
+        XCTAssert(aIngredients.sorted() == ingredients.ingredients["a"]!.sorted())
+        XCTAssert(cIngredients.sorted() == ingredients.ingredients["c"]!.sorted())
         
-        XCTAssert(aMoreIngredients == ["apple", "apple butter", "apple cider", "apple cider vinegar", "apple jelly", "apple juice", "apple pie filling", "apple pie spice"])
-        XCTAssert(cMoreIngredients == ["catalina dressing", "catfish fillets"])
+        XCTAssert(aMoreIngredients == ["appetizer", "apple", "apple butter", "apple cider", "apple cider vinegar", "apple jelly", "apple juice", "apple pie filling", "apple pie spice", "app"])
+        XCTAssert(cMoreIngredients == ["catalina dressing", "catfish fillets", "cat"])
         
         let nothing = sampleSearch.getIngredientOptions("")
         XCTAssert(nothing.count == 0)

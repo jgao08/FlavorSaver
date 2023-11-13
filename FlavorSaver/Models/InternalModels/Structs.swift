@@ -12,7 +12,7 @@ struct RecipesMetaData: Codable, Identifiable{
     let offset : Int
     let numberOfRecipes : Int
     let totalRecipes : Int
-    let recipes : [RecipeLite]
+    let recipes : [Recipe]
     
     
     enum CodingKeys: String, CodingKey {
@@ -20,20 +20,6 @@ struct RecipesMetaData: Codable, Identifiable{
         case numberOfRecipes = "number"
         case totalRecipes = "totalResults"
         case recipes = "results"
-    }
-}
-
-struct RecipeLite : Codable, Identifiable{
-    let id : Int
-    let title : String
-    let image : String
-    let imageType : String
-
-    enum CodingKeys: String, CodingKey{
-        case id
-        case title
-        case image
-        case imageType
     }
 }
 

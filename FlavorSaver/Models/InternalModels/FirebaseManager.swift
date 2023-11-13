@@ -22,117 +22,89 @@ class FirebaseManager {
     }
     
     func retrieveSavedRecipes() async -> [Recipe] {
+        var result : [Recipe] = []
         do{
             let document = try await userDocument.getDocument()
-            if document.exists {
-                let data = document.data()
-                let savedRecipes = data?["savedRecipeIDs"] as? [String] ?? []
-                
-                if (savedRecipes == []){
-                    return []
-                }
-                let querySnapshot = try await recipeCollection.whereField(FieldPath.documentID(), in: savedRecipes).getDocuments()
-                
-                var result: [Recipe] = []
-                
-                for document in querySnapshot.documents {
-                    let recipe = try document.data(as: Recipe.self)
-                    result.append(recipe)
-                }
-                return result
-            }else{
+            guard document.exists else {
                 try await userDocument.setData(["savedRecipeIDs" : []])
-                return []
+                return result
             }
+            let data = document.data()
+            let savedRecipes = data?["savedRecipeIDs"] as? [String] ?? []
+            
+            guard (savedRecipes.count > 0) else {
+                return result
+            }
+            let querySnapshot = try await recipeCollection.whereField(FieldPath.documentID(), in: savedRecipes).getDocuments()
+            
+            for document in querySnapshot.documents {
+                let recipe = try document.data(as: Recipe.self)
+                result.append(recipe)
+            }
+            return result
+            
         }catch{
             print("Error with retrieving saved recipes : \(error)")
         }
-        return []
+        return result
     }
     
-    private func recipeInSavedList(recipeID : Int, completion : @escaping (Bool) -> Void){
-        recipeCollection.document(String(recipeID)).getDocument { (docSnap, error) in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-            } else if docSnap!.exists {
-                completion(true)
-            }else{
-                completion(false)
+    private func recipeInSavedList(recipeID : Int) async -> Bool {
+        do {
+            let document = try await recipeCollection.document(String(recipeID)).getDocument()
+            return document.exists
+        } catch{
+            print("Error in retrieving document in recipeInSavedList \(error.localizedDescription)")
+        }
+        return false
+    }
+        
+    // Need some sort of lock for race-condition adds to database
+    func addRecipeToUser(recipe : Recipe) async {
+        do{
+            let document = try await userDocument.getDocument()
+            guard document.exists else{
+                return
             }
+            var data = document.data() ?? [:]
+            var savedRecipes = data["savedRecipeIDs"] as? [String] ?? []
+            
+            // Check if the recipeID is in the master list and remove it if so
+            if !savedRecipes.contains(String(recipe.id)) {
+                savedRecipes.append(String(recipe.id))
+                
+                data["savedRecipeIDs"] = savedRecipes
+                try await userDocument.setData(data, merge: true)
+                
+                // Check if recipe is currently in the master list, if not then add it
+                if (!(await recipeInSavedList(recipeID: recipe.id))){
+                    try recipeCollection.document(String(recipe.id)).setData(from: recipe)
+                }
+            }
+            
+        }catch{
+            print("Error in adding recipe to user: \(error.localizedDescription)")
         }
     }
     
-    // Unused, can be used to test consistency between local and firebase
-//    private func isRecipeSaved(recipeID : Int, completion :  @escaping (Bool) -> Void){
-//        userDocument.getDocument(completion: {(document, error) in
-//            if let document = document, document.exists {
-//                let data = document.data()
-//                let savedRecipes = data?["savedRecipeIDs"] as? [String] ?? []
-//                let result = savedRecipes.contains(String(recipeID))
-//                completion(result)
-//            }else{
-//                print("Document does not exist. Could be wrong userID.")
-//            }
-//        })
-//    }
-    
-    // Need some sort of lock for race-condition adds to database
-    func addRecipeToUser(recipe : Recipe){
-        userDocument.getDocument(completion: {(document, error) in
-            if let document = document, document.exists {
-                var data = document.data() ?? [:]
-                var savedRecipes = data["savedRecipeIDs"] as? [String] ?? []
-                
-                // Check if the current recipe is in user's list
-                if !savedRecipes.contains(String(recipe.id)) {
-                    savedRecipes.append(String(recipe.id))
-                    
-                    data["savedRecipeIDs"] = savedRecipes
-                    self.userDocument.setData(data, merge: true) { error in
-                        if let error = error {
-                            print("Error updating user document: \(error.localizedDescription)")
-                        }
-                    }
-                    
-                    // Check if recipe is currently in the master list, if not then add it
-                    self.recipeInSavedList(recipeID: recipe.id, completion: { val in
-                        if (!val){
-                            do {
-                                try self.recipeCollection.document(String(recipe.id)).setData(from: recipe)
-                            }catch{
-                                print("Error encoding document: \(error.localizedDescription)")
-                            }
-                        }
-                    })
-                }
-                
-            }else{
-                print("Document does not exist. Could be wrong userID.")
+    func removeRecipeFromUser(recipeID : Int) async {
+        do{
+            let document = try await userDocument.getDocument()
+            guard document.exists else {
+                return
             }
-        })
-    }
-    
-    func removeRecipeFromUser(recipeID : Int){
-        userDocument.getDocument(completion: {(document, error) in
-            if let document = document, document.exists {
-                var data = document.data() ?? [:]
-                var savedRecipes = data["savedRecipeIDs"] as? [String] ?? []
-                
-                // Check if the recipeID is in the master list and remove it if so
-                if let index = savedRecipes.firstIndex(of: String(recipeID)) {
-                    savedRecipes.remove(at: index)
-                    data["savedRecipeIDs"] = savedRecipes
-                    self.userDocument.setData(data, merge: true) { error in
-                        if let error = error {
-                            print("Error updating user document: \(error.localizedDescription)")
-                        }
-                    }
-                }
-                
-            }else{
-                print("Document does not exist. Could be wrong userID.")
+            var data = document.data() ?? [:]
+            var savedRecipes = data["savedRecipeIDs"] as? [String] ?? []
+            
+            // Check if the recipeID is in the master list and remove it if so
+            if let index = savedRecipes.firstIndex(of: String(recipeID)) {
+                savedRecipes.remove(at: index)
+                data["savedRecipeIDs"] = savedRecipes
+                try await userDocument.setData(data, merge: true)
             }
-        })
+        }catch{
+            print("Error in updating user document: \(error.localizedDescription)")
+        }
     }
     
 }

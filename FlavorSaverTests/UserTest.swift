@@ -6,28 +6,30 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import FlavorSaver
 
+@MainActor
 final class UserTest: XCTestCase {
-    var user : User = User(userID : 0)
+    var user : User = User(userID : -1)
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        user = User(userID : 9202)
-        
+        let _ = user.getSavedRecipes().map {user.removeSavedRecipe(recipe: $0)}
+        print("Successfully removed all SETUP recipes? \(user.getSavedRecipes().count)")
     }
     
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        
+        let _ = user.getSavedRecipes().map {user.removeSavedRecipe(recipe: $0)}
+        print("Successfully removed all TEARDOWN recipes? \(user.getSavedRecipes().count)")
     }
     
     // Sometimes passes sometimes fails
     func testExample() async throws {
         let vodka : Search = Search()
-        //user = User(userID: 0)
         vodka.addIngredient("vodka")
         
-        let recipes = await vodka.getRecipes()
+        await vodka.executeSearch()
+        let recipes = vodka.getRecipes()
         
         XCTAssert(recipes.count == 1)
         let firstRecipe = recipes.first!
@@ -43,9 +45,6 @@ final class UserTest: XCTestCase {
         XCTAssert(recipes.count == 1)
         let recipeAgain = savedRecipes.first!
         
-//        print(recipeAgain)
-//        print("---------------------")
-//        print(firstRecipe)
         XCTAssert(recipeAgain == firstRecipe)
     }
     
@@ -54,13 +53,17 @@ final class UserTest: XCTestCase {
         bananaAlmond.addIngredient("banana")
         bananaAlmond.addIngredient("almond")
         
-        let recipes = await bananaAlmond.getRecipes()
+        await bananaAlmond.executeSearch()
+        let recipes = bananaAlmond.getRecipes()
         
         XCTAssert(recipes.count == 5)
+        
         
         // Add both recipes
         user.addSavedRecipe(recipe: recipes[0])
         user.addSavedRecipe(recipe: recipes[2])
+        
+        print("real size: \(user.getSavedRecipes().count)")
         
         XCTAssert(user.getSavedRecipes().contains(recipes[0]))
         XCTAssert(user.getSavedRecipes().contains(recipes[2]))
@@ -92,6 +95,6 @@ final class UserTest: XCTestCase {
         XCTAssert(!user.isRecipeSaved(recipeID: recipes[1].id))
         XCTAssert(!user.isRecipeSaved(recipeID: recipes[3].id))
         
+        XCTAssert(user.getUserID() == -1)
     }
-    
 }
