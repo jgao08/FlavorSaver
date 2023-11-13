@@ -67,7 +67,7 @@ struct RecipeView: View {
               .foregroundStyle(Color.black)
               .shadow(radius: 10)
               .sheet(isPresented: $cookingMode, content: {
-                  CookingModeView(recipe: recipe)
+                  CookingModeView(recipe: recipe, sheetOpen: cookingMode).environmentObject(user)
               })
               Spacer()
             }
