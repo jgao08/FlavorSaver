@@ -43,6 +43,8 @@ struct FlavorSaverApp: App {
 
                 }
             }
+            .preferredColorScheme(.light)
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }
