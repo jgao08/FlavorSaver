@@ -13,66 +13,86 @@ struct SearchResultsView: View {
     @EnvironmentObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var search: Search
-    @State var recipes : [Recipe] = []
+    @State var recipes: [Recipe] = []
     
     
     var body: some View  {
         NavigationStack {
             VStack {
-                HStack{
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack{
-                            ForEach(search.getCurrentSelectedIngredients(), id: \.self){ ingredient in
-                                Button(action: {
-                                }, label: {
-                                    Text(ingredient)
-                                })
-                                .buttonStyle(.bordered)
-                                .foregroundStyle(Color.black)
-                            }
-                        }
-                    }
-                    Spacer()
-                    
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Edit")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .frame(alignment: .trailing)
-                }
-                .padding()
-                
-                HStack{
-                    Text("Recipes")
-                        .font(.title)
+                RecipeSearchNavigation(search: search)
+
+                if recipes == [] {
+                    ContentUnavailableView.search
+                } else {
+                    RecipeSearchResultsRow(recipes: recipes)
                     Spacer()
                 }
-                .padding(.horizontal)
-                
-                
-                HStack {
-                    ScrollView (.horizontal, showsIndicators: false ){
-                        HStack{
-                            ForEach(recipes, id: \.self){ recipe in
-                                NavigationLink(destination: RecipeView(recipe: recipe).environmentObject(user), label: {
-                                    RecipeCardLarge(recipe: recipe)
-                                })
-                            }
-                        }
-                        .task{
-                            await search.executeSearch()
-                            recipes = search.getRecipes()
-                            //              print(recipes)
-                        }
+            }
+            .navigationBarBackButtonHidden()
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .task{
+            await search.executeSearch()
+            recipes = search.getRecipes()
+        }
+    }
+}
+
+struct RecipeSearchNavigation: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @ObservedObject var search: Search
+    
+    var body: some View {
+        HStack{
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Text("Edit")
+            })
+            .buttonStyle(.borderedProminent)
+            .frame(alignment: .trailing)
+            
+            Spacer()
+            
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack{
+                    ForEach(search.getCurrentSelectedIngredients(), id: \.self){ ingredient in
+                        Button(action: {
+                        }, label: {
+                            Text(ingredient)
+                        })
+                        .buttonStyle(.bordered)
+                        .foregroundStyle(Color.black)
                     }
-                }.padding(.horizontal)
-                Spacer()
+                }
             }
         }
-        .navigationBarBackButtonHidden()
-        .navigationBarTitleDisplayMode(.inline)
+        .padding()
+    }
+}
+
+struct RecipeSearchResultsRow: View {
+    
+    @State var recipes: [Recipe] = []
+    var body: some View {
+        HStack{
+            Text("Recipes")
+                .font(.title)
+            Spacer()
+        }
+        .padding(.horizontal)
+        
+        
+        HStack {
+            ScrollView (.horizontal, showsIndicators: false ){
+                HStack{
+                    ForEach(recipes, id: \.self){ recipe in
+                        RecipeCardLarge(recipe: recipe)
+                    }
+                }
+            }
+        }.padding(.horizontal)
     }
 }
 

@@ -22,10 +22,10 @@ struct SearchView: View {
             VStack {
                 if searchText.isEmpty {
                     HStack {
-                        Text("Search by ingredient, dish, or cuisine")
-                            .font(.title)
-                            .foregroundStyle(Color.gray)
-                            .transition(.opacity.animation(.spring(duration: 1.0)))
+//                        Text("Search by ingredient, dish, or cuisine")
+//                            .font(.title)
+//                            .foregroundStyle(Color.gray)
+//                            .transition(.opacity.animation(.spring(duration: 1.0)))
                         Spacer()
                     }
                     .padding(.horizontal)
@@ -49,8 +49,8 @@ struct SearchView: View {
                         }
                     }
                 }
-                .searchable(text: $searchText)
-                .navigationTitle(Text("Search"))
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
+                .navigationTitle(Text("Find a recipe"))
                 
                 
                 //    MARK: selected ingredients and Done button

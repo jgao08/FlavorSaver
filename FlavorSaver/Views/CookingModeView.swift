@@ -17,55 +17,11 @@ struct CookingModeView: View {
         NavigationView {
             VStack {
                 TabView {
-                    CookingModeIntro()
+                    CookingModeIntro(recipe: recipe)
                     ForEach(recipe.getRecipeStepsWithAmounts(), id: \.0){ (stepIndex, step, ingredients) in
                         ScrollView {
-                            HStack (spacing: 4) {
-                                Text("Step")
-                                    .font(.headline)
-                                Text(String(stepIndex))
-                                    .font(.headline)
-                                Text("of")
-                                    .font(.headline)
-                                Text(String(recipe.getRecipeStepsWithAmounts().count))
-                                    .font(.headline)
-                                
-                                Spacer()
-                                Button {
-                                    presentationMode.wrappedValue.dismiss()
-                                } label: {
-                                    Image(systemName: "x.circle.fill")
-                                        .foregroundColor(.black)
-                                        .font(.system(size: 24))
-                                }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                            }
-                            .padding(.vertical, 16)
-                            HStack{
-                                Text(step)
-                                    .font(.title)
-                                Spacer()
-                            }
-                            HStack{
-                                VStack{
-                                    ForEach(ingredients, id: \.self) { ingredient in
-                                        HStack {
-                                            Button(action: {}, label: {
-                                                Text(ingredient)
-                                                    .multilineTextAlignment(.leading)
-                                            })
-                                            .disabled(true)
-                                            .buttonStyle(.bordered)
-                                            .foregroundStyle(Color.black)
-                                            Spacer()
-                                        }
-                                    }
-                                }
-                            }
-                            Spacer()
+                            CookingModeStep(recipe: recipe, stepIndex: stepIndex, step: step, ingredients: ingredients)
                         }
-                        .padding(.horizontal, 16)
                     }
                     CookingModeOutro(recipe: recipe, sheetOpen: sheetOpen).environmentObject(user)
                 }
@@ -76,48 +32,85 @@ struct CookingModeView: View {
 }
 
 struct CookingModeIntro: View {
+    var recipe: Recipe
+    
     var body: some View {
-        
-        VStack (spacing: 128){
-            VStack (spacing: 64){
-                HStack {
-                    Text("Cooking Mode")
-                        .font(.headline)
-                    Spacer()
-                }
+        VStack {
+            CookingModeHeader(title: recipe.name, progressValue: 0)
+            
+            VStack (spacing: 128){
                 Text("Welcome to Cooking Mode!")
                     .font(.title)
                     .foregroundStyle(Color.gray)
-            }
-            HStack{
-                Spacer()
-                VStack (alignment: .trailing) {
-                    HStack {
-                        Text("To go to the next step")
-                            .font(.body)
-                        Image(systemName: "chevron.right")
+                HStack{
+                    Spacer()
+                    VStack (alignment: .trailing) {
+                        HStack {
+                            Text("To go to the next step")
+                                .font(.body)
+                            Image(systemName: "chevron.right")
+                        }
+                        Text("Swipe left")
+                            .font(.title)
                     }
-                    Text("Swipe left")
-                        .font(.title)
                 }
-            }
-            
-            HStack {
-                VStack (alignment: .leading) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("To go to the previous step")
-                            .font(.body)
+                
+                HStack {
+                    VStack (alignment: .leading) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("To go to the previous step")
+                                .font(.body)
+                        }
+                        Text("Swipe right")
+                            .font(.title)
                     }
-                    Text("Swipe right")
-                        .font(.title)
+                    Spacer()
                 }
                 Spacer()
             }
-            Spacer()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 32)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 32)
+    }
+}
+
+struct CookingModeStep: View {
+    @State var recipe: Recipe
+    @State var stepIndex: Int
+    @State var step: String
+    @State var ingredients: [String]
+    
+    var body: some View {
+        VStack {
+            CookingModeHeader(title: "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)", progressValue: (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1)))
+            VStack {
+                HStack{
+                    Text(step)
+                        .font(.title)
+                    Spacer()
+                }
+                HStack{
+                    VStack{
+                        ForEach(ingredients, id: \.self) { ingredient in
+                            HStack {
+                                Button(action: {}, label: {
+                                    Text(ingredient)
+                                        .multilineTextAlignment(.leading)
+                                })
+                                .disabled(true)
+                                .buttonStyle(.bordered)
+                                .foregroundStyle(Color.black)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+                Spacer()
+            }   
+            .padding(.top, 16)
+            .padding(.horizontal, 16)
+        }
     }
 }
 
@@ -129,30 +122,27 @@ struct CookingModeOutro: View {
     
     var body: some View {
         VStack{
-            ZStack{
-                AsyncImage(url: URL(string: recipe.image)) { phase in
-                    switch phase {
-                    case .empty:
-                        Image(systemName: "photo")
-                    case .success(let image):
-                        image.resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / (3/2))
-                            .clipped()
-                            .cornerRadius(10)
-                    case .failure:
-                        Image(systemName: "photo")
-                    @unknown default:
-                        // Since the AsyncImagePhase enum isn't frozen,
-                        // we need to add this currently unused fallback
-                        // to handle any new cases that might be added
-                        // in the future:
-                        EmptyView()
+            CookingModeHeader(title: "Recipe Complete!", progressValue: 1)
+            GeometryReader { proxy in
+                ZStack{
+                    AsyncImage(url: URL(string: recipe.image)) { phase in
+                        switch phase {
+                        case .empty:
+                            Image(systemName: "photo")
+                        case .success(let image):
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
+                                .clipped()
+                                .cornerRadius(10)
+                        case .failure:
+                            Image(systemName: "photo")
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
-                }
-                
-                VStack(spacing: 16){
-                    HStack(alignment: .bottom){
+                    
+                    HStack {
                         VStack(alignment: .leading) {
                             Spacer()
                             Text(recipe.name)
@@ -164,28 +154,40 @@ struct CookingModeOutro: View {
                         }
                         Spacer()
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 16)
+                    .padding(16)
+                    .padding(.bottom, 32)
+                    .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
+                    
                 }
+                .padding(.top, 16)
+                Spacer()
+                //            NavigationLink(destination: SavedRecipesView().environmentObject(user), label: {Text("Go to Saved Recipes")})
+                //                .buttonStyle(.borderedProminent)
+                //                .frame(alignment: .trailing)
             }
-            NavigationLink(destination: SavedRecipesView().environmentObject(user), label: {Text("Go to Saved Recipes")})
-                .buttonStyle(.borderedProminent)
-                .frame(alignment: .trailing)
-            //                NavigationLink(destination: SavedRecipesView(), isActive: $sheetOpen) {
-            //                    SaveButton(recipe: recipe)
-            //                }
-            //            Button("Go to Saved Recipes") {
-            //                sheetOpen = false
-            //            }
-            //            .padding()
-            //            .background(NavigationLink("", destination: SavedRecipesView()))
-//            NavigationLink(destination: SavedRecipesView()) {
-//                Button("Go to Saved Recipes") {
-//                    sheetOpen = false
-//                }
-//            }
-//            .padding()
         }
-        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct CookingModeHeader: View {
+    @Environment(\.presentationMode) var presentationMode
+    @State var title: String
+    @State var progressValue: Float
+    
+    var body: some View {
+        VStack {
+            HStack (spacing: 4) {
+                Text(title)
+                Spacer()
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "x.circle.fill")
+                        .foregroundColor(.black)
+                        .font(.system(size: 24))
+                }
+            }.padding(.top, 16)
+        }.padding(.horizontal, 16)
+        ProgressView(value: progressValue)
     }
 }
