@@ -11,7 +11,7 @@ import SwiftUI
 
 @MainActor
 final class UserTest: XCTestCase {
-    var user : User = User(userID : -1)
+    var user : User = User(userID : "-1", username : "fake user")
     
     override func setUpWithError() throws {
         let _ = user.getSavedRecipes().map {user.removeSavedRecipe(recipe: $0)}
@@ -95,6 +95,6 @@ final class UserTest: XCTestCase {
         XCTAssert(!user.isRecipeSaved(recipeID: recipes[1].id))
         XCTAssert(!user.isRecipeSaved(recipeID: recipes[3].id))
         
-        XCTAssert(user.getUserID() == -1)
+        XCTAssert(user.getUserID() == "-1")
     }
 }

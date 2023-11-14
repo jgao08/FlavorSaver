@@ -10,15 +10,17 @@ import Foundation
 // An instance of this class should be created for every user, and maintained throughout the lifetime of the app
 class User : ObservableObject{
     // TODO: Make static versions of checking if recipe is saved or not by pre-loading the user's saved recipe data
-    private var userid : Int
+    private var userid : String
+    private var username : String
     
     @Published private var localSavedRecipes : [Recipe]
     
     // Most of the database work happens in this class
     private var dbManager : FirebaseManager
     
-    init(userID : Int){
-        userid = userID
+    init(userID : String, username : String){
+        self.userid = userID
+        self.username = username
         localSavedRecipes = []
         dbManager = FirebaseManager(userID: String(userid))
         Task(priority: .high){
@@ -29,7 +31,7 @@ class User : ObservableObject{
         }
     }
     
-    func getUserID() -> Int{
+    func getUserID() -> String{
         return userid
     }
     

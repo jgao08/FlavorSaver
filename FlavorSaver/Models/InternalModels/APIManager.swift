@@ -27,7 +27,7 @@ class APIManager {
     func sendAPIRequest<T>(_ url: String, _ type: T.Type) async throws -> T where T: Decodable {
         let decoder = JSONDecoder()
         
-        let apiRequest = URL(string: url)
+        let apiRequest = URL(string: url.replacingOccurrences(of: " ", with: "%20"))
 
         let (data, _) = try await URLSession.shared.data(from: apiRequest!)
         let result = try decoder.decode(type, from: data)
