@@ -17,6 +17,8 @@ struct SaveIcon: View {
     
     @EnvironmentObject var user: User
     var recipe: Recipe
+  @State var colorMode: Bool = true // if true: white, else: black
+
     
     var body: some View  {
         Button {
@@ -34,7 +36,7 @@ struct SaveIcon: View {
                     .font(.system(size: 24))
             } else {
                 Image(systemName: "heart")
-                    .foregroundColor(.white)
+                  .foregroundColor(colorMode ? .white : .black)
                     .font(.system(size: 24))
             }
         }
