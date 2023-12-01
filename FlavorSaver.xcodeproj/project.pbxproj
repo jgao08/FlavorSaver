@@ -11,6 +11,9 @@
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
 		27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED4A2AF49214002904FE /* CookingModeView.swift */; };
 		27DAED4F2AF49351002904FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27DAED4E2AF49351002904FE /* GoogleService-Info.plist */; };
+		27FA5D932B1955EC00973173 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA5D912B1955EC00973173 /* SignInView.swift */; };
+		27FA5D942B1955EC00973173 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA5D922B1955EC00973173 /* SignUpView.swift */; };
+		27FA5D962B19561800973173 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA5D952B19561800973173 /* OnboardingView.swift */; };
 		F90917302AF7394600DAA43A /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909172F2AF7394600DAA43A /* Ingredients.swift */; };
 		F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E22AF8092C003C2474 /* FirebaseManager.swift */; };
 		F935C4142AF17CB50010BB0C /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C4132AF17CB50010BB0C /* Structs.swift */; };
@@ -76,6 +79,9 @@
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
 		27DAED4A2AF49214002904FE /* CookingModeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookingModeView.swift; sourceTree = "<group>"; };
 		27DAED4E2AF49351002904FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		27FA5D912B1955EC00973173 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		27FA5D922B1955EC00973173 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		27FA5D952B19561800973173 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		F909172F2AF7394600DAA43A /* Ingredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredients.swift; sourceTree = "<group>"; };
 		F92B12E02AF790AA003C2474 /* UserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTest.swift; sourceTree = "<group>"; };
 		F92B12E22AF8092C003C2474 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -231,6 +237,9 @@
 				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
 				F991A8942AEF87B900200104 /* SaveIcon.swift */,
 				F991A8962AEF87C000200104 /* SaveButton.swift */,
+				27FA5D912B1955EC00973173 /* SignInView.swift */,
+				27FA5D922B1955EC00973173 /* SignUpView.swift */,
+				27FA5D952B19561800973173 /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -388,15 +397,18 @@
 				F90917302AF7394600DAA43A /* Ingredients.swift in Sources */,
 				F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */,
 				F9ECAB802AEF009800F951B0 /* SearchView.swift in Sources */,
+				27FA5D942B1955EC00973173 /* SignUpView.swift in Sources */,
 				F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */,
 				F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */,
 				F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */,
 				27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */,
+				27FA5D932B1955EC00973173 /* SignInView.swift in Sources */,
 				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,
 				F991A88F2AEF879E00200104 /* RecipeCardSmall.swift in Sources */,
+				27FA5D962B19561800973173 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
