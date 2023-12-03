@@ -9,11 +9,15 @@ import Foundation
 import FirebaseDatabaseSwift
 import FirebaseFirestore
 
-class Folder : ObservableObject, Equatable {
+class Folder : ObservableObject, Equatable, Hashable {
     var ordering : Ordering = .recent
     var name : String
     @Published var recipeMeta : [RecipeMeta] = []
     @Published var recipes : [Recipe] = []
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
     
     init(name: String) {
         self.name = name

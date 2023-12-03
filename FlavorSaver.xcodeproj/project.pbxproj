@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */; };
 		27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED482AF49214002904FE /* RecipeView.swift */; };
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
 		27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED4A2AF49214002904FE /* CookingModeView.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectView.swift; sourceTree = "<group>"; };
 		27DAED482AF49214002904FE /* RecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
 		27DAED4A2AF49214002904FE /* CookingModeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookingModeView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				27FA5D912B1955EC00973173 /* SignInView.swift */,
 				27FA5D922B1955EC00973173 /* SignUpView.swift */,
 				27FA5D952B19561800973173 /* OnboardingView.swift */,
+				0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,
+				0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */,
 				F96ABF6A2B06AD1E00C2935F /* SavedRecipes.swift in Sources */,
 				F991A88F2AEF879E00200104 /* RecipeCardSmall.swift in Sources */,
 				27FA5D962B19561800973173 /* OnboardingView.swift in Sources */,
