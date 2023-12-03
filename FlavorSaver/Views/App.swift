@@ -20,31 +20,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct FlavorSaverApp: App {
-    // register app delegate for Firebase setup
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
-    @StateObject var user: User = User(userID: "0", username: "Steven", profileID: 0)
-    var body: some Scene {
-        WindowGroup {
-            NavigationView {
-                TabView {
-                    SearchView()
-                        .environmentObject(user)
-                        .tabItem {
-                            Image(systemName: "magnifyingglass")
-                            Text("Search")
-                        }
-                    ProfileView()
-                        .environmentObject(user)
-                        .tabItem {
-                            Image(systemName: "person.fill")
-                            Text("Profile")
-                        }
+  // register app delegate for Firebase setup
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+  
+//  @StateObject var user: User = User(userID: "0", username: "Steven")
+//  var accountManager = AccountManager()
+  
+  var body: some Scene {
+    WindowGroup{
+      OnboardingView()
 
-                }
-            }
-            .preferredColorScheme(.light)
-            .navigationViewStyle(StackNavigationViewStyle())
-        }
     }
+  }
 }

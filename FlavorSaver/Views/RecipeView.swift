@@ -84,13 +84,23 @@ struct RecipeView: View {
             
             ScrollView(.horizontal){
               HStack{
-                ForEach(recipe.dishTypes, id: \.self) {tag in
+                ForEach(recipe.cuisines, id: \.self) {tag in
                   Button(action: {}, label: {
                     Text(tag)
                   })
                   .buttonStyle(.bordered)
                   .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                   .foregroundStyle(Color.black)
+                  .scrollIndicators(.hidden)
+                }
+                ForEach(recipe.cuisines, id: \.self) {tag in
+                  Button(action: {}, label: {
+                    Text(tag)
+                  })
+                  .buttonStyle(.bordered)
+                  .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                  .foregroundStyle(Color.black)
+                  .scrollIndicators(.hidden)
                 }
                 Spacer()
               }
