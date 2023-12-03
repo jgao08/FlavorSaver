@@ -26,7 +26,7 @@ struct FolderSelectView: View {
                     case .success(let image):
                         image.resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 300, height: 400)
+                            .frame(width: 200, height: 200)
                             .clipped()
                             .cornerRadius(10)
                     case .failure:
@@ -42,6 +42,7 @@ struct FolderSelectView: View {
                 Text(recipe.name)
                     .font(.headline)
             }
+            
             Button {
                 isNamingFolder.toggle()
             } label: {
@@ -50,9 +51,20 @@ struct FolderSelectView: View {
                 }
                 Text("New Folder")
             }
+            .controlSize(.large)
+            .buttonStyle(.borderedProminent)
+            .foregroundStyle(Color.black)
+            .shadow(radius: 10)
             .alert("Log in", isPresented: $isNamingFolder) {
                 TextField("Folder Name", text: $folderName)
                     .textInputAutocapitalization(.never)
+                Button {
+                    createFolder()
+                    user.addRecipeToFolder(recipe: recipe, folderName: folderName)
+                    isNamingFolder = false
+                } label: {
+                    Text("Save")
+                }
                 Button("Save", action: createFolder)
                 Button("Cancel", role: .cancel) { }
             } message: {
@@ -61,7 +73,9 @@ struct FolderSelectView: View {
             
             List(user.getSavedRecipeFolders(), id: \.self) { folder in
                 Button(action: {
-                    if user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
+                    if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
+                        user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
+                    }
 //                    searchText = ""
                 }){
                     HStack{
@@ -69,7 +83,7 @@ struct FolderSelectView: View {
                             .foregroundStyle(Color.black)
                         Spacer()
                         
-                        if folder.recipes.contains(recipe) {
+                        if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
                             Image(systemName: "checkmark")
                                 .foregroundColor(.blue)
                         }
