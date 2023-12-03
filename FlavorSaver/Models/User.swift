@@ -36,18 +36,34 @@ class User : ObservableObject{
         return userid
     }
     
+    /// Returns the username of the user
+    /// - Returns: username
     func getUsername() -> String{
         return username
     }
     
+    /// Retrieves all saved recipes
+    /// - Returns: all saved recipes
     func getSavedRecipes() -> [Recipe]{
         return getSavedRecipes(folderName: "all")
         //return localSavedRecipes
     }
     
+    /// Returns whether a recipe is saved by the user
+    /// - Parameter recipeID: recipeID
+    /// - Returns: true if the recipe is saved, false if not
     func isRecipeSaved(recipeID : Int) -> Bool{
         return getSavedRecipes().filter({recipe in recipe.id == recipeID}).count > 0
         //return localSavedRecipes.filter({recipe in recipe.id == recipeID}).count > 0
+    }
+    
+    /// Returns whether a recipe is saved by the user in a given folder
+    /// - Parameters:
+    ///   - recipeID: the recipe ID
+    ///   - folderName: the name of the folder
+    /// - Returns: true if the recipe is in the folder, false otherwise
+    func isRecipeSavedInFolder(recipeID : Int, folderName : String) -> Bool{
+        return getSavedRecipes(folderName: folderName).contains(where: {recipe in recipe.id == recipeID})
     }
     
     /// Retrieves the list of saved recipe folders of the user
@@ -85,10 +101,17 @@ class User : ObservableObject{
         savedRecipes.deleteFolder(folderName: folderName)
     }
     
+    /// Retrieves the saved recipes from a given folder name
+    /// - Parameter folderName: name of the folder
+    /// - Returns: list of recipes in that folder
     func getSavedRecipes(folderName : String) -> [Recipe] {
         return savedRecipes.showFolderRecipes(folderName: folderName)
     }
     
+    /// Changes the ordering parameter of the folder
+    /// - Parameters:
+    ///   - folderName: name of the folder
+    ///   - ordering: ordering (recent, alphabetical, etc.)
     func changeFolderOrdering(folderName : String, ordering : String){
         savedRecipes.changeFolderOrder(folderName: folderName, order: Ordering.fromString(ordering: ordering))
     }
