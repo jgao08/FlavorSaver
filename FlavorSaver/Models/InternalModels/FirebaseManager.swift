@@ -110,7 +110,7 @@ class FirebaseManager {
     
     private func updateFolders(folders : [String : FirebaseFolder]) async throws{
         let encodedValue = try Firestore.Encoder().encode(folders)
-        try await userDocument.setData(encodedValue)
+        try await userDocument.setData(["folders" : encodedValue])
     }
     
 //    func addRecipeToFolder(recipe: Recipe, folderName : String) async{
