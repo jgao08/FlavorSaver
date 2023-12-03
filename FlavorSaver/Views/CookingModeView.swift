@@ -13,31 +13,43 @@ struct CookingModeView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var sheetOpen: Bool
     
+    @State var title: String = ""
+    @State var progressValue: Float = 0
+    @State var selected: Int = 0
+    
     var body: some View {
         NavigationView {
             VStack {
-                TabView {
-                    CookingModeIntro(recipe: recipe)
+                CookingModeHeader(title: $title, progressValue: $progressValue)
+                TabView (selection: $selected) {
+                    CookingModeIntro(recipe: recipe, title: $title, progressValue: $progressValue, selected: $selected)
+                        .tag(0)
                     ForEach(recipe.getRecipeStepsWithAmounts(), id: \.0){ (stepIndex, step, ingredients) in
                         ScrollView {
-                            CookingModeStep(recipe: recipe, stepIndex: stepIndex, step: step, ingredients: ingredients)
+                            CookingModeStep(recipe: recipe, stepIndex: stepIndex, step: step, ingredients: ingredients, title: $title, progressValue: $progressValue, selected: $selected)
+                                .tag(stepIndex)
                         }
                     }
-                    CookingModeOutro(recipe: recipe, sheetOpen: sheetOpen).environmentObject(user)
+                    CookingModeOutro(recipe: recipe, sheetOpen: sheetOpen, title: $title, progressValue: $progressValue, selected: $selected).environmentObject(user)
+                        .tag(100)
                 }
                 .tabViewStyle(.page)
             }
+        }
+        .onAppear {
+            title = recipe.name
         }
     }
 }
 
 struct CookingModeIntro: View {
     var recipe: Recipe
+    @Binding var title: String
+    @Binding var progressValue: Float
+    @Binding var selected: Int
     
     var body: some View {
         VStack {
-            CookingModeHeader(title: recipe.name, progressValue: 0)
-            
             VStack (spacing: 128){
                 Text("Welcome to Cooking Mode!")
                     .font(.title)
@@ -71,6 +83,11 @@ struct CookingModeIntro: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 32)
+        }.onChange(of: selected) {
+            if selected == 0 {
+                title = recipe.name
+                progressValue = 0
+            }
         }
     }
 }
@@ -80,10 +97,14 @@ struct CookingModeStep: View {
     @State var stepIndex: Int
     @State var step: String
     @State var ingredients: [String]
+    @Binding var title: String
+    @Binding var progressValue: Float
+    @Binding var selected: Int
+
     
     var body: some View {
         VStack {
-            CookingModeHeader(title: "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)", progressValue: (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1)))
+//            CookingModeHeader(title: "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)", progressValue: (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1)))
             VStack {
                 HStack{
                     Text(step)
@@ -111,6 +132,12 @@ struct CookingModeStep: View {
             .padding(.top, 16)
             .padding(.horizontal, 16)
         }
+        .onChange(of: selected) {
+            if selected == stepIndex {
+                title = "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)"
+                progressValue = (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1))
+            }
+        }
     }
 }
 
@@ -119,10 +146,13 @@ struct CookingModeOutro: View {
     @State var recipe : Recipe
     @Environment(\.presentationMode) var presentationMode
     @State var sheetOpen: Bool
+    @Binding var title: String
+    @Binding var progressValue: Float
+    @Binding var selected: Int
+
     
     var body: some View {
-        VStack{
-            CookingModeHeader(title: "Recipe Complete!", progressValue: 1)
+        VStack {
             GeometryReader { proxy in
                 ZStack{
                     AsyncImage(url: URL(string: recipe.image)) { phase in
@@ -166,13 +196,19 @@ struct CookingModeOutro: View {
                 //                .frame(alignment: .trailing)
             }
         }
+        .onChange(of: selected) {
+            if selected == 100 {
+                title = "Recipe Complete!"
+                progressValue = 1
+            }
+        }
     }
 }
 
 struct CookingModeHeader: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var title: String
-    @State var progressValue: Float
+    @Binding var title: String
+    @Binding var progressValue: Float
     
     var body: some View {
         VStack {
