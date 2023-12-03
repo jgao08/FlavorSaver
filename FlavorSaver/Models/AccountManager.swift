@@ -21,7 +21,7 @@ class AccountManager {
         let profileChange = authInfo.user.createProfileChangeRequest()
         profileChange.displayName = username
         try await profileChange.commitChanges()
-        try await db.collection("users").document(userID).setData(["folders" : ["all" : []], "name" : username, "profileID" : profileID])
+        try await db.collection("users").document(userID).setData(["folders" : ["Liked Recipes" : []], "name" : username, "profileID" : profileID])
         
         return User(userID: userID, username: username, profileID : profileID)
     }
@@ -38,5 +38,15 @@ class AccountManager {
     
     static func signOut(user : User) async throws{
         try auth.signOut()
+    }
+    
+    static func updateProfileID(userID : String, profileID : Int) {
+        Task{
+            do{
+                try await db.collection("users").document(userID).updateData(["profileID" : profileID])
+            }catch{
+                print("Error with updating profileID in updateProfileID: \(error)")
+            }
+        }
     }
 }
