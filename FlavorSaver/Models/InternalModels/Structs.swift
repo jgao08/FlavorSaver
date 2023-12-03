@@ -31,6 +31,10 @@ struct FirebaseRecipeMeta : Codable {
         case lastInteracted
         case recipeID
     }
+    
+    func toRecipeMeta(recipe : Recipe) -> RecipeMeta{
+        return RecipeMeta(firstAdded: firstAdded, lastInteracted: lastInteracted, recipe: recipe)
+    }
 }
 
 struct RecipeMeta : Hashable {

@@ -29,6 +29,7 @@ struct FlavorSaverApp: App {
   var body: some Scene {
     WindowGroup{
       OnboardingView()
+
     }
   }
 }

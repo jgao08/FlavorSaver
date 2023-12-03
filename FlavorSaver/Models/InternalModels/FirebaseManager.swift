@@ -69,7 +69,7 @@ class FirebaseManager {
                 let firebaseRecipeMeta = folder.recipeMeta
                 
     
-                result.append(Folder(recipeMeta: firebaseRecipeMeta.values.map({firebaseRecipe in toRecipeMeta(recipe: recipes.first(where: {String($0.id) == firebaseRecipe.recipeID})!, firstAdded: firebaseRecipe.firstAdded, lastInteracted: firebaseRecipe.lastInteracted)}),
+                result.append(Folder(recipeMeta: firebaseRecipeMeta.values.map({firebaseRecipe in firebaseRecipe.toRecipeMeta(recipe: recipes.first(where: {String($0.id) == firebaseRecipe.recipeID})!)}),
                                      ordering: Ordering.fromString(ordering: folder.ordering),
                                      name: name))
             }
@@ -79,10 +79,6 @@ class FirebaseManager {
             print("Error with retrieving saved folders in retrieveSavedFolders: \(error)")
         }
         return result
-    }
-    
-    func toRecipeMeta(recipe : Recipe, firstAdded: Timestamp, lastInteracted: Timestamp) -> RecipeMeta{
-        return RecipeMeta(firstAdded: firstAdded, lastInteracted: lastInteracted, recipe: recipe)
     }
     
     private func getFolders() async throws -> [String : FirebaseFolder]{
@@ -109,7 +105,9 @@ class FirebaseManager {
     
     private func updateFolders(folders : [String : FirebaseFolder]) async throws{
         let encodedValue = try Firestore.Encoder().encode(folders)
-        try await userDocument.setData(["folders" : encodedValue])
+        var data = try await userDocument.getDocument().data()
+        data?["folders"] = encodedValue
+        try await userDocument.setData(data!)
     }
     
     private func recipeInSavedList(recipeID : Int) async -> Bool {
@@ -120,6 +118,16 @@ class FirebaseManager {
             print("Error in retrieving document in recipeInSavedList \(error.localizedDescription)")
         }
         return false
+    }
+    
+    func addRecipe(recipe : Recipe) async {
+        if (!(await recipeInSavedList(recipeID: recipe.id))){
+            do{
+                try recipeCollection.document(String(recipe.id)).setData(from: recipe)
+            }catch{
+                print("Error in adding recipe to database: \(error.localizedDescription)")
+            }
+        }
     }
     
     // Need some sort of lock for race-condition adds to database
