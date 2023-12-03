@@ -34,11 +34,11 @@ struct FlavorSaverApp: App {
                             Image(systemName: "magnifyingglass")
                             Text("Search")
                         }
-                    SavedRecipesView()
+                    ProfileView()
                         .environmentObject(user)
                         .tabItem {
-                            Image(systemName: "heart")
-                            Text("Saved")
+                            Image(systemName: "person.fill")
+                            Text("Profile")
                         }
 
                 }

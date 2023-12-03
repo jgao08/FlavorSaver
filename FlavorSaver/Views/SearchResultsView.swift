@@ -14,6 +14,7 @@ struct SearchResultsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var search: Search
     @State var recipes: [Recipe] = []
+    @State var recipeResultsReceived: Bool = false
     
     
     var body: some View  {
@@ -21,12 +22,12 @@ struct SearchResultsView: View {
             VStack {
                 RecipeSearchNavigation(search: search)
 
-                if recipes == [] {
+                if recipes == [] && recipeResultsReceived {
                     ContentUnavailableView.search
-                } else {
+                } else if recipeResultsReceived {
                     RecipeSearchResultsRow(recipes: recipes)
-                    Spacer()
                 }
+                Spacer()
             }
             .navigationBarBackButtonHidden()
             .navigationBarTitleDisplayMode(.inline)
@@ -34,6 +35,7 @@ struct SearchResultsView: View {
         .task{
             await search.executeSearch()
             recipes = search.getRecipes()
+            recipeResultsReceived = true
         }
     }
 }
