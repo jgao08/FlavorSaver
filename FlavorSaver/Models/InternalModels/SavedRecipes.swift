@@ -131,6 +131,7 @@ class SavedRecipes : ObservableObject {
         folders[index].recipes = enforceInvariants(folder: folders[index])
         Task(priority: .medium){
             await dbManager.updateFolders(folders: folders)
+            await dbManager.addRecipe(recipe: recipe)
         }
     }
     

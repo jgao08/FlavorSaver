@@ -46,7 +46,6 @@ class User : ObservableObject{
     /// - Returns: all saved recipes
     func getSavedRecipes() -> [Recipe]{
         return getSavedRecipes(folderName: "all")
-        //return localSavedRecipes
     }
     
     /// Returns whether a recipe is saved by the user
@@ -54,7 +53,6 @@ class User : ObservableObject{
     /// - Returns: true if the recipe is saved, false if not
     func isRecipeSaved(recipeID : Int) -> Bool{
         return getSavedRecipes().filter({recipe in recipe.id == recipeID}).count > 0
-        //return localSavedRecipes.filter({recipe in recipe.id == recipeID}).count > 0
     }
     
     /// Returns whether a recipe is saved by the user in a given folder
