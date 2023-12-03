@@ -6,6 +6,9 @@ struct SignUpView: View {
   @State var password: String = ""
   @State var showPassword: Bool = false
   @State var selectedImg: Int = 0
+  @State var user: User? = nil
+  @State var errormsg: String = ""
+
   
   var isSignInButtonDisabled: Bool {
     [email, name, password].contains(where: \.isEmpty)
@@ -112,8 +115,31 @@ struct SignUpView: View {
         .scrollDisabled(true)
         
         Spacer()
+        HStack{
+          Spacer()
+          Text(errormsg)
+            .foregroundStyle(errormsg == "" ? Color.clear : Color.red)
+        }
         Button {
-          print("do signup action")
+          Task{
+            do{
+              let signedUpUser = try await AccountManager.signUp(username: name, email: email, password: password)
+              self.user = signedUpUser
+//              print(user?.getUsername())
+              let scene = UIApplication.shared.connectedScenes.first
+              if let windowScene = scene as? UIWindowScene {
+                if let user = user {
+                  let viewController = UIHostingController(rootView: ContentView(user: user))
+                  windowScene.windows.first?.rootViewController = viewController
+                }
+              }
+            }catch{
+              print("signup failed")
+              print(error)
+              errormsg = error.localizedDescription
+//              loginFailed = true
+            }
+          }
         } label: {
           Text("Sign Up")
             .font(.title2)

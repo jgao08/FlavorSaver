@@ -84,6 +84,7 @@ struct SearchView: View {
                 .padding()
             }/*.padding(.vertical, 32)*/
         }
+        .navigationBarBackButtonHidden(true)
         .ignoresSafeArea(.all)
     }
     var searchResults: [String] {
