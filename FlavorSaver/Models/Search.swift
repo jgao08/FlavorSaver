@@ -46,7 +46,7 @@ class Search : ObservableObject{
     
     // Retrieves a list of the recipes from the given search parameter
     func getRecipes() -> [Recipe]{
-        return listOfRecipes.flatMap({$0.value})
+        return Array(Set(listOfRecipes.flatMap({$0.value})))
     }
     
     func getRecipesWithTags() -> [String : [Recipe]]{
