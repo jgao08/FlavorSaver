@@ -80,11 +80,6 @@ class Search : ObservableObject{
                 list.append((tuple.key, tuple.value))
             })
             
-            for (key, value) in tagGroups{
-                print("\(key) : \(value.count)")
-            }
-            
-            
             DispatchQueue.main.async{
                 self.searchResults = request
                 self.listOfRecipes = tagGroups

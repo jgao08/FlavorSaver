@@ -105,7 +105,9 @@ class FirebaseManager {
     
     private func updateFolders(folders : [String : FirebaseFolder]) async throws{
         let encodedValue = try Firestore.Encoder().encode(folders)
-        try await userDocument.setData(["folders" : encodedValue])
+        var data = try await userDocument.getDocument().data()
+        data?["folders"] = encodedValue
+        try await userDocument.setData(data!)
     }
     
     private func recipeInSavedList(recipeID : Int) async -> Bool {
@@ -116,6 +118,16 @@ class FirebaseManager {
             print("Error in retrieving document in recipeInSavedList \(error.localizedDescription)")
         }
         return false
+    }
+    
+    func addRecipe(recipe : Recipe) async {
+        if (!(await recipeInSavedList(recipeID: recipe.id))){
+            do{
+                try recipeCollection.document(String(recipe.id)).setData(from: recipe)
+            }catch{
+                print("Error in adding recipe to database: \(error.localizedDescription)")
+            }
+        }
     }
     
     // Need some sort of lock for race-condition adds to database
