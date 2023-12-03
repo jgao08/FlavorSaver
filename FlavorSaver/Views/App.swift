@@ -23,7 +23,7 @@ struct FlavorSaverApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @StateObject var user: User = User(userID: "0", username: "Steven")
+    @StateObject var user: User = User(userID: "0", username: "Steven", profileID: 0)
     var body: some Scene {
         WindowGroup {
             NavigationView {

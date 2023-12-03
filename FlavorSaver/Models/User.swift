@@ -11,14 +11,16 @@ import Foundation
 class User : ObservableObject{
     private var userid : String
     private var username : String
+    private var profileID : Int
     private var dbManager : FirebaseManager
     
     @Published private var localSavedRecipes : [Recipe]
     @Published private var savedRecipes : SavedRecipes
     
-    init(userID : String, username : String){
+    init(userID : String, username : String, profileID : Int){
         self.userid = userID
         self.username = username
+        self.profileID = profileID
         localSavedRecipes = []
         dbManager = FirebaseManager(userID: String(userid))
         savedRecipes = SavedRecipes(db: dbManager)
