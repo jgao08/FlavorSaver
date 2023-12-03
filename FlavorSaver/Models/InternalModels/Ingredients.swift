@@ -14,7 +14,9 @@ class Ingredients {
     func filterIngredients(_ input : String) -> [String]{
         let firstCharacter : Character = input.first!
         
-        let searchDict = ingredients[String(firstCharacter)]!
+        guard let searchDict = ingredients[String(firstCharacter)] else{
+            return []
+        }
         var results = searchDict.filter({$0.contains(input)}).sorted()
         if (results.count < 12 && !results.contains(input)){
             results.append(input)

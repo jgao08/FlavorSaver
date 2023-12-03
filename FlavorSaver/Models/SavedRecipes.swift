@@ -44,7 +44,6 @@ class SavedRecipes : ObservableObject {
             let folders = await db.retrieveSavedFolders()
             DispatchQueue.main.async {
                 self.folders = folders
-                print("\(folders.count) is the number of folders there are")
             }
         }
     }

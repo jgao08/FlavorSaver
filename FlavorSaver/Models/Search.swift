@@ -16,7 +16,7 @@ class Search : ObservableObject{
     @Published private var searchResults : RecipesMetaData = RecipesMetaData(offset: 0, numberOfRecipes: 0, totalRecipes: 0, recipes: [])
     
     // List of the recipes returned from the given search query
-    @Published private var listOfRecipes : [Recipe] = []
+    @Published private var listOfRecipes : [[Recipe]] = []
     
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
@@ -46,7 +46,19 @@ class Search : ObservableObject{
     
     // Retrieves a list of the recipes from the given search parameter
     func getRecipes() -> [Recipe]{
-        return listOfRecipes
+        return listOfRecipes[0]
+    }
+    
+    func getQuickRecipes() -> [Recipe]{
+        return listOfRecipes[0]
+    }
+    
+    func getModerateRecipes() -> [Recipe]{
+        return listOfRecipes[1]
+    }
+    
+    func getLongRecipes() -> [Recipe]{
+        return listOfRecipes[2]
     }
     
     // ASYNC Function. Executes the search
@@ -61,9 +73,14 @@ class Search : ObservableObject{
         let urlRequest = "\(apiManager.complexSearchParams)&query=\(queryRequest)&cuisine=\(cuisineRequest)&type=\(mealTypeRequest)"
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
+            
+            let fast = request.recipes.filter({$0.readyInMinutes <= 30})
+            let moderate = request.recipes.filter({$0.readyInMinutes > 30 && $0.readyInMinutes <= 60})
+            let long = request.recipes.filter({$0.readyInMinutes > 60})
+            
             DispatchQueue.main.async{
                 self.searchResults = request
-                self.listOfRecipes = request.recipes
+                self.listOfRecipes = [fast, moderate, long]
             }
             self.hasChanged = false;
         }catch{
@@ -73,7 +90,7 @@ class Search : ObservableObject{
     
     // Retrieves a list of ingredients corresponding to the input search parameter
     func getIngredientOptions(_ input : String) -> [String] {
-        if (input.isEmpty || !input.first!.isASCII){
+        if (input.isEmpty || !input.first!.isLetter){
             return []
         }
         return ingredientFinder.filterIngredients(input.lowercased())
