@@ -161,6 +161,7 @@
 		F96C7C712AF96DD0005B6FA1 /* InternalModels */ = {
 			isa = PBXGroup;
 			children = (
+				F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */,
 				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
 				F92B12E22AF8092C003C2474 /* FirebaseManager.swift */,
 				F935C4132AF17CB50010BB0C /* Structs.swift */,
@@ -226,7 +227,6 @@
 				F94C7A9E2AF59DEF00155131 /* Recipe.swift */,
 				F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */,
 				F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */,
-				F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */,
 				F96C7C712AF96DD0005B6FA1 /* InternalModels */,
 			);
 			path = Models;

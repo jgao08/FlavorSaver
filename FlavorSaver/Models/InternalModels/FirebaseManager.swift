@@ -69,7 +69,7 @@ class FirebaseManager {
                 let firebaseRecipeMeta = folder.recipeMeta
                 
     
-                result.append(Folder(recipeMeta: firebaseRecipeMeta.values.map({firebaseRecipe in toRecipeMeta(recipe: recipes.first(where: {String($0.id) == firebaseRecipe.recipeID})!, firstAdded: firebaseRecipe.firstAdded, lastInteracted: firebaseRecipe.lastInteracted)}),
+                result.append(Folder(recipeMeta: firebaseRecipeMeta.values.map({firebaseRecipe in firebaseRecipe.toRecipeMeta(recipe: recipes.first(where: {String($0.id) == firebaseRecipe.recipeID})!)}),
                                      ordering: Ordering.fromString(ordering: folder.ordering),
                                      name: name))
             }
@@ -79,10 +79,6 @@ class FirebaseManager {
             print("Error with retrieving saved folders in retrieveSavedFolders: \(error)")
         }
         return result
-    }
-    
-    func toRecipeMeta(recipe : Recipe, firstAdded: Timestamp, lastInteracted: Timestamp) -> RecipeMeta{
-        return RecipeMeta(firstAdded: firstAdded, lastInteracted: lastInteracted, recipe: recipe)
     }
     
     private func getFolders() async throws -> [String : FirebaseFolder]{
