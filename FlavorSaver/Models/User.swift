@@ -44,10 +44,19 @@ class User : ObservableObject{
         return username
     }
     
+    func getProfileID() -> Int{
+        return profileID
+    }
+    
+    func setProfileID(profileID : Int){
+        AccountManager.updateProfileID(userID: userid, profileID: profileID)
+        self.profileID = profileID
+    }
+    
     /// Retrieves all saved recipes
     /// - Returns: all saved recipes
     func getSavedRecipes() -> [Recipe]{
-        return getSavedRecipes(folderName: "all")
+        return getSavedRecipes(folderName: "Liked Recipes")
     }
     
     /// Returns whether a recipe is saved by the user
@@ -80,7 +89,7 @@ class User : ObservableObject{
         savedRecipes.addRecipeToFolder(recipe: recipe, folderName: folderName)
     }
     
-    /// Removes the given recipe from the given folder. If the folder is "all", then the recipe is removed from all folders.
+    /// Removes the given recipe from the given folder
     /// - Parameters:
     ///   - recipe: the recipe to remove
     ///   - folder: the folder to remove the recipe from
@@ -95,7 +104,7 @@ class User : ObservableObject{
         return savedRecipes.createFolder(name: name)
     }
     
-    /// Deletes the folder with the given name. If the folder is "all", then the folder is not deleted.
+    /// Deletes the folder with the given name. If the folder is "Liked Recipes", then the folder is not deleted.
     /// - Parameter folderName: name of the folder to delete
     func deleteFolder(folderName : String){
         savedRecipes.deleteFolder(folderName: folderName)
@@ -126,7 +135,7 @@ class User : ObservableObject{
         Task(priority: .medium){
             await dbManager.addRecipeToUser(recipe: recipe)
         }
-        addRecipeToFolder(recipe: recipe, folderName: "all")
+        addRecipeToFolder(recipe: recipe, folderName: "Liked Recipes")
     }
     
     func removeSavedRecipe(recipe : Recipe){
@@ -139,6 +148,6 @@ class User : ObservableObject{
         Task(priority: .medium){
             await dbManager.removeRecipeFromUser(recipeID: recipeID)
         }
-        removeRecipeFromFolder(recipe: recipe, folderName: "all")
+        removeRecipeFromFolder(recipe: recipe, folderName: "Liked Recipes")
     }
 }

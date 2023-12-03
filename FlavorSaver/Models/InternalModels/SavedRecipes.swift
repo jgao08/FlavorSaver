@@ -144,6 +144,9 @@ class SavedRecipes : ObservableObject {
             print("Foldename is not valid in removeRecipeFromFolder")
             return
         }
+        guard folder.name != "Liked Recipes" else {
+            return
+        }
         let folderIndex = folders.firstIndex(of: folder)
         guard let index = folderIndex else {
             print("Folder is not found in SavedRecipes?")
@@ -172,7 +175,7 @@ class SavedRecipes : ObservableObject {
     /// Deletes the given folder
     /// - Parameter folderName: name of the folder
     func deleteFolder(folderName : String){
-        guard folderName != "all" else {
+        guard folderName != "Liked Recipes" else {
             return
         }
         guard let folder = getFolder(name: folderName) else {

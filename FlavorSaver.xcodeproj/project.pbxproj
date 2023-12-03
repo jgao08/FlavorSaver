@@ -164,8 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */,
-				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
 				F92B12E22AF8092C003C2474 /* FirebaseManager.swift */,
+				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
 				F935C4132AF17CB50010BB0C /* Structs.swift */,
 				F909172F2AF7394600DAA43A /* Ingredients.swift */,
 				F94070282B1D10AE0002AC27 /* ingredients.txt */,

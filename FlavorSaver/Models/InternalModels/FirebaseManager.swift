@@ -10,7 +10,6 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-// TODO: Support multiple users. Requires authentication and creating new data when account is created
 class FirebaseManager {
     private var db = Firestore.firestore()
     private var recipeCollection : CollectionReference
@@ -84,7 +83,7 @@ class FirebaseManager {
     private func getFolders() async throws -> [String : FirebaseFolder]{
         var document = try await userDocument.getDocument()
         if !document.exists {
-            try await userDocument.setData(["folders" : ["all": [:]]])
+            try await userDocument.setData(["folders" : ["Liked Recipes": [:]]])
             document = try await userDocument.getDocument()
         }
         if let foldersData = document["folders"] as? [String: Any] {
