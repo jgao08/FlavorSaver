@@ -16,7 +16,7 @@ class Search : ObservableObject{
     @Published private var searchResults : RecipesMetaData = RecipesMetaData(offset: 0, numberOfRecipes: 0, totalRecipes: 0, recipes: [])
     
     // List of the recipes returned from the given search query
-    @Published private var listOfRecipes : [[Recipe]] = []
+    @Published private var listOfRecipes : [String : [Recipe]] = [:]
     
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
@@ -46,19 +46,11 @@ class Search : ObservableObject{
     
     // Retrieves a list of the recipes from the given search parameter
     func getRecipes() -> [Recipe]{
-        return listOfRecipes[0]
+        return listOfRecipes.flatMap({$0.value})
     }
     
-    func getQuickRecipes() -> [Recipe]{
-        return listOfRecipes[0]
-    }
-    
-    func getModerateRecipes() -> [Recipe]{
-        return listOfRecipes[1]
-    }
-    
-    func getLongRecipes() -> [Recipe]{
-        return listOfRecipes[2]
+    func getRecipesWithTags() -> [String : [Recipe]]{
+        return listOfRecipes
     }
     
     // ASYNC Function. Executes the search
@@ -74,13 +66,19 @@ class Search : ObservableObject{
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
             
-            let fast = request.recipes.filter({$0.readyInMinutes <= 30})
-            let moderate = request.recipes.filter({$0.readyInMinutes > 30 && $0.readyInMinutes <= 60})
-            let long = request.recipes.filter({$0.readyInMinutes > 60})
+            let tagGroups : [String : [Recipe]] = request.recipes.reduce(into: [:], { (dict, recipe) in
+                for tag in recipe.cuisines + recipe.dishTypes{
+                    if (dict[tag] == nil){
+                        dict[tag] = [recipe]
+                    }else{
+                        dict[tag]!.append(recipe)
+                    }
+                }
+            })
             
             DispatchQueue.main.async{
                 self.searchResults = request
-                self.listOfRecipes = [fast, moderate, long]
+                self.listOfRecipes = tagGroups
             }
             self.hasChanged = false;
         }catch{
