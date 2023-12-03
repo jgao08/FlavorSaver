@@ -16,7 +16,7 @@ class Search : ObservableObject{
     @Published private var searchResults : RecipesMetaData = RecipesMetaData(offset: 0, numberOfRecipes: 0, totalRecipes: 0, recipes: [])
     
     // List of the recipes returned from the given search query
-    @Published private var listOfRecipes : [String : [Recipe]] = [:]
+    @Published private var listOfRecipes : [(String,[Recipe])] = []
     
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
@@ -46,10 +46,10 @@ class Search : ObservableObject{
     
     // Retrieves a list of the recipes from the given search parameter
     func getRecipes() -> [Recipe]{
-        return Array(Set(listOfRecipes.flatMap({$0.value})))
+        return Array(Set(listOfRecipes.flatMap({$1})))
     }
     
-    func getRecipesWithTags() -> [String : [Recipe]]{
+    func getRecipesWithTags() -> [(String,[Recipe])]{
         return listOfRecipes
     }
     
@@ -66,7 +66,7 @@ class Search : ObservableObject{
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
             
-            let tagGroups : [String : [Recipe]] = request.recipes.reduce(into: [:], { (dict, recipe) in
+            let tagGroups : [(String,[Recipe])] = request.recipes.reduce(into: [:], { (dict, recipe) in
                 for tag in recipe.cuisines + recipe.dishTypes{
                     if (dict[tag] == nil){
                         dict[tag] = [recipe]
@@ -74,7 +74,16 @@ class Search : ObservableObject{
                         dict[tag]!.append(recipe)
                     }
                 }
+            }).sorted(by: { (first, second) -> Bool in
+                return first.value.count > second.value.count
+            }).reduce(into: [], { (list, tuple) in
+                list.append((tuple.key, tuple.value))
             })
+            
+            for (key, value) in tagGroups{
+                print("\(key) : \(value.count)")
+            }
+            
             
             DispatchQueue.main.async{
                 self.searchResults = request
