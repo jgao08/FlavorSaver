@@ -2,12 +2,14 @@ import SwiftUI
 
 struct SignInView: View {
   
-  @State var name: String = ""
+  @State var email: String = ""
   @State var password: String = ""
   @State var showPassword: Bool = false
+  @State var loginFailed: Bool = false
+  @State var user: User? = nil
   
   var isSignInButtonDisabled: Bool {
-    [name, password].contains(where: \.isEmpty)
+    [email, password].contains(where: \.isEmpty)
   }
   
   var body: some View {
@@ -17,9 +19,9 @@ struct SignInView: View {
         Form{
           Section{
             HStack{
-              Text("Username")
+              Text("Email")
                 .frame(width: 100, alignment: .leading)
-              TextField("Username", text: $name)
+              TextField("Email", text: $email)
             }
             HStack{
               Text("Password")
@@ -31,13 +33,55 @@ struct SignInView: View {
         }
         .scrollContentBackground(.hidden)
         .scrollDisabled(true)
-//        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-
+        
         
         Spacer()
+        //        https://stackoverflow.com/questions/67394432/navigate-after-successful-login-with-swiftui
+        
+        HStack{
+          Spacer()
+          Text("Login Failed")
+            .foregroundStyle(loginFailed ? Color.red : Color.clear)
+          Spacer()
+        }
+        //        NavigationLink(destination: ContentView(), label: {
+        //          HStack{
+        //            Text("Sign In")
+        //              .font(.title2)
+        //              .bold()
+        //              .foregroundColor(isSignInButtonDisabled ? .black : .white)
+        //          }
+        //          .frame(height: 50)
+        //          .frame(maxWidth: .infinity) // how to make a button fill all the space available horizontally
+        //          .background(
+        //            isSignInButtonDisabled ?
+        //            Color.gray.opacity(0.25) : Color.blue
+        //          )
+        //          .cornerRadius(20)
+        //          .disabled(isSignInButtonDisabled)
+        //          .padding(.horizontal)
+        //          .padding(.bottom)
+        //
+        //        })
         
         Button {
           print("do login action")
+          Task{
+            do{
+              let loggedInUser = try await AccountManager.login(email: email, password: password)
+              self.user = loggedInUser
+              let scene = UIApplication.shared.connectedScenes.first
+              if let windowScene = scene as? UIWindowScene {
+                if let user = user {
+                  let viewController = UIHostingController(rootView: ContentView(user: user))
+                  windowScene.windows.first?.rootViewController = viewController
+                }
+              }
+            }catch{
+              print("login failed")
+              loginFailed = true
+            }
+          }
         } label: {
           Text("Sign In")
             .font(.title2)
@@ -45,22 +89,23 @@ struct SignInView: View {
             .foregroundColor(isSignInButtonDisabled ? .black : .white)
         }
         .frame(height: 50)
-        .frame(maxWidth: .infinity) // how to make a button fill all the space available horizontaly
+        .frame(maxWidth: .infinity) // how to make a button fill all the space available horizontally
         .background(
           isSignInButtonDisabled ?
           Color.gray.opacity(0.25) : Color.blue
         )
         .cornerRadius(20)
-        .disabled(isSignInButtonDisabled) // how to disable while some condition is applied
+        .disabled(isSignInButtonDisabled)
         .padding(.horizontal)
         .padding(.bottom)
       }
-      .navigationTitle("Sign In")
-      .navigationBarTitleDisplayMode(.large)
     }
+    .navigationTitle("Sign In")
+    .navigationBarTitleDisplayMode(.large)
   }
 }
 
-#Preview{
-  SignInView()
-}
+
+//#Preview{
+//  SignInView()
+//}

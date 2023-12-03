@@ -5,6 +5,7 @@ struct OnboardingView: View {
   @State var name: String = ""
   @State var password: String = ""
   @State var showPassword: Bool = false
+//  @ObservedObject var loginManager : LoginManager
   
   var isSignInButtonDisabled: Bool {
     [name, password].contains(where: \.isEmpty)
@@ -69,6 +70,6 @@ struct OnboardingView: View {
   }
 }
 
-#Preview{
-  OnboardingView()
-}
+//#Preview{
+//  OnboardingView()
+//}
