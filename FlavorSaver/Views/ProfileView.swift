@@ -11,23 +11,30 @@ import SwiftUI
 
 struct ProfileView: View {
   @EnvironmentObject var user: User
-  var imgName: String = ""
   
   var body: some View{
     NavigationStack{
       VStack{
-        if user.profileID == 0 {
-          imgName = "rat"
-        } else if user.profileID == 1 {
-          imgName = "raccoon"
-        } else if user.profileID == 2 {
-          imgName = "guy"
+        if user.getProfileID() == 0 {
+          Image("rat")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+        } else if user.getProfileID() == 1 {
+          Image("raccoon")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+        } else if user.getProfileID() == 2 {
+          Image("guy")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
         }
-        Image(imgName)
-          .resizable()
-          .aspectRatio(contentMode: .fill)
-          .frame(width: 100, height: 100)
-          .clipShape(Circle())
+        
         Text(user.getUsername())
           .font(.title)
           .bold()
