@@ -21,7 +21,7 @@ class Search : ObservableObject{
     
     init(){
         Task(priority: .high){
-            await executeRandomSearch()
+            //await executeRandomSearch()
         }
     }
     
@@ -72,6 +72,7 @@ class Search : ObservableObject{
     /// Executes a request to update the random recommended recipes
     func executeRandomSearch() async {
         let urlRequest = "\(apiManager.randomSearchParams)"
+        print(urlRequest)
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
             
@@ -80,8 +81,8 @@ class Search : ObservableObject{
             }
         }catch{
             if (apiManager.apiVersion == "SPOON_API"){
-                apiManager.apiVersion = "SPOON_API2"
-                await executeRandomSearch()
+                //apiManager.apiVersion = "SPOON_API2"
+                //await executeRandomSearch()
             }else{
                 print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")
             }
