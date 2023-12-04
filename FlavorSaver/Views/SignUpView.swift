@@ -76,7 +76,6 @@ struct SignUpView: View {
               )
               .onTapGesture {
                 print("chose pic 2")
-//                TODO: show image is selected
                 selectedImg = 2
               }
           }
@@ -123,9 +122,8 @@ struct SignUpView: View {
         Button {
           Task{
             do{
-              let signedUpUser = try await AccountManager.signUp(username: name, email: email, password: password)
+              let signedUpUser = try await AccountManager.signUp(username: name, profileID: selectedImg, email: email, password: password)
               self.user = signedUpUser
-//              print(user?.getUsername())
               let scene = UIApplication.shared.connectedScenes.first
               if let windowScene = scene as? UIWindowScene {
                 if let user = user {
