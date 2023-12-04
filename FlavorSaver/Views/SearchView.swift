@@ -15,6 +15,8 @@ struct SearchView: View {
     @State private var searchText = ""
     @State var selectedIngredients : [String] = []
     @State var search : Search = Search()
+  @State var searchRecs : Search = Search()
+  @State var recommendedRecipes: [Recipe] = []
     
     
     var body: some View {
@@ -22,8 +24,14 @@ struct SearchView: View {
             VStack {
                 if searchText.isEmpty {
                     HStack {
-                      SearchPageRecipesView()
+                      SearchPageRecipesView(recipes: recommendedRecipes)
                         Spacer()
+                    }
+                    .refreshable {
+                      await searchRecs.executeRandomSearch()
+                      print("------------------------------")
+                      recommendedRecipes = searchRecs.getRecommendedRecipes()
+                      print(searchRecs.getRecommendedRecipes().count)
                     }
                     .padding(.horizontal)
                 }
@@ -104,7 +112,7 @@ struct SearchPageRecipesView: View {
     @State var recipes: [Recipe] = []
     var body: some View {
         HStack{
-            Text("Recipes")
+            Text("Recommended Recipes")
                 .font(.title)
             Spacer()
         }
@@ -112,8 +120,8 @@ struct SearchPageRecipesView: View {
         
         
         HStack {
-            ScrollView (.horizontal, showsIndicators: false ){
-                HStack{
+            ScrollView (.vertical, showsIndicators: false ){
+                VStack{
                     ForEach(recipes, id: \.self){ recipe in
                         RecipeCardLarge(recipe: recipe)
                     }
