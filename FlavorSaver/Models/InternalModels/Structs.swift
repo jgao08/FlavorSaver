@@ -68,6 +68,14 @@ struct RecipesMetaData: Codable, Identifiable{
     }
 }
 
+struct RandomRecipes : Codable {
+    let recipes : [Recipe]
+    
+    enum CodingKeys: String, CodingKey {
+        case recipes = "recipes"
+    }
+}
+
 // Used in Recipe struct in Recipe.swift
 struct Ingredient : Codable, Identifiable, Hashable{
     let id : Int

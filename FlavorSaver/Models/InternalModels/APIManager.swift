@@ -9,7 +9,7 @@ import Foundation
 
 class APIManager {
     let apiLink : String = "https://api.spoonacular.com/recipes/"
-    static var maxNumberRecipes : Int = 30
+    static var maxNumberRecipes : Int = 10
     var apiVersion = "SPOON_API"
     var complexSearchParams : String {"\(apiLink)complexSearch?addRecipeInformation=true&fillIngredients=true&number=\(APIManager.maxNumberRecipes)&apiKey=\(getAPIKey())"}
     
