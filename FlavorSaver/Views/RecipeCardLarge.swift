@@ -63,6 +63,7 @@ struct RecipeCardLarge: View {
                                 Text("•")
                             }
                             Text(recipe.cuisines.joined(separator: ", "))
+                                .lineLimit(1)
                         }
                         .font(.caption)
                         
@@ -76,7 +77,7 @@ struct RecipeCardLarge: View {
                     Spacer()
                 }
                 .padding(24)
-                .foregroundStyle(.white)
+                .foregroundColor(.white)
                 .frame(width: 300, height: 400)
             }
         })

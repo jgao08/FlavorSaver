@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */; };
+		0865DAE92B1D8310005DDC02 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAE82B1D8310005DDC02 /* FolderView.swift */; };
+		0865DAEB2B1D8BBD005DDC02 /* AddFolderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */; };
 		274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274CEFDB2B1D0D31008F77DD /* ContentView.swift */; };
 		27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED482AF49214002904FE /* RecipeView.swift */; };
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
@@ -79,6 +82,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectView.swift; sourceTree = "<group>"; };
+		0865DAE82B1D8310005DDC02 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
+		0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderButton.swift; sourceTree = "<group>"; };
 		274CEFDB2B1D0D31008F77DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27DAED482AF49214002904FE /* RecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
@@ -251,6 +257,9 @@
 				27FA5D912B1955EC00973173 /* SignInView.swift */,
 				27FA5D922B1955EC00973173 /* SignUpView.swift */,
 				27FA5D952B19561800973173 /* OnboardingView.swift */,
+				0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */,
+				0865DAE82B1D8310005DDC02 /* FolderView.swift */,
+				0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -402,6 +411,7 @@
 			files = (
 				F991A8992AEF89E400200104 /* Search.swift in Sources */,
 				274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */,
+				0865DAE92B1D8310005DDC02 /* FolderView.swift in Sources */,
 				27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */,
 				F9ECAB822AEF00B800F951B0 /* SearchResultsView.swift in Sources */,
 				F9ECAB842AEF00C000F951B0 /* ProfileView.swift in Sources */,
@@ -409,6 +419,7 @@
 				F96C7E6B2B0071D60094FDE9 /* AccountManager.swift in Sources */,
 				F991A8972AEF87C000200104 /* SaveButton.swift in Sources */,
 				F991A89F2AEF8A9D00200104 /* User.swift in Sources */,
+				0865DAEB2B1D8BBD005DDC02 /* AddFolderButton.swift in Sources */,
 				F90917302AF7394600DAA43A /* Ingredients.swift in Sources */,
 				F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */,
 				F9E25DEA2B1D93C600076BCA /* Authentication.swift in Sources */,
@@ -422,6 +433,7 @@
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,
+				0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */,
 				F96ABF6A2B06AD1E00C2935F /* SavedRecipes.swift in Sources */,
 				F991A88F2AEF879E00200104 /* RecipeCardSmall.swift in Sources */,
 				27FA5D962B19561800973173 /* OnboardingView.swift in Sources */,
