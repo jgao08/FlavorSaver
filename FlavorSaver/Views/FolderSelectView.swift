@@ -14,8 +14,7 @@ struct FolderSelectView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var recipe: Recipe
-    @State private var isNamingFolder: Bool = false
-    @State private var folderName: String = ""
+    @State var folders: [Folder] = []
     @State private var selectedFolder: String?
     
     var body: some View {
@@ -70,31 +69,11 @@ struct FolderSelectView: View {
             }.padding(.horizontal, 16)
             
             List {
-                Button(action: toggleNamingFolder) {
-                    Label("Add Folder", systemImage: "folder.badge.plus")
+                HStack (spacing: 16) {
+                    AddFolderButton(recipe: recipe, folders: $folders).environmentObject(user)
+                    Text("Add Folder")
                 }
-                .alert("New Folder", isPresented: $isNamingFolder) {
-                    TextField("Name", text: $folderName)
-                        .textInputAutocapitalization(.never)
-                    
-                    Button("Save") {
-                        print("Save button clicked", folderName) // Moved print statement here
-                        if createFolder() {
-                            user.addRecipeToFolder(recipe: recipe, folderName: folderName)
-                            isNamingFolder = false
-                            print("Folder created", folderName)
-                            folderName = "" // Reset folderName after successful folder creation
-                        } else {
-                            // Optionally handle the case when createFolder() returns false
-                            print("Folder creation failed")
-                        }
-                    }
-                    
-                    Button("Cancel", role: .cancel) { }
-                } message: {
-                    Text("Enter a name for this folder")
-                }
-                ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
+                ForEach(folders, id: \.self) { folder in
                     Button(action: {
                         if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
                             user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
@@ -110,7 +89,6 @@ struct FolderSelectView: View {
                     }){
                         HStack{
                             Text(folder.name)
-                            //                            .foregroundStyle(Color.black)
                             Spacer()
                             
                             if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name {
@@ -122,24 +100,18 @@ struct FolderSelectView: View {
                 }
             }
         }.foregroundColor(.black)
-
-//        .onChange(of: folderName) {
-//            print("folder name changed", folderName)
-//            if folderName == "" {
-//                folderNameEmpty = true
-//            } else {
-//                folderNameEmpty = false
-//            }
-//        }
+        .onAppear {
+            folders = user.getSavedRecipeFolders()
+        }
     }
     
-    func createFolder() -> Bool {
-        let folderCreated = user.createFolder(name: folderName)
-        print("folder created", folderCreated)
-        return folderCreated
-    }
-    
-    func toggleNamingFolder() {
-        isNamingFolder.toggle()
-    }
+//    func createFolder() -> Bool {
+//        let folderCreated = user.createFolder(name: folderName)
+//        print("folder created", folderCreated)
+//        return folderCreated
+//    }
+//
+//    func toggleNamingFolder() {
+//        isNamingFolder.toggle()
+//    }
 }

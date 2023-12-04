@@ -11,6 +11,8 @@ import SwiftUI
 struct SavedRecipesView: View {
     @EnvironmentObject var user: User
     
+    @State var folders: [Folder] = []
+    
     private let columns = [
 //        GridItem(.flexible(), spacing: 16),
 //        GridItem(.flexible(), spacing: 16)
@@ -19,16 +21,94 @@ struct SavedRecipesView: View {
     
     var body: some View  {
         ScrollView {
-            Text("Saved Recipes")
-                .font(.headline)
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(user.getSavedRecipes(), id: \.self) { recipe in
-                    RecipeCardSmall(recipe: recipe).environmentObject(user)
+            VStack (spacing: 32) {
+//                HStack {
+//                    Text("My Folders")
+//                        .font(.headline)
+//                    Spacer()
+//                    AddFolderButton(recipe: nil, folders: $folders)
+//                }
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach($folders, id: \.self) { folder in
+                        FolderCard(folder: folder).environmentObject(user)
+                    }
                 }
             }
-            .padding(.horizontal)
         }
+        .padding(.horizontal)
+        .toolbar(.hidden, for: .tabBar)
+        .onAppear {
+            folders = user.getSavedRecipeFolders()
+        }
+        .navigationTitle("My Folders")
+        .navigationBarItems(trailing: AddFolderButton(recipe: nil, folders: $folders))
+
     }
 }
 
+struct FolderCard: View {
+    @EnvironmentObject var user: User
+    @Binding var folder: Folder
 
+    var body: some View {
+        NavigationLink (destination: FolderView(folder: folder).environmentObject(user), label: {
+            
+            VStack (alignment: .leading) {
+                if user.getSavedRecipes(folderName: folder.name).count > 0 {
+                    AsyncImage(url: URL(string: user.getSavedRecipes(folderName: folder.name).first!.image)) { phase in
+                        switch phase {
+                        case .empty:
+                            Rectangle()
+                                .fill(.gray)
+                                .frame(width: 170, height: 170)
+                                .modifier(RoundedEdge(width: 2, color: .black, cornerRadius: 10))
+                        case .success(let image):
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 170, height: 170)
+                                .clipped()
+                        case .failure:
+                            Rectangle()
+                                .fill(.gray)
+                                .frame(width: 170, height: 170)
+                        @unknown default:
+                            // Since the AsyncImagePhase enum isn't frozen,
+                            // we need to add this currently unused fallback
+                            // to handle any new cases that might be added
+                            // in the future:
+                            EmptyView()
+                        }
+                    }
+                    .frame(width: 170, height: 170)
+                    .cornerRadius(10)
+
+                } else {
+                    Rectangle()
+                        .fill(.gray)
+                        .frame(width: 170, height: 170)
+                        .cornerRadius(10)
+
+                }
+                Text(folder.name)
+                    .font(.body)
+                    .foregroundColor(.black)
+                Text("\(user.getSavedRecipes(folderName: folder.name).count) Recipes")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+        })
+    }
+}
+
+struct RoundedEdge: ViewModifier {
+    let width: CGFloat
+    let color: Color
+    let cornerRadius: CGFloat
+
+    func body(content: Content) -> some View {
+        content.cornerRadius(cornerRadius - width)
+            .padding(width)
+            .background(color)
+            .cornerRadius(cornerRadius)
+    }
+}
