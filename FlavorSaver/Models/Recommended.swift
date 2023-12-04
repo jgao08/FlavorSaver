@@ -34,7 +34,7 @@ class Recommended : ObservableObject{
             }
         }catch{
             if (apiManager.apiVersion == "SPOON_API"){
-                apiManager.apiVersion = "SPOON_API2"
+                apiManager.apiVersion = "SPOON_API3"
                 await executeRandomSearch()
             }else{
                 print("Error retrieving the recipes in Search.executeRandomSearch(). Error: \(error)")
