@@ -50,15 +50,15 @@ struct ProfileView: View {
             }
             .foregroundStyle(Color.black)
             .padding()
-
+            
             HStack {
-                ScrollView (.horizontal, showsIndicators: false ){
-                    HStack{
-                      ForEach(user.getSavedRecipes(), id: \.self){ recipe in
-                            RecipeCardLarge(recipe: recipe)
-                        }
-                    }
+              ScrollView (.horizontal, showsIndicators: false ){
+                HStack{
+                  ForEach(user.getSavedRecipes(), id: \.self){ recipe in
+                    RecipeCardLarge(recipe: recipe)
+                  }
                 }
+              }
             }.padding(.horizontal)
           }
           
