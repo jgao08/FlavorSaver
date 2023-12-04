@@ -32,6 +32,22 @@ class User : ObservableObject{
         }
     }
     
+    init(userID : String, username : String){
+        self.userid = userID
+        self.username = username
+        self.profileID = 0
+        localSavedRecipes = []
+        dbManager = FirebaseManager(userID: String(userid))
+        savedRecipes = SavedRecipes(db: dbManager)
+        Task(priority: .high){
+            let recipes = await dbManager.retrieveSavedRecipes()
+            self.profileID = await AccountManager.getProfileID(userID: userID)
+            DispatchQueue.main.async {
+                self.localSavedRecipes = recipes
+            }
+        }
+    }
+    
     /// Returns the userID of the user
     /// - Returns: the userID of the user
     func getUserID() -> String{
@@ -60,7 +76,7 @@ class User : ObservableObject{
     /// Retrieves all saved recipes
     /// - Returns: all saved recipes
     func getSavedRecipes() -> [Recipe]{
-        return getSavedRecipes(folderName: "Liked Recipes")
+        return savedRecipes.getAllRecipes()
     }
     
     /// Returns whether a recipe is saved by the user

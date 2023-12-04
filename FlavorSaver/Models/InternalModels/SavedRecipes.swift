@@ -52,6 +52,10 @@ class SavedRecipes : ObservableObject {
         return folders.filter({folder in folder.name == name}).first
     }
     
+    func getAllRecipes() -> [Recipe] {
+        return folders.flatMap({folder in folder.recipeMetaToRecipe()})
+    }
+    
     ///  Retrieves the recipes in the given folder
     /// - Parameter folderName: the folder to retrieve the recipes of
     /// - Returns: the recipes in the folder
