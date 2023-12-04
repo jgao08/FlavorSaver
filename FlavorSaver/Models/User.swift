@@ -60,7 +60,7 @@ class User : ObservableObject{
     /// Retrieves all saved recipes
     /// - Returns: all saved recipes
     func getSavedRecipes() -> [Recipe]{
-        return getSavedRecipes(folderName: "Liked Recipes")
+        return savedRecipes.getAllRecipes()
     }
     
     /// Returns whether a recipe is saved by the user
