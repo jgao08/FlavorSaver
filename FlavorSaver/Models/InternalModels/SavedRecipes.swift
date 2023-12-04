@@ -131,9 +131,6 @@ class SavedRecipes : ObservableObject {
             print("Foldename is not valid in removeRecipeFromFolder")
             return
         }
-        guard folder.name != "Liked Recipes" else {
-            return
-        }
         let folderIndex = folders.firstIndex(of: folder)
         guard let index = folderIndex else {
             print("Folder is not found in SavedRecipes?")
@@ -146,13 +143,24 @@ class SavedRecipes : ObservableObject {
         }
     }
     
+    func isValidFolderName(name : String) -> String?{
+        let newName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        if newName.count == 0 {
+            return "Folder name cannot be empty"
+        }else if folders.contains(where: {$0.name == name}){
+            return "Folder name is already taken"
+        }else{
+            return nil
+        }
+    }
+    
     
     /// Creates a new folder with the given name
     /// - name: name of the new folder. MUST be unique.
     /// - Returns: true if success, false otherwise (if name is already taken)
-    func createFolder(name : String) -> Bool{
-        if (folders.contains(where: {$0.name == name})){
-            return false;
+    func createFolder(name : String) -> Bool {
+        if isValidFolderName(name: name) != nil{
+            return false
         }
         folders.append(Folder(name: name))
         return true;

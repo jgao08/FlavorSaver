@@ -58,6 +58,10 @@ class FirebaseManager {
             }
             
             for (name,folder) in savedFolders {
+                guard folder.recipeMeta.count > 0 else {
+                    result.append(Folder(recipeMeta: [], ordering: Ordering.fromString(ordering: folder.ordering), name: name))
+                    continue
+                }
                 let querySnapshot = try await recipeCollection.whereField(FieldPath.documentID(), in: folder.recipeMeta.values.map({recipe in recipe.recipeID})).getDocuments()
                 
                 var recipes : [Recipe] = []

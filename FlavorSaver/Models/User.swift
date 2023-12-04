@@ -104,6 +104,13 @@ class User : ObservableObject{
         return savedRecipes.createFolder(name: name)
     }
     
+    /// Returns nil if the folder name is valid, otherwise returns an error message
+    /// - Parameter name: name of folder
+    /// - Returns: nil if the folder name is valid, otherwise returns an error message
+    func isFolderValid(name : String) -> String?{
+        return savedRecipes.isValidFolderName(name: name)
+    }
+    
     /// Deletes the folder with the given name. If the folder is "Liked Recipes", then the folder is not deleted.
     /// - Parameter folderName: name of the folder to delete
     func deleteFolder(folderName : String){
