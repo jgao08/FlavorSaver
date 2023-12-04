@@ -19,6 +19,12 @@ class Search : ObservableObject{
     private var hasChanged : Bool = true
     private var apiManager = APIManager()
     
+    init(){
+        Task(priority: .high){
+            await executeRandomSearch()
+        }
+    }
+    
     
     /// Adds an ingredient to the search request. No ingredients are added if the ingredient is already in the list
     /// - Parameter ingredient: the ingredient to add
