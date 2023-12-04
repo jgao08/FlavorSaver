@@ -8,18 +8,21 @@
 import Foundation
 
 struct Recipe : Codable, Equatable, Hashable, Identifiable {
-    // Retrieves the ingredients with just their name (without amounts)
+    
+    /// Retrieves the ingredients with just their name (without amounts)
+    /// - Returns: list of ingredients
     func getIngredients() -> [String]{
         return ingredientInfo.map{$0.originalName}
     }
     
-    // Retrieves the ingredients of the recipe with their corresponding amounts
+    /// Retrieves the ingredients of the recipe with their corresponding amounts
+    /// - Returns: list of ingredients
     func getIngredientsWithAmounts() -> [String]{
         return ingredientInfo.map{$0.original}
     }
     
-    // @returns : A list of tuples representing the (Instruction, [Ingredients]) of a particular step
-    // The list is returned in the order of the steps.
+    /// Returns a list of tuples representing the (Instruction, [Ingredients]) of a particular step
+    /// - Returns: returns a list of tuples representing the (Instruction, [Ingredients]) of a particular step
     func getRecipeSteps() -> [(String,[String])] {
         var result : [(String,[String])] = []
         
@@ -36,8 +39,8 @@ struct Recipe : Codable, Equatable, Hashable, Identifiable {
         return result
     }
     
-    // @returns : A list of tuples representing the (Index, Instruction, [Ingredients]) of a particular step
-    // The list is returned in the order of the steps.
+    /// Returns a list of tuples representing the (Index, Instruction, [Ingredients]) of a particular step
+    /// - Returns: list of tuples representing the (Index, Instruction, [Ingredients]) of a particular step
     func getRecipeStepsWithAmounts() -> [(Int, String,[String])] {
         var result : [(Int, String,[String])] = []
         let ingredientsWithAmounts = getIngredientsWithAmounts()

@@ -44,10 +44,14 @@ class User : ObservableObject{
         return username
     }
     
+    /// Returns the profileID of the user
+    /// - Returns: the profile ID
     func getProfileID() -> Int{
         return profileID
     }
     
+    /// Sets the profileID of the user
+    /// - Parameter profileID: the profile ID
     func setProfileID(profileID : Int){
         AccountManager.updateProfileID(userID: userid, profileID: profileID)
         self.profileID = profileID

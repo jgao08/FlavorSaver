@@ -10,12 +10,13 @@ import Foundation
 class APIManager {
     let apiLink : String = "https://api.spoonacular.com/recipes/"
     static var maxNumberRecipes : Int = 30
+    var apiVersion = "SPOON_API"
     var complexSearchParams : String {"\(apiLink)complexSearch?addRecipeInformation=true&fillIngredients=true&number=\(APIManager.maxNumberRecipes)&apiKey=\(getAPIKey())"}
     
     func getAPIKey() -> String {
         if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
            let dict = NSDictionary(contentsOfFile: path) as? [String: Any],
-           let apiKey = dict["SPOON_API"] as? String {
+           let apiKey = dict[apiVersion] as? String {
             
             return apiKey
         } else {

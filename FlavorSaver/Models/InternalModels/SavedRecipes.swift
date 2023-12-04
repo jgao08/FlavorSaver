@@ -162,7 +162,7 @@ class SavedRecipes : ObservableObject {
         if isValidFolderName(name: name) != nil{
             return false
         }
-        folders.append(Folder(name: name))
+        folders.insert(Folder(name: name), at: 0)
         return true;
     }
     
