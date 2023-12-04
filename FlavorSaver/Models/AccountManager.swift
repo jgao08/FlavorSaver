@@ -21,7 +21,7 @@ class AccountManager {
         let profileChange = authInfo.user.createProfileChangeRequest()
         profileChange.displayName = username
         try await profileChange.commitChanges()
-        try await db.collection("users").document(userID).setData(["folders" : ["Liked Recipes" : [:]], "name" : username, "profileID" : profileID])
+        try await db.collection("users").document(userID).setData(["folders" : ["Liked Recipes" : ["name" : "Liked Recipes", "ordering" : "recent", "recipes" : [:]]], "name" : username, "profileID" : profileID])
         
         return User(userID: userID, username: username, profileID : profileID)
     }

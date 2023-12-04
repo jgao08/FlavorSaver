@@ -83,7 +83,7 @@ class FirebaseManager {
     private func getFolders() async throws -> [String : FirebaseFolder]{
         var document = try await userDocument.getDocument()
         if !document.exists {
-            try await userDocument.setData(["folders" : ["Liked Recipes": [:]]])
+            try await userDocument.setData(["folders" : ["Liked Recipes": ["Liked Recipes" : ["name" : "Liked Recipes", "ordering" : "recent", "recipes" : [:]]]]])
             document = try await userDocument.getDocument()
         }
         if let foldersData = document["folders"] as? [String: Any] {
