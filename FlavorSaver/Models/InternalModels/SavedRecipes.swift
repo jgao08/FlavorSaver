@@ -52,19 +52,6 @@ class SavedRecipes : ObservableObject {
         return folders.filter({folder in folder.name == name}).first
     }
     
-    private func updateFolder(folder : Folder){
-        let folderIndex = folders.firstIndex(of: folder)
-        guard folderIndex != nil else {
-            print("Folder is not found in SavedRecipes????")
-            return
-        }
-        folders[folderIndex!] = folder
-        Task(priority: .medium){
-            await dbManager.updateFolders(folders: folders)
-        }
-    }
-    
-    
     ///  Retrieves the recipes in the given folder
     /// - Parameter folderName: the folder to retrieve the recipes of
     /// - Returns: the recipes in the folder

@@ -95,7 +95,8 @@ class FirebaseManager {
     
     func updateFolders(folders : [Folder]) async {
         do{
-            let newFolders = Dictionary(uniqueKeysWithValues: folders.map{folder in (folder.name, FirebaseFolder(ordering: folder.ordering.toString(), name: folder.name, recipeMeta: Dictionary(uniqueKeysWithValues: folder.recipeMeta.map({recipe in (String(recipe.recipe.id), recipe.toFirebaseRecipeMeta())}))))})
+            let mappedNames = folders.map {folder in (folder.name, FirebaseFolder.toFirebaseFolder(folder: folder))}
+            let newFolders = Dictionary(uniqueKeysWithValues: mappedNames)
             try await updateFolders(folders: newFolders)
         }catch{
             print("Error in updating user document: \(error.localizedDescription)")
