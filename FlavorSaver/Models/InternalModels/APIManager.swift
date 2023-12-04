@@ -13,6 +13,8 @@ class APIManager {
     var apiVersion = "SPOON_API"
     var complexSearchParams : String {"\(apiLink)complexSearch?addRecipeInformation=true&fillIngredients=true&number=\(APIManager.maxNumberRecipes)&apiKey=\(getAPIKey())"}
     
+    var randomSearchParams : String {"\(apiLink)random?number=\(APIManager.maxNumberRecipes)&apiKey=\(getAPIKey())"}
+    
     func getAPIKey() -> String {
         if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
            let dict = NSDictionary(contentsOfFile: path) as? [String: Any],

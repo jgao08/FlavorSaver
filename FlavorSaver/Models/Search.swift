@@ -9,29 +9,29 @@ import Foundation
 
 
 class Search : ObservableObject{
-    // Currently Selected Ingredients from the user
+    
     private var selectedIngredients : [String] = []
-    
-    // An instance of the Recipes struct if it has been requested
     @Published private var searchResults : RecipesMetaData = RecipesMetaData(offset: 0, numberOfRecipes: 0, totalRecipes: 0, recipes: [])
-    
-    // List of the recipes returned from the given search query
     @Published private var listOfRecipes : [(String,[Recipe])] = []
+    @Published private var recommendedRecipes : [Recipe] = []
     
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
     private var apiManager = APIManager()
     
-    // Add an ingredient to the search request
-    func addIngredient(_ ingredient : String) -> Void {
+    
+    /// Adds an ingredient to the search request. No ingredients are added if the ingredient is already in the list
+    /// - Parameter ingredient: the ingredient to add
+    func addIngredient(_ ingredient : String) {
         if (!selectedIngredients.contains(ingredient)){
             selectedIngredients.append(ingredient.lowercased())
             hasChanged = true
         }
     }
     
-    // Remove an ingredient from the search request
-    func removeIngredient(_ ingredient : String) -> Void {
+    /// Removes an ingredient from the search request. No ingredients are removed if the ingredient is not in the list
+    /// - Parameter ingredient: ingredient to remove
+    func removeIngredient(_ ingredient : String) {
         let newIngredients = selectedIngredients.filter({$0 != ingredient.lowercased()})
         if (newIngredients != selectedIngredients){
             selectedIngredients = newIngredients
@@ -39,21 +39,50 @@ class Search : ObservableObject{
         }
     }
     
-    // Get back to current list of selected ingredients
+    /// Returns the current list of selected ingredients
+    /// - Returns: list of ingredients
     func getCurrentSelectedIngredients() -> [String]{
         return selectedIngredients
     }
     
-    // Retrieves a list of the recipes from the given search parameter
+    /// Returns the current list of recommended recipes
+    /// - Returns: list of recipes
+    func getRecommendedRecipes() -> [Recipe]{
+        return recommendedRecipes
+    }
+    
+    /// Returns a list of all recipes returned from the search parameter
+    /// - Returns: list of recipes
     func getRecipes() -> [Recipe]{
         return Array(Set(listOfRecipes.flatMap({$1})))
     }
     
+    /// Returns a list of tuples representing the (Tag, [Recipes]) of a particular tag
+    /// - Returns: list of recipes
     func getRecipesWithTags() -> [(String,[Recipe])]{
         return listOfRecipes
     }
     
-    // ASYNC Function. Executes the search
+    /// Executes a request to update the random recommended recipes
+    func executeRandomSearch() async {
+        let urlRequest = "\(apiManager.randomSearchParams)"
+        do{
+            let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
+            
+            DispatchQueue.main.async{
+                self.recommendedRecipes = request.recipes
+            }
+        }catch{
+            if (apiManager.apiVersion == "SPOON_API"){
+                apiManager.apiVersion = "SPOON_API2"
+                await executeRandomSearch()
+            }else{
+                print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// Executes the search request and updates the @Published listOfRecipes retrieved from getRecipesWithTags or getRecipes
     func executeSearch() async{
         if (!hasChanged){
             return
@@ -95,7 +124,9 @@ class Search : ObservableObject{
         }
     }
     
-    // Retrieves a list of ingredients corresponding to the input search parameter
+    /// Retrieves a list of ingredients corresponding to the input search parameter
+    /// - Parameter input: search string
+    /// - Returns: list of matching ingredients
     func getIngredientOptions(_ input : String) -> [String] {
         if (input.isEmpty || !input.first!.isLetter){
             return []
