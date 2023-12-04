@@ -39,7 +39,7 @@ class AccountManager {
     static func signOut(user : User) async throws{
         try auth.signOut()
     }
-    
+  
     static func updateProfileID(userID : String, profileID : Int) {
         Task{
             do{
@@ -48,5 +48,15 @@ class AccountManager {
                 print("Error with updating profileID in updateProfileID: \(error)")
             }
         }
+    }
+    
+    static func getProfileID(userID : String) async -> Int {
+        do{
+            let profileID = try await db.collection("users").document(userID).getDocument().data()!["profileID"] as! Int
+            return profileID
+        }catch{
+            print("Error with getting profileID in getProfileID: \(error)")
+        }
+        return 0
     }
 }

@@ -32,6 +32,7 @@
 		F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595B2AF383DA0080B480 /* SearchTests.swift */; };
 		F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595F2AF42BAB0080B480 /* APIManager.swift */; };
 		F9B9F13E2AFDB3C100EA9FB8 /* UserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E02AF790AA003C2474 /* UserTest.swift */; };
+		F9E25DEA2B1D93C600076BCA /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E25DE92B1D93C600076BCA /* Authentication.swift */; };
 		F9ECAB342AEEF04600F951B0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECAB332AEEF04600F951B0 /* App.swift */; };
 		F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB372AEEF04800F951B0 /* Assets.xcassets */; };
 		F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */; };
@@ -103,6 +104,7 @@
 		F9B659522AF382E00080B480 /* FlavorSaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlavorSaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9B6595B2AF383DA0080B480 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
 		F9B6595F2AF42BAB0080B480 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		F9E25DE92B1D93C600076BCA /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlavorSaver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9ECAB332AEEF04600F951B0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F9ECAB372AEEF04800F951B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				F991A89E2AEF8A9D00200104 /* User.swift */,
 				F94C7A9E2AF59DEF00155131 /* Recipe.swift */,
 				F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */,
+				F9E25DE92B1D93C600076BCA /* Authentication.swift */,
 				F96C7C712AF96DD0005B6FA1 /* InternalModels */,
 			);
 			path = Models;
@@ -408,6 +411,7 @@
 				F991A89F2AEF8A9D00200104 /* User.swift in Sources */,
 				F90917302AF7394600DAA43A /* Ingredients.swift in Sources */,
 				F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */,
+				F9E25DEA2B1D93C600076BCA /* Authentication.swift in Sources */,
 				F9ECAB802AEF009800F951B0 /* SearchView.swift in Sources */,
 				27FA5D942B1955EC00973173 /* SignUpView.swift in Sources */,
 				F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */,
