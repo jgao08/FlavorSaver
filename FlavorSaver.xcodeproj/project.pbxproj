@@ -36,6 +36,7 @@
 		F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595F2AF42BAB0080B480 /* APIManager.swift */; };
 		F9B9F13E2AFDB3C100EA9FB8 /* UserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E02AF790AA003C2474 /* UserTest.swift */; };
 		F9E25DEA2B1D93C600076BCA /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E25DE92B1D93C600076BCA /* Authentication.swift */; };
+		F9E25DEE2B1DBD6400076BCA /* Recommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E25DED2B1DBD6400076BCA /* Recommended.swift */; };
 		F9ECAB342AEEF04600F951B0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECAB332AEEF04600F951B0 /* App.swift */; };
 		F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB372AEEF04800F951B0 /* Assets.xcassets */; };
 		F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */; };
@@ -111,6 +112,7 @@
 		F9B6595B2AF383DA0080B480 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
 		F9B6595F2AF42BAB0080B480 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		F9E25DE92B1D93C600076BCA /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		F9E25DED2B1DBD6400076BCA /* Recommended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommended.swift; sourceTree = "<group>"; };
 		F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlavorSaver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9ECAB332AEEF04600F951B0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F9ECAB372AEEF04800F951B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				F991A8982AEF89E400200104 /* Search.swift */,
+				F9E25DED2B1DBD6400076BCA /* Recommended.swift */,
 				F991A89E2AEF8A9D00200104 /* User.swift */,
 				F94C7A9E2AF59DEF00155131 /* Recipe.swift */,
 				F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */,
@@ -430,6 +433,7 @@
 				27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */,
 				27FA5D932B1955EC00973173 /* SignInView.swift in Sources */,
 				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
+				F9E25DEE2B1DBD6400076BCA /* Recommended.swift in Sources */,
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,

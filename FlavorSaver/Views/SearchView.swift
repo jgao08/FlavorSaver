@@ -14,8 +14,8 @@ struct SearchView: View {
   @Environment(\.editMode) private var editMode
   @State private var searchText = ""
   @State var selectedIngredients : [String] = []
-  @State var search : Search = Search()
-  @State var searchRecs : Search = Search()
+  @StateObject var search : Search = Search()
+  @StateObject var searchRecs : Recommended = Recommended()
   @State var recommendedRecipes: [Recipe] = []
   
   
@@ -61,10 +61,6 @@ struct SearchView: View {
                       RecipeCardLarge(recipe: recipe)
                     }
                   }
-                }
-                .task{
-                  await searchRecs.executeRandomSearch()
-                  recommendedRecipes = searchRecs.getRecommendedRecipes()
                 }
                 .refreshable {
                   await searchRecs.executeRandomSearch()
