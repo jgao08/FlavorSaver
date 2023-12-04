@@ -16,6 +16,7 @@ struct FolderSelectView: View {
     var recipe: Recipe
     @State private var isNamingFolder: Bool = false
     @State private var folderName: String = ""
+    @State private var selectedFolder: String?
     
     var body: some View {
         VStack {
@@ -34,10 +35,10 @@ struct FolderSelectView: View {
                 }
                 .buttonStyle(.automatic)
                 
-            }.padding(.top, 16)
-                .padding(.horizontal, 16)
+            }.padding(.vertical, 16)
+            .padding(.horizontal, 16)
             
-            HStack {
+            HStack (spacing: 16) {
                 AsyncImage(url: URL(string: recipe.image)) { phase in
                     switch phase {
                     case .empty:
@@ -58,76 +59,87 @@ struct FolderSelectView: View {
                         EmptyView()
                     }
                 }
-                VStack (alignment: .leading, spacing: 16) {
+                VStack (alignment: .leading) {
                     Text(recipe.name)
                         .font(.headline)
-                        .foregroundStyle(Color.black)
-                    ForEach(recipe.dishTypes, id: \.self) {tag in
-                        Button(action: {}, label: {
-                            Text(tag)
-                        })
-                        .buttonStyle(.bordered)
-                        .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-                        .foregroundStyle(Color.black)
-                    }
-                    
+                        .multilineTextAlignment(.leading)
+                    Text(recipe.dishTypes.joined(separator: ", "))
+                        .lineLimit(1)
                 }
                 Spacer()
             }.padding(.horizontal, 16)
             
-            Button {
-                isNamingFolder.toggle()
-            } label: {
-                HStack {
-                    Image(systemName: "plus")
+            List {
+                Button(action: toggleNamingFolder) {
+                    Label("Add Folder", systemImage: "folder.badge.plus")
                 }
-                Text("New Folder")
-            }
-            .controlSize(.large)
-            .buttonStyle(.borderedProminent)
-            .shadow(radius: 10)
-            .alert("New Folder", isPresented: $isNamingFolder) {
-                TextField("Name", text: $folderName)
-                    .textInputAutocapitalization(.never)
-                //                    .foregroundColor(Color.black)
-                Button {
-                    createFolder()
-                    user.addRecipeToFolder(recipe: recipe, folderName: folderName)
-                    isNamingFolder = false
-                } label: {
-                    Text("Save")
-                }
-                .disabled(folderName == "")
-                
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Enter a name for this folder")
-            }
-            
-            List(user.getSavedRecipeFolders(), id: \.self) { folder in
-                Button(action: {
-                    if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
-                        user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
-                    } else {
-                        user.removeRecipeFromFolder(recipe: recipe, folderName: folder.name)
+                .alert("New Folder", isPresented: $isNamingFolder) {
+                    TextField("Name", text: $folderName)
+                        .textInputAutocapitalization(.never)
+                    
+                    Button("Save") {
+                        print("Save button clicked", folderName) // Moved print statement here
+                        if createFolder() {
+                            user.addRecipeToFolder(recipe: recipe, folderName: folderName)
+                            isNamingFolder = false
+                            print("Folder created", folderName)
+                            folderName = "" // Reset folderName after successful folder creation
+                        } else {
+                            // Optionally handle the case when createFolder() returns false
+                            print("Folder creation failed")
+                        }
                     }
-                }){
-                    HStack{
-                        Text(folder.name)
-                        //                            .foregroundStyle(Color.black)
-                        Spacer()
-                        
-                        if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.blue)
+                    
+                    Button("Cancel", role: .cancel) { }
+                } message: {
+                    Text("Enter a name for this folder")
+                }
+                ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
+                    Button(action: {
+                        if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
+                            user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
+                            selectedFolder = folder.name
+                            print("recipe added to folder", folder.name)
+                        } else {
+                            user.removeRecipeFromFolder(recipe: recipe, folderName: folder.name)
+                            selectedFolder = folder.name
+                            selectedFolder = nil
+                            print("recipe removed from folder", folder.name)
+
+                        }
+                    }){
+                        HStack{
+                            Text(folder.name)
+                            //                            .foregroundStyle(Color.black)
+                            Spacer()
+                            
+                            if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
                         }
                     }
                 }
             }
-        }
+        }.foregroundColor(.black)
+
+//        .onChange(of: folderName) {
+//            print("folder name changed", folderName)
+//            if folderName == "" {
+//                folderNameEmpty = true
+//            } else {
+//                folderNameEmpty = false
+//            }
+//        }
     }
     
-    func createFolder() {
-        user.createFolder(name: folderName)
+    func createFolder() -> Bool {
+        let folderCreated = user.createFolder(name: folderName)
+        print("folder created", folderCreated)
+        return folderCreated
+    }
+    
+    func toggleNamingFolder() {
+        isNamingFolder.toggle()
     }
 }

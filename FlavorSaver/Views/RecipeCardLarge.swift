@@ -63,6 +63,7 @@ struct RecipeCardLarge: View {
                                 Text("•")
                             }
                             Text(recipe.cuisines.joined(separator: ", "))
+                                .lineLimit(1)
                         }
                         .font(.caption)
                         

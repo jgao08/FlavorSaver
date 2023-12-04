@@ -23,7 +23,7 @@ struct SaveIcon: View {
     var body: some View  {
         Button {
             // Change the saved properties in the backend here
-            print("Edit button was tapped")
+//            print("Edit button was tapped")
             //            if user.isRecipeSaved(recipeID: recipe.id) {
             //                user.removeSavedRecipe(recipe: recipe)
             //            } else {
@@ -37,7 +37,7 @@ struct SaveIcon: View {
                     .font(.system(size: 24))
             } else {
                 Image(systemName: "heart")
-                    .foregroundStyle(colorMode ? .white : .black)
+                    .foregroundColor(colorMode ? .white : .black)
                     .font(.system(size: 24))
             }
         }
