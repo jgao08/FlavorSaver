@@ -23,7 +23,7 @@ class AccountManager {
         try await profileChange.commitChanges()
         try await db.collection("users").document(userID).setData(["folders" : ["Liked Recipes" : ["name" : "Liked Recipes", "ordering" : "recent", "recipes" : [:]]], "name" : username, "profileID" : profileID])
         
-        return User(userID: userID, username: username, profileID : profileID)
+        return User(userID: userID, username: username, profileID: profileID)
     }
     
     static func login(email : String, password : String) async throws -> User{
@@ -33,7 +33,7 @@ class AccountManager {
         
         let profileID = try await db.collection("users").document(userID).getDocument().data()!["profileID"] as! Int
         
-        return User(userID: userID, username: profileName, profileID : profileID)
+        return User(userID: userID, username: profileName, profileID: profileID)
     }
     
     static func signOut(user : User) async throws{
