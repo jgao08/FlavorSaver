@@ -56,19 +56,6 @@ class SavedRecipes : ObservableObject {
         return folders.filter({folder in folder.name == name}).first
     }
     
-    private func updateFolder(folder : Folder){
-        let folderIndex = folders.firstIndex(of: folder)
-        guard folderIndex != nil else {
-            print("Folder is not found in SavedRecipes????")
-            return
-        }
-        folders[folderIndex!] = folder
-        Task(priority: .medium){
-            await dbManager.updateFolders(folders: folders)
-        }
-    }
-    
-    
     ///  Retrieves the recipes in the given folder
     /// - Parameter folderName: the folder to retrieve the recipes of
     /// - Returns: the recipes in the folder
@@ -160,15 +147,26 @@ class SavedRecipes : ObservableObject {
         }
     }
     
+    func isValidFolderName(name : String) -> String?{
+        let newName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        if newName.count == 0 {
+            return "Folder name cannot be empty"
+        }else if folders.contains(where: {$0.name == name}){
+            return "Folder name is already taken"
+        }else{
+            return nil
+        }
+    }
+    
     
     /// Creates a new folder with the given name
     /// - name: name of the new folder. MUST be unique.
     /// - Returns: true if success, false otherwise (if name is already taken)
-    func createFolder(name : String) -> Bool{
-        if (folders.contains(where: {$0.name == name})){
-            return false;
+    func createFolder(name : String) -> Bool {
+        if isValidFolderName(name: name) != nil{
+            return false
         }
-        folders.append(Folder(name: name))
+        folders.insert(Folder(name: name), at: 1)
         return true;
     }
     
@@ -176,7 +174,7 @@ class SavedRecipes : ObservableObject {
     /// Deletes the given folder
     /// - Parameter folderName: name of the folder
     func deleteFolder(folderName : String){
-        guard folderName != "all" else {
+        guard folderName != "Liked Recipes" else {
             return
         }
         guard let folder = getFolder(name: folderName) else {

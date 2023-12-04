@@ -15,12 +15,27 @@ struct ProfileView: View {
   var body: some View{
     NavigationStack{
       VStack{
-        Image("testimg")
-          .resizable()
-          .aspectRatio(contentMode: .fill)
-          .frame(width: 100, height: 100)
-          .clipShape(Circle())
-        Text("Steven Zhang")
+        if user.getProfileID() == 0 {
+          Image("rat")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+        } else if user.getProfileID() == 1 {
+          Image("raccoon")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+        } else if user.getProfileID() == 2 {
+          Image("guy")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+        }
+        
+        Text(user.getUsername())
           .font(.title)
           .bold()
         Divider()

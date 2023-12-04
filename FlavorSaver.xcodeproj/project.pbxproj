@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */; };
+		274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274CEFDB2B1D0D31008F77DD /* ContentView.swift */; };
 		27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED482AF49214002904FE /* RecipeView.swift */; };
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
 		27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED4A2AF49214002904FE /* CookingModeView.swift */; };
@@ -18,6 +19,7 @@
 		F90917302AF7394600DAA43A /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909172F2AF7394600DAA43A /* Ingredients.swift */; };
 		F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E22AF8092C003C2474 /* FirebaseManager.swift */; };
 		F935C4142AF17CB50010BB0C /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C4132AF17CB50010BB0C /* Structs.swift */; };
+		F93CCB2A2B1D511B002E5D55 /* FDSoundActivatedRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = F93CCB292B1D511B002E5D55 /* FDSoundActivatedRecorder */; };
 		F94070292B1D10AE0002AC27 /* ingredients.txt in Resources */ = {isa = PBXBuildFile; fileRef = F94070282B1D10AE0002AC27 /* ingredients.txt */; };
 		F94C7A9F2AF59DEF00155131 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C7A9E2AF59DEF00155131 /* Recipe.swift */; };
 		F96ABF6A2B06AD1E00C2935F /* SavedRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */; };
@@ -29,10 +31,8 @@
 		F991A8992AEF89E400200104 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8982AEF89E400200104 /* Search.swift */; };
 		F991A89F2AEF8A9D00200104 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A89E2AEF8A9D00200104 /* User.swift */; };
 		F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595B2AF383DA0080B480 /* SearchTests.swift */; };
-		F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */; };
 		F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595F2AF42BAB0080B480 /* APIManager.swift */; };
 		F9B9F13E2AFDB3C100EA9FB8 /* UserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E02AF790AA003C2474 /* UserTest.swift */; };
-		F9BAA99C2AF98722004919CC /* RecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BAA99B2AF98722004919CC /* RecipeTests.swift */; };
 		F9ECAB342AEEF04600F951B0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECAB332AEEF04600F951B0 /* App.swift */; };
 		F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB372AEEF04800F951B0 /* Assets.xcassets */; };
 		F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */; };
@@ -80,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectView.swift; sourceTree = "<group>"; };
+		274CEFDB2B1D0D31008F77DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27DAED482AF49214002904FE /* RecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
 		27DAED4A2AF49214002904FE /* CookingModeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookingModeView.swift; sourceTree = "<group>"; };
@@ -103,9 +104,7 @@
 		F991A89E2AEF8A9D00200104 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F9B659522AF382E00080B480 /* FlavorSaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlavorSaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9B6595B2AF383DA0080B480 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
-		F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearch.swift; sourceTree = "<group>"; };
 		F9B6595F2AF42BAB0080B480 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		F9BAA99B2AF98722004919CC /* RecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTests.swift; sourceTree = "<group>"; };
 		F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlavorSaver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9ECAB332AEEF04600F951B0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F9ECAB372AEEF04800F951B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -129,6 +128,7 @@
 			files = (
 				F9ECAB592AEEF6BD00F951B0 /* FirebaseDatabase in Frameworks */,
 				F9ECAB672AEEF6BD00F951B0 /* FirebaseFunctionsCombine-Community in Frameworks */,
+				F93CCB2A2B1D511B002E5D55 /* FDSoundActivatedRecorder in Frameworks */,
 				F9ECAB5F2AEEF6BD00F951B0 /* FirebaseFirestore in Frameworks */,
 				F9ECAB4B2AEEF6BD00F951B0 /* FirebaseAnalyticsSwift in Frameworks */,
 				F9ECAB472AEEF6BD00F951B0 /* FirebaseAnalytics in Frameworks */,
@@ -164,8 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */,
-				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
 				F92B12E22AF8092C003C2474 /* FirebaseManager.swift */,
+				F9B6595F2AF42BAB0080B480 /* APIManager.swift */,
 				F935C4132AF17CB50010BB0C /* Structs.swift */,
 				F909172F2AF7394600DAA43A /* Ingredients.swift */,
 				F94070282B1D10AE0002AC27 /* ingredients.txt */,
@@ -178,7 +178,6 @@
 			children = (
 				F9B6595B2AF383DA0080B480 /* SearchTests.swift */,
 				F92B12E02AF790AA003C2474 /* UserTest.swift */,
-				F9BAA99B2AF98722004919CC /* RecipeTests.swift */,
 			);
 			path = FlavorSaverTests;
 			sourceTree = "<group>";
@@ -227,7 +226,6 @@
 				F991A8982AEF89E400200104 /* Search.swift */,
 				F991A89E2AEF8A9D00200104 /* User.swift */,
 				F94C7A9E2AF59DEF00155131 /* Recipe.swift */,
-				F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */,
 				F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */,
 				F96C7C712AF96DD0005B6FA1 /* InternalModels */,
 			);
@@ -241,6 +239,7 @@
 				27DAED482AF49214002904FE /* RecipeView.swift */,
 				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
 				F9ECAB332AEEF04600F951B0 /* App.swift */,
+				274CEFDB2B1D0D31008F77DD /* ContentView.swift */,
 				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
 				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
 				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
@@ -318,6 +317,7 @@
 				F9ECAB762AEEF6BD00F951B0 /* FirebaseRemoteConfigSwift */,
 				F9ECAB782AEEF6BD00F951B0 /* FirebaseStorage */,
 				F9ECAB7A2AEEF6BD00F951B0 /* FirebaseStorageCombine-Community */,
+				F93CCB292B1D511B002E5D55 /* FDSoundActivatedRecorder */,
 			);
 			productName = FlavorSaver;
 			productReference = F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */;
@@ -353,6 +353,7 @@
 			mainGroup = F9ECAB272AEEF04600F951B0;
 			packageReferences = (
 				F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F93CCB282B1D511B002E5D55 /* XCRemoteSwiftPackageReference "FDSoundActivatedRecorder" */,
 			);
 			productRefGroup = F9ECAB312AEEF04600F951B0 /* Products */;
 			projectDirPath = "";
@@ -392,7 +393,6 @@
 			files = (
 				F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */,
 				F9B9F13E2AFDB3C100EA9FB8 /* UserTest.swift in Sources */,
-				F9BAA99C2AF98722004919CC /* RecipeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F991A8992AEF89E400200104 /* Search.swift in Sources */,
+				274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */,
 				27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */,
 				F9ECAB822AEF00B800F951B0 /* SearchResultsView.swift in Sources */,
 				F9ECAB842AEF00C000F951B0 /* ProfileView.swift in Sources */,
@@ -414,7 +415,6 @@
 				27FA5D942B1955EC00973173 /* SignUpView.swift in Sources */,
 				F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */,
 				F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */,
-				F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */,
 				27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */,
 				27FA5D932B1955EC00973173 /* SignInView.swift in Sources */,
 				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
@@ -687,6 +687,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F93CCB282B1D511B002E5D55 /* XCRemoteSwiftPackageReference "FDSoundActivatedRecorder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fulldecent/FDSoundActivatedRecorder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.1;
+			};
+		};
 		F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -698,6 +706,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F93CCB292B1D511B002E5D55 /* FDSoundActivatedRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F93CCB282B1D511B002E5D55 /* XCRemoteSwiftPackageReference "FDSoundActivatedRecorder" */;
+			productName = FDSoundActivatedRecorder;
+		};
 		F9ECAB462AEEF6BD00F951B0 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -10,7 +10,6 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-// TODO: Support multiple users. Requires authentication and creating new data when account is created
 class FirebaseManager {
     private var db = Firestore.firestore()
     private var recipeCollection : CollectionReference
@@ -60,6 +59,7 @@ class FirebaseManager {
             
             for (name,folder) in savedFolders {
                 guard folder.recipeMeta.count > 0 else {
+                    result.append(Folder(recipeMeta: [], ordering: Ordering.fromString(ordering: folder.ordering), name: name))
                     continue
                 }
                 let querySnapshot = try await recipeCollection.whereField(FieldPath.documentID(), in: folder.recipeMeta.values.map({recipe in recipe.recipeID})).getDocuments()
@@ -87,7 +87,7 @@ class FirebaseManager {
     private func getFolders() async throws -> [String : FirebaseFolder]{
         var document = try await userDocument.getDocument()
         if !document.exists {
-            try await userDocument.setData(["folders" : ["all": [:]]])
+            try await userDocument.setData(["folders" : ["Liked Recipes": ["Liked Recipes" : ["name" : "Liked Recipes", "ordering" : "recent", "recipes" : [:]]]]])
             document = try await userDocument.getDocument()
         }
         if let foldersData = document["folders"] as? [String: Any] {
@@ -99,7 +99,8 @@ class FirebaseManager {
     
     func updateFolders(folders : [Folder]) async {
         do{
-            let newFolders = Dictionary(uniqueKeysWithValues: folders.map{folder in (folder.name, FirebaseFolder(ordering: folder.ordering.toString(), name: folder.name, recipeMeta: Dictionary(uniqueKeysWithValues: folder.recipeMeta.map({recipe in (String(recipe.recipe.id), recipe.toFirebaseRecipeMeta())}))))})
+            let mappedNames = folders.map {folder in (folder.name, FirebaseFolder.toFirebaseFolder(folder: folder))}
+            let newFolders = Dictionary(uniqueKeysWithValues: mappedNames)
             try await updateFolders(folders: newFolders)
         }catch{
             print("Error in updating user document: \(error.localizedDescription)")
