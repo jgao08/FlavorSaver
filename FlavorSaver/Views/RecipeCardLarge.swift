@@ -76,7 +76,7 @@ struct RecipeCardLarge: View {
                     Spacer()
                 }
                 .padding(24)
-                .foregroundStyle(.white)
+                .foregroundColor(.white)
                 .frame(width: 300, height: 400)
             }
         })

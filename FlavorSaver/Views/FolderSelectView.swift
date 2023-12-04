@@ -11,13 +11,32 @@ import SwiftUI
 struct FolderSelectView: View {
     
     @EnvironmentObject var user: User
-
+    @Environment(\.presentationMode) var presentationMode
+    
     var recipe: Recipe
     @State private var isNamingFolder: Bool = false
     @State private var folderName: String = ""
     
     var body: some View {
         VStack {
+            HStack (spacing: 4) {
+                Button("Cancel") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .buttonStyle(.automatic)
+                Spacer()
+                Text("Add to Folder")
+                    .font(.headline)
+                //                    .foregroundColor(Color.black)
+                Spacer()
+                Button("Done") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .buttonStyle(.automatic)
+                
+            }.padding(.top, 16)
+                .padding(.horizontal, 16)
+            
             HStack {
                 AsyncImage(url: URL(string: recipe.image)) { phase in
                     switch phase {
@@ -26,7 +45,7 @@ struct FolderSelectView: View {
                     case .success(let image):
                         image.resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 200, height: 200)
+                            .frame(width: 100, height: 100)
                             .clipped()
                             .cornerRadius(10)
                     case .failure:
@@ -39,9 +58,22 @@ struct FolderSelectView: View {
                         EmptyView()
                     }
                 }
-                Text(recipe.name)
-                    .font(.headline)
-            }
+                VStack (alignment: .leading, spacing: 16) {
+                    Text(recipe.name)
+                        .font(.headline)
+                        .foregroundStyle(Color.black)
+                    ForEach(recipe.dishTypes, id: \.self) {tag in
+                        Button(action: {}, label: {
+                            Text(tag)
+                        })
+                        .buttonStyle(.bordered)
+                        .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                        .foregroundStyle(Color.black)
+                    }
+                    
+                }
+                Spacer()
+            }.padding(.horizontal, 16)
             
             Button {
                 isNamingFolder.toggle()
@@ -53,11 +85,11 @@ struct FolderSelectView: View {
             }
             .controlSize(.large)
             .buttonStyle(.borderedProminent)
-            .foregroundStyle(Color.black)
             .shadow(radius: 10)
-            .alert("Log in", isPresented: $isNamingFolder) {
-                TextField("Folder Name", text: $folderName)
+            .alert("New Folder", isPresented: $isNamingFolder) {
+                TextField("Name", text: $folderName)
                     .textInputAutocapitalization(.never)
+                //                    .foregroundColor(Color.black)
                 Button {
                     createFolder()
                     user.addRecipeToFolder(recipe: recipe, folderName: folderName)
@@ -65,22 +97,24 @@ struct FolderSelectView: View {
                 } label: {
                     Text("Save")
                 }
-                Button("Save", action: createFolder)
+                .disabled(folderName == "")
+                
                 Button("Cancel", role: .cancel) { }
             } message: {
-                Text("Please enter your username and password.")
+                Text("Enter a name for this folder")
             }
             
             List(user.getSavedRecipeFolders(), id: \.self) { folder in
                 Button(action: {
                     if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
                         user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
+                    } else {
+                        user.removeRecipeFromFolder(recipe: recipe, folderName: folder.name)
                     }
-//                    searchText = ""
                 }){
                     HStack{
                         Text(folder.name)
-                            .foregroundStyle(Color.black)
+                        //                            .foregroundStyle(Color.black)
                         Spacer()
                         
                         if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {

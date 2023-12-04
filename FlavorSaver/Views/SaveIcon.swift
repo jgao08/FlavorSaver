@@ -37,7 +37,7 @@ struct SaveIcon: View {
                     .font(.system(size: 24))
             } else {
                 Image(systemName: "heart")
-                    .foregroundColor(colorMode ? .white : .black)
+                    .foregroundStyle(colorMode ? .white : .black)
                     .font(.system(size: 24))
             }
         }
