@@ -22,10 +22,7 @@ struct SearchView: View {
             VStack {
                 if searchText.isEmpty {
                     HStack {
-//                        Text("Search by ingredient, dish, or cuisine")
-//                            .font(.title)
-//                            .foregroundStyle(Color.gray)
-//                            .transition(.opacity.animation(.spring(duration: 1.0)))
+                      SearchPageRecipesView()
                         Spacer()
                     }
                     .padding(.horizontal)
@@ -99,6 +96,30 @@ struct SearchView: View {
             selectedIngredients.append(ingredient)
             search.addIngredient(ingredient)
         }
+    }
+}
+
+struct SearchPageRecipesView: View {
+    
+    @State var recipes: [Recipe] = []
+    var body: some View {
+        HStack{
+            Text("Recipes")
+                .font(.title)
+            Spacer()
+        }
+        .padding(.horizontal)
+        
+        
+        HStack {
+            ScrollView (.horizontal, showsIndicators: false ){
+                HStack{
+                    ForEach(recipes, id: \.self){ recipe in
+                        RecipeCardLarge(recipe: recipe)
+                    }
+                }
+            }
+        }.padding(.horizontal)
     }
 }
 
