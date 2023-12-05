@@ -15,7 +15,7 @@ class Authentication: ObservableObject {
     private var auth = Auth.auth()
 
     init() {
-        checkUserAuthentication()
+        configureFirebaseAuthStateListener()
     }
 
     func configureFirebaseAuthStateListener() {
@@ -25,14 +25,6 @@ class Authentication: ObservableObject {
             } else {
                 self.currentUser = nil
             }
-        }
-    }
-
-    private func checkUserAuthentication() {
-        if let user = auth.currentUser {
-            self.currentUser = User(userID: user.uid, username: user.displayName!)
-        } else {
-            self.currentUser = nil
         }
     }
 }
