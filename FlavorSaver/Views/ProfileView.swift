@@ -14,6 +14,24 @@ struct ProfileView: View {
   
   var body: some View{
     NavigationStack{
+      HStack{
+        Spacer()
+        Button(action: {
+          do{
+            try AccountManager.signOut(user: user)
+          } catch {
+            print("signout failed")
+            print(error)
+            //            errormsg = error.localizedDescription
+          }
+        }, label: {
+          Text("Sign Out")
+        })
+        .buttonStyle(.borderedProminent)
+        .padding(.trailing)
+        .tint(.red)
+      }
+      
       VStack{
         if user.getProfileID() == 0 {
           Image("rat")
@@ -65,6 +83,22 @@ struct ProfileView: View {
         })
       }
     }
+//    .toolbar{
+//      ToolbarItem( placement: .navigation ){
+//        Button(action: {
+//          do{
+//            try AccountManager.signOut(user: user)
+//          } catch {
+//            print("signout failed")
+//            print(error)
+//            //            errormsg = error.localizedDescription
+//          }
+//        }, label: {
+//          Text("Sign Out")
+//        })
+//        .buttonStyle(.borderedProminent)
+//      }
+//    }
   }
 }
 

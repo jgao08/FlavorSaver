@@ -22,64 +22,66 @@ struct SearchView: View {
   var body: some View {
     NavigationStack {
       VStack {
-//        ZStack{
-          //    MARK: Searched ingredient list
-          List(searchResults, id: \.self){ ingredient in
-            Button(action: {
-              toggleSelection(ingredient)
-              searchText = ""
-            }){
-              HStack{
-                Text(ingredient)
-                  .foregroundStyle(Color.black)
-                Spacer()
-                
-                if selectedIngredients.contains(ingredient) {
-                  Image(systemName: "checkmark")
-                    .foregroundColor(.blue)
+        ZStack{
+          ScrollView{
+            //    MARK: Searched ingredient list
+            List(searchResults, id: \.self){ ingredient in
+              Button(action: {
+                toggleSelection(ingredient)
+                searchText = ""
+              }){
+                HStack{
+                  Text(ingredient)
+                    .foregroundStyle(Color.black)
+                  Spacer()
+                  
+                  if selectedIngredients.contains(ingredient) {
+                    Image(systemName: "checkmark")
+                      .foregroundColor(.blue)
+                  }
                 }
               }
             }
-          }
-          .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
-          .navigationTitle(Text("Find a recipe"))
-//          .scrollDisabled(true) //NOT SURE IF THIS IS CODE ISSUE OR API ISSUE
-          
-          
-          if searchText.isEmpty && selectedIngredients.isEmpty {
-            VStack {
-              HStack{
-                Text("Recommended Recipes")
-                  .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                Spacer()
-              }
-              .padding()
-              HStack{
-                VStack{
-                  ScrollView{
-                    VStack{
-                      ForEach(recommendedRecipes, id: \.self){ recipe in
-                        RecipeCardLarge(recipe: recipe)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
+            .navigationTitle(Text("Find a recipe"))
+            //          .scrollDisabled(true) //NOT SURE IF THIS IS CODE ISSUE OR API ISSUE
+            
+//            Spacer()
+            if searchText.isEmpty && selectedIngredients.isEmpty {
+              VStack {
+                HStack{
+                  Text("Recommended Recipes")
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                  Spacer()
+                }
+                .padding()
+                HStack{
+                  VStack{
+                    ScrollView{
+                      VStack{
+                        ForEach(recommendedRecipes, id: \.self){ recipe in
+                          RecipeCardLarge(recipe: recipe)
+                        }
                       }
                     }
+                    .scrollIndicators(.hidden)
+                    .task {
+                      await searchRecs.executeRandomSearch()
+                      recommendedRecipes = searchRecs.getRecommendedRecipes()
+                    }
+                    .refreshable {
+                      await searchRecs.executeRandomSearch()
+                      recommendedRecipes = searchRecs.getRecommendedRecipes()
+                    }
+                    //                  .listStyle(.plain)
                   }
-                  .scrollIndicators(.hidden)
-                  .task {
-                    await searchRecs.executeRandomSearch()
-                    recommendedRecipes = searchRecs.getRecommendedRecipes()
-                  }
-                  .refreshable {
-                    await searchRecs.executeRandomSearch()
-                    recommendedRecipes = searchRecs.getRecommendedRecipes()
-                  }
-//                  .listStyle(.plain)
                 }
               }
+              Spacer()
             }
           }
           
-          
-//        }
+        }
         
         //    MARK: selected ingredients and Done button
         HStack{
