@@ -22,7 +22,7 @@ struct SearchView: View {
   var body: some View {
     NavigationStack {
       VStack {
-        ZStack{
+//        ZStack{
           //    MARK: Searched ingredient list
           List(searchResults, id: \.self){ ingredient in
             Button(action: {
@@ -43,7 +43,7 @@ struct SearchView: View {
           }
           .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
           .navigationTitle(Text("Find a recipe"))
-          .scrollDisabled(true) //NOT SURE IF THIS IS CODE ISSUE OR API ISSUE
+//          .scrollDisabled(true) //NOT SURE IF THIS IS CODE ISSUE OR API ISSUE
           
           
           if searchText.isEmpty && selectedIngredients.isEmpty {
@@ -54,25 +54,32 @@ struct SearchView: View {
                 Spacer()
               }
               .padding()
-              VStack{
-                ScrollView{
-                  VStack{
-                    ForEach(recommendedRecipes, id: \.self){ recipe in
-                      RecipeCardLarge(recipe: recipe)
+              HStack{
+                VStack{
+                  ScrollView{
+                    VStack{
+                      ForEach(recommendedRecipes, id: \.self){ recipe in
+                        RecipeCardLarge(recipe: recipe)
+                      }
                     }
                   }
+                  .scrollIndicators(.hidden)
+                  .task {
+                    await searchRecs.executeRandomSearch()
+                    recommendedRecipes = searchRecs.getRecommendedRecipes()
+                  }
+                  .refreshable {
+                    await searchRecs.executeRandomSearch()
+                    recommendedRecipes = searchRecs.getRecommendedRecipes()
+                  }
+//                  .listStyle(.plain)
                 }
-                .refreshable {
-                  await searchRecs.executeRandomSearch()
-                  recommendedRecipes = searchRecs.getRecommendedRecipes()
-                }
-                .listStyle(.plain)
               }
             }
           }
           
           
-        }
+//        }
         
         //    MARK: selected ingredients and Done button
         HStack{
@@ -125,6 +132,6 @@ struct SearchView: View {
 
 
 
-#Preview {
-  SearchView()
-}
+//#Preview {
+//  SearchView()
+//}
