@@ -17,7 +17,8 @@ struct SearchView: View {
   @StateObject var search : Search = Search()
   @StateObject var searchRecs : Recommended = Recommended()
   @State var recommendedRecipes: [Recipe] = []
-  
+  @State private var isInitialLoad = true
+
   
   var body: some View {
     NavigationStack {
@@ -44,14 +45,14 @@ struct SearchView: View {
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
             .navigationTitle(Text("Find a recipe"))
-            //          .scrollDisabled(true) //NOT SURE IF THIS IS CODE ISSUE OR API ISSUE
+//            .zIndex(1)
             
 //            Spacer()
             if searchText.isEmpty && selectedIngredients.isEmpty {
               VStack {
                 HStack{
                   Text("Recommended Recipes")
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .font(.title)
                   Spacer()
                 }
                 .padding()
@@ -66,19 +67,22 @@ struct SearchView: View {
                     }
                     .scrollIndicators(.hidden)
                     .task {
-                      await searchRecs.executeRandomSearch()
-                      recommendedRecipes = searchRecs.getRecommendedRecipes()
+                      if isInitialLoad{
+                        await searchRecs.executeRandomSearch()
+                        recommendedRecipes = searchRecs.getRecommendedRecipes()
+                        isInitialLoad = false
+                      }
                     }
-                    .refreshable {
-                      await searchRecs.executeRandomSearch()
-                      recommendedRecipes = searchRecs.getRecommendedRecipes()
-                    }
-                    //                  .listStyle(.plain)
                   }
                 }
               }
+//              .zIndex(1)
               Spacer()
             }
+          }
+          .refreshable {
+            await searchRecs.executeRandomSearch()
+            recommendedRecipes = searchRecs.getRecommendedRecipes()
           }
           
         }
