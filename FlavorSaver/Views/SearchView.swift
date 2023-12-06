@@ -48,7 +48,7 @@ struct SearchView: View {
 //            .zIndex(1)
             
 //            Spacer()
-            if searchText.isEmpty && selectedIngredients.isEmpty {
+            if searchText.isEmpty {
               VStack {
                 HStack{
                   Text("Recommended Recipes")
@@ -83,6 +83,27 @@ struct SearchView: View {
           .refreshable {
             await searchRecs.executeRandomSearch()
             recommendedRecipes = searchRecs.getRecommendedRecipes()
+          }
+          .overlay{
+            if !searchText.isEmpty {
+              List(searchResults, id: \.self){ ingredient in
+                Button(action: {
+                  toggleSelection(ingredient)
+                  searchText = ""
+                }){
+                  HStack{
+                    Text(ingredient)
+                      .foregroundStyle(Color.black)
+                    Spacer()
+                    
+                    if selectedIngredients.contains(ingredient) {
+                      Image(systemName: "checkmark")
+                        .foregroundColor(.blue)
+                    }
+                  }
+                }
+              }
+            }
           }
           
         }
@@ -122,6 +143,11 @@ struct SearchView: View {
     .ignoresSafeArea(.all)
   }
   var searchResults: [String] {
+    if !search.getIngredientOptions(searchText).isEmpty {
+      print(search.getIngredientOptions(searchText))
+    } else {
+      print("no search results")
+    }
     return search.getIngredientOptions(searchText)
   }
   
