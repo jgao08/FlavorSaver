@@ -243,24 +243,24 @@
 		F9ECAB7E2AEEFA9100F951B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
-				27DAED482AF49214002904FE /* RecipeView.swift */,
-				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
+				0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */,
 				F9ECAB332AEEF04600F951B0 /* App.swift */,
 				274CEFDB2B1D0D31008F77DD /* ContentView.swift */,
-				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
-				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
-				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
-				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
-				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
-				F991A8942AEF87B900200104 /* SaveIcon.swift */,
-				F991A8962AEF87C000200104 /* SaveButton.swift */,
-				27FA5D912B1955EC00973173 /* SignInView.swift */,
-				27FA5D922B1955EC00973173 /* SignUpView.swift */,
-				27FA5D952B19561800973173 /* OnboardingView.swift */,
+				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
 				0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */,
 				0865DAE82B1D8310005DDC02 /* FolderView.swift */,
-				0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */,
+				27FA5D952B19561800973173 /* OnboardingView.swift */,
+				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
+				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
+				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
+				27DAED482AF49214002904FE /* RecipeView.swift */,
+				F991A8962AEF87C000200104 /* SaveButton.swift */,
+				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
+				F991A8942AEF87B900200104 /* SaveIcon.swift */,
+				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
+				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
+				27FA5D912B1955EC00973173 /* SignInView.swift */,
+				27FA5D922B1955EC00973173 /* SignUpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
