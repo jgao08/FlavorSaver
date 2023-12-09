@@ -33,6 +33,8 @@ struct AddFolderButton: View {
                     isNamingFolder = false
                     print("Folder created", folderName)
                     folderName = "" // Reset folderName after successful folder creation
+                } else if recipe == nil{
+                    print("Folder created but recipe not added")
                 } else {
                     // Optionally handle the case when createFolder() returns false
                     print("Folder creation failed")

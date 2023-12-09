@@ -171,6 +171,9 @@ class SavedRecipes : ObservableObject {
             return false
         }
         folders.insert(Folder(name: name), at: 1)
+        Task(priority: .medium){
+            await dbManager.updateFolders(folders: folders)
+        }
         return true;
     }
     
