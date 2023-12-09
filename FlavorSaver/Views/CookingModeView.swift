@@ -44,6 +44,7 @@ struct CookingModeView: View {
             voiceController.startSpeech()
         }
         .onChange(of: voiceController.result) {
+            print("changed")
             changeTabSelection()
         }
     }
