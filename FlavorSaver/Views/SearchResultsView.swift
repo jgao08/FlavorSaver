@@ -13,7 +13,7 @@ struct SearchResultsView: View {
     @EnvironmentObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var search: Search
-    @State var recipes: [Recipe] = []
+    @State var recipes: [(String, [Recipe])] = []
     @State var recipeResultsReceived: Bool = false
     
     
@@ -22,10 +22,14 @@ struct SearchResultsView: View {
             VStack {
                 RecipeSearchNavigation(search: search)
 
-                if recipes == [] && recipeResultsReceived {
+              if recipes.isEmpty && recipeResultsReceived {
                     ContentUnavailableView.search
                 } else if recipeResultsReceived {
-                    RecipeSearchResultsRow(recipes: recipes)
+                  ScrollView{
+                    ForEach(recipes, id: \.0){ (tag, taggedRecipes) in
+                      RecipeSearchResultsRow(tag: tag, recipes: taggedRecipes)
+                    }
+                  }
                 }
                 Spacer()
             }
@@ -34,7 +38,7 @@ struct SearchResultsView: View {
         }
         .task{
             await search.executeSearch()
-            recipes = search.getRecipes()
+            recipes = search.getRecipesWithTags()
             recipeResultsReceived = true
         }
     }
@@ -75,11 +79,11 @@ struct RecipeSearchNavigation: View {
 }
 
 struct RecipeSearchResultsRow: View {
-    
+    @State var tag: String = ""
     @State var recipes: [Recipe] = []
     var body: some View {
         HStack{
-            Text("Recipes")
+          Text(tag.firstUppercased)
                 .font(.title)
             Spacer()
         }
@@ -99,6 +103,7 @@ struct RecipeSearchResultsRow: View {
 }
 
 
-#Preview {
-    SearchView()
+extension StringProtocol {
+    var firstUppercased: String { return prefix(1).uppercased() + dropFirst() }
+    var firstCapitalized: String { return prefix(1).capitalized + dropFirst() }
 }

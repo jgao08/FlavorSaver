@@ -51,6 +51,7 @@ struct CookingModeIntro: View {
     var body: some View {
         VStack {
             VStack (spacing: 128){
+                
                 Text("Welcome to Cooking Mode!")
                     .font(.title)
                     .foregroundStyle(Color.gray)
@@ -67,6 +68,9 @@ struct CookingModeIntro: View {
                     }
                 }
                 
+                Text("Ready in \(recipe.readyInMinutes)")
+                Text("\(recipe.getRecipeStepsWithAmounts().count) steps")
+
                 HStack {
                     VStack (alignment: .leading) {
                         HStack {
