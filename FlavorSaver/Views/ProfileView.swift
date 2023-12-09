@@ -11,26 +11,10 @@ import SwiftUI
 
 struct ProfileView: View {
   @EnvironmentObject var user: User
+  @State var signOut : Bool = false
   
   var body: some View{
     NavigationStack{
-      HStack{
-        Spacer()
-        Button(action: {
-          do{
-            try AccountManager.signOut(user: user)
-          } catch {
-            print("signout failed")
-            print(error)
-            //            errormsg = error.localizedDescription
-          }
-        }, label: {
-          Text("Sign Out")
-        })
-        .buttonStyle(.borderedProminent)
-        .padding(.trailing)
-        .tint(.red)
-      }
       
       VStack{
         if user.getProfileID() == 0 {
@@ -82,23 +66,23 @@ struct ProfileView: View {
           
         })
       }
+      .navigationBarItems(trailing:
+                            Button{
+        signOut = true
+      } label: {
+        Image(systemName: "ellipsis")
+      })
+      .confirmationDialog("Select a color", isPresented: $signOut) {
+        Button("Sign Out", role: .destructive) {
+          do{
+            try AccountManager.signOut(user: user)
+          } catch {
+            print("signout failed")
+            print(error)
+          }
+        }
+      }
     }
-//    .toolbar{
-//      ToolbarItem( placement: .navigation ){
-//        Button(action: {
-//          do{
-//            try AccountManager.signOut(user: user)
-//          } catch {
-//            print("signout failed")
-//            print(error)
-//            //            errormsg = error.localizedDescription
-//          }
-//        }, label: {
-//          Text("Sign Out")
-//        })
-//        .buttonStyle(.borderedProminent)
-//      }
-//    }
   }
 }
 

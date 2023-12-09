@@ -256,8 +256,10 @@
 				F9ECAB332AEEF04600F951B0 /* App.swift */,
 				274CEFDB2B1D0D31008F77DD /* ContentView.swift */,
 				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
+				271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */,
 				0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */,
 				0865DAE82B1D8310005DDC02 /* FolderView.swift */,
+				271AF5E92B24ED2800594183 /* Launch Screen.storyboard */,
 				27FA5D952B19561800973173 /* OnboardingView.swift */,
 				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
 				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
@@ -270,8 +272,6 @@
 				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
 				27FA5D912B1955EC00973173 /* SignInView.swift */,
 				27FA5D922B1955EC00973173 /* SignUpView.swift */,
-				271AF5E92B24ED2800594183 /* Launch Screen.storyboard */,
-				271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
