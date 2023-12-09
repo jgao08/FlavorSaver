@@ -646,7 +646,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FlavorSaver/Preview Content\"";
-				DEVELOPMENT_TEAM = HFUS3M42J2;
+				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
@@ -679,7 +679,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FlavorSaver/Preview Content\"";
-				DEVELOPMENT_TEAM = HFUS3M42J2;
+				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
