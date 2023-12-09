@@ -50,46 +50,70 @@ struct CookingModeIntro: View {
     
     var body: some View {
         VStack {
-            VStack (spacing: 128){
-                
-                Text("Welcome to Cooking Mode!")
-                    .font(.title)
-                    .foregroundStyle(Color.gray)
-                HStack{
-                    Spacer()
-                    VStack (alignment: .trailing) {
-                        HStack {
-                            Text("To go to the next step")
-                                .font(.body)
-                            Image(systemName: "chevron.right")
+            GeometryReader { proxy in
+                ZStack{
+                    AsyncImage(url: URL(string: recipe.image)) { phase in
+                        switch phase {
+                        case .empty:
+                            Image(systemName: "photo")
+                        case .success(let image):
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
+                                .clipped()
+                                .cornerRadius(10)
+                        case .failure:
+                            Image(systemName: "photo")
+                        @unknown default:
+                            EmptyView()
                         }
-                        Text("Swipe left")
-                            .font(.title)
                     }
-                }
-                
-                Text("Ready in \(recipe.readyInMinutes)")
-                Text("\(recipe.getRecipeStepsWithAmounts().count) steps")
-
-                HStack {
-                    VStack (alignment: .leading) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("To go to the previous step")
-                                .font(.body)
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                            Text(recipe.name)
+                                .font(.largeTitle)
+                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                .foregroundStyle(Color.white)
+                                .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            HStack {
+                                Text("Ready in \(recipe.readyInMinutes) minutes")
+                                    .modifier(Tag())
+                                Text("\(recipe.getRecipeStepsWithAmounts().count) steps")
+                                    .modifier(Tag())
+                            }
                         }
-                        Text("Swipe right")
-                            .font(.title)
+                        Spacer()
                     }
-                    Spacer()
+                    .modifier(TextShadow())
+                    .padding(16)
+                    .padding(.bottom, 32)
+                    .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
+                    
                 }
+                .padding(.top, 16)
                 Spacer()
             }
+            HStack {
+                HStack {
+                    Image(systemName: "chevron.left")
+                    Text("Swipe right \nor say previous")
+                        .font(.body)
+                }
+                Spacer()
+                HStack {
+                    Text("Swipe left \nor say next")
+                        .font(.body)
+                        .multilineTextAlignment(.trailing)
+                    Image(systemName: "chevron.right")
+                }
+            }
             .padding(.horizontal, 16)
-            .padding(.vertical, 32)
-        }.onChange(of: selected) {
+        }
+        .onChange(of: selected) {
             if selected == 0 {
-                title = recipe.name
+                title = "Cooking Mode"
                 progressValue = 0
             }
         }
@@ -188,6 +212,7 @@ struct CookingModeOutro: View {
                         }
                         Spacer()
                     }
+                    .modifier(TextShadow())
                     .padding(16)
                     .padding(.bottom, 32)
                     .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
