@@ -21,24 +21,26 @@ struct SaveIcon: View {
     @State private var folderSelect = false
     
     var body: some View  {
-        Button {
-            // Change the saved properties in the backend here
-//            print("Edit button was tapped")
-            //            if user.isRecipeSaved(recipeID: recipe.id) {
-            //                user.removeSavedRecipe(recipe: recipe)
-            //            } else {
-            //                user.addSavedRecipe(recipe: recipe)
-            //            }
-            folderSelect = true
-        } label: {
-            if user.isRecipeSaved(recipeID: recipe.id) {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.red)
-                    .font(.system(size: 24))
-            } else {
-                Image(systemName: "heart")
-                    .foregroundColor(colorMode ? .white : .black)
-                    .font(.system(size: 24))
+        Group {
+            Button {
+                // Change the saved properties in the backend here
+                //            print("Edit button was tapped")
+                //            if user.isRecipeSaved(recipeID: recipe.id) {
+                //                user.removeSavedRecipe(recipe: recipe)
+                //            } else {
+                //                user.addSavedRecipe(recipe: recipe)
+                //            }
+                folderSelect = true
+            } label: {
+                if user.isRecipeSaved(recipeID: recipe.id) {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.red)
+                        .font(.system(size: 24))
+                } else {
+                    Image(systemName: "heart")
+                        .foregroundColor(colorMode ? .white : .black)
+                        .font(.system(size: 24))
+                }
             }
         }
         .sheet(isPresented: $folderSelect, content: {
