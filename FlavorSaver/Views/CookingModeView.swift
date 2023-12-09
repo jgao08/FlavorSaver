@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ConfettiSwiftUI
+//import ConfettiSwiftUI
 
 struct CookingModeView: View {
     @EnvironmentObject var user: User
@@ -42,6 +42,23 @@ struct CookingModeView: View {
         .onAppear {
             title = recipe.name
             voiceController.startSpeech()
+        }
+        .onChange(of: voiceController.result) {
+            changeTabSelection()
+        }
+    }
+    
+    func changeTabSelection() {
+        if voiceController.result == Direction.back {
+            if selected != 0 {
+                selected = selected - 1
+            }
+            voiceController.result = Direction.none
+        } else if voiceController.result == Direction.next {
+            if selected != recipe.getRecipeStepsWithAmounts().count+2 {
+                selected = selected + 1
+            }
+            voiceController.result = Direction.none
         }
     }
 }
@@ -239,7 +256,7 @@ struct CookingModeOutro: View {
         .onAppear{
           counter += 1
         }
-        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
+//        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
     }
 }
 
