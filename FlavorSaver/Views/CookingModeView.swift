@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct CookingModeView: View {
     @EnvironmentObject var user: User
@@ -142,6 +143,7 @@ struct CookingModeStep: View {
 }
 
 struct CookingModeOutro: View {
+  @State private var counter : Int = 0
     @EnvironmentObject var user: User
     @State var recipe : Recipe
     @Environment(\.presentationMode) var presentationMode
@@ -202,6 +204,10 @@ struct CookingModeOutro: View {
                 progressValue = 1
             }
         }
+        .onAppear{
+          counter += 1
+        }
+        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
     }
 }
 
