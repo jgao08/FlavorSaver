@@ -31,7 +31,6 @@ class VoiceControl: ObservableObject {
     }
     
     func startSpeech() {
-        print("fired")
         let node = audioEngine.inputNode
         let recordingFormat = node.outputFormat(forBus: 0)
         node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
@@ -53,7 +52,7 @@ class VoiceControl: ObservableObject {
                 let recognizedText = result.bestTranscription.formattedString
                 if recognizedText.lowercased().contains("next") {
                     self.result = .next
-                } else if recognizedText.lowercased().contains("back") {
+                } else if recognizedText.lowercased().contains("previous") {
                     self.result = .back
                 }
                 print(recognizedText)
@@ -71,7 +70,7 @@ class VoiceControl: ObservableObject {
     func handleVoiceCommand(text: String) {
         if text.lowercased().contains("next") {
             result = .next
-        } else if text.lowercased().contains("back") {
+        } else if text.lowercased().contains("previous") {
             result = .back
         }
     }
