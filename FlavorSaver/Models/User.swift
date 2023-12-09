@@ -14,37 +14,24 @@ class User : ObservableObject{
     private var profileID : Int
     private var dbManager : FirebaseManager
     
-    @Published private var localSavedRecipes : [Recipe]
     @Published private var savedRecipes : SavedRecipes
     
     init(userID : String, username : String, profileID : Int){
         self.userid = userID
         self.username = username
         self.profileID = profileID
-        localSavedRecipes = []
         dbManager = FirebaseManager(userID: String(userid))
         savedRecipes = SavedRecipes(db: dbManager)
-        Task(priority: .high){
-            let recipes = await dbManager.retrieveSavedRecipes()
-            DispatchQueue.main.async {
-                self.localSavedRecipes = recipes
-            }
-        }
     }
     
     init(userID : String, username : String){
         self.userid = userID
         self.username = username
         self.profileID = 0
-        localSavedRecipes = []
         dbManager = FirebaseManager(userID: String(userid))
         savedRecipes = SavedRecipes(db: dbManager)
         Task(priority: .high){
-            let recipes = await dbManager.retrieveSavedRecipes()
             self.profileID = await AccountManager.getProfileID(userID: userID)
-            DispatchQueue.main.async {
-                self.localSavedRecipes = recipes
-            }
         }
     }
     
@@ -150,31 +137,5 @@ class User : ObservableObject{
     ///   - ordering: ordering (recent, alphabetical, etc.)
     func changeFolderOrdering(folderName : String, ordering : String){
         savedRecipes.changeFolderOrder(folderName: folderName, order: Ordering.fromString(ordering: ordering))
-    }
-    
-    // REQUIRES: recipe is not currently in the list
-    func addSavedRecipe(recipe : Recipe){
-        if (isRecipeSaved(recipeID: recipe.id)){
-            print("Recipe already added to local version of the list")
-            return
-        }
-        localSavedRecipes.append(recipe)
-        Task(priority: .medium){
-            await dbManager.addRecipeToUser(recipe: recipe)
-        }
-        addRecipeToFolder(recipe: recipe, folderName: "Liked Recipes")
-    }
-    
-    func removeSavedRecipe(recipe : Recipe){
-        let recipeID = recipe.id
-        if (!isRecipeSaved(recipeID: recipeID)){
-            print("Recipe already removed from local version of list")
-            return
-        }
-        localSavedRecipes = localSavedRecipes.filter({$0.id != recipeID})
-        Task(priority: .medium){
-            await dbManager.removeRecipeFromUser(recipeID: recipeID)
-        }
-        removeRecipeFromFolder(recipe: recipe, folderName: "Liked Recipes")
     }
 }

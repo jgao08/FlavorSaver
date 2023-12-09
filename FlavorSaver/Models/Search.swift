@@ -106,10 +106,5 @@ class Search : ObservableObject{
         }
         return ingredientFinder.filterIngredients(input.lowercased())
     }
-    
-    // TESTING FUNCTION. Not needed to be used regularly
-    func getMetaData() -> RecipesMetaData {
-        return searchResults
-    }
 }
 
