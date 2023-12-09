@@ -36,7 +36,7 @@ class AccountManager {
         return User(userID: userID, username: profileName, profileID: profileID)
     }
     
-    static func signOut(user : User) async throws{
+    static func signOut(user : User) throws{
         try auth.signOut()
     }
   
