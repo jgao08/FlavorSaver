@@ -27,7 +27,6 @@ struct FlavorSaverApp: App {
 
     var body: some Scene {
         WindowGroup {
-            let _ = authentication.configureFirebaseAuthStateListener()
             if let user = authentication.currentUser {
                 ContentView(user: user)
             } else {

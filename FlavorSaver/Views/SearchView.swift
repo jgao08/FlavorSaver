@@ -17,60 +17,94 @@ struct SearchView: View {
   @StateObject var search : Search = Search()
   @StateObject var searchRecs : Recommended = Recommended()
   @State var recommendedRecipes: [Recipe] = []
-  
+  @State private var isInitialLoad = true
+
   
   var body: some View {
     NavigationStack {
       VStack {
         ZStack{
-          //    MARK: Searched ingredient list
-          List(searchResults, id: \.self){ ingredient in
-            Button(action: {
-              toggleSelection(ingredient)
-              searchText = ""
-            }){
-              HStack{
-                Text(ingredient)
-                  .foregroundStyle(Color.black)
-                Spacer()
-                
-                if selectedIngredients.contains(ingredient) {
-                  Image(systemName: "checkmark")
-                    .foregroundColor(.blue)
+          ScrollView{
+            //    MARK: Searched ingredient list
+            List(searchResults, id: \.self){ ingredient in
+              Button(action: {
+                toggleSelection(ingredient)
+                searchText = ""
+              }){
+                HStack{
+                  Text(ingredient)
+                    .foregroundStyle(Color.black)
+                  Spacer()
+                  
+                  if selectedIngredients.contains(ingredient) {
+                    Image(systemName: "checkmark")
+                      .foregroundColor(.blue)
+                  }
                 }
               }
             }
-          }
-          .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
-          .navigationTitle(Text("Find a recipe"))
-          .scrollDisabled(true) //NOT SURE IF THIS IS CODE ISSUE OR API ISSUE
-          
-          
-          if searchText.isEmpty && selectedIngredients.isEmpty {
-            VStack {
-              HStack{
-                Text("Recommended Recipes")
-                  .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                Spacer()
-              }
-              .padding()
-              VStack{
-                ScrollView{
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
+            .navigationTitle(Text("Find a recipe"))
+//            .zIndex(1)
+            
+//            Spacer()
+            if searchText.isEmpty {
+              VStack {
+                HStack{
+                  Text("Recommended Recipes")
+                    .font(.title)
+                  Spacer()
+                }
+                .padding()
+                HStack{
                   VStack{
-                    ForEach(recommendedRecipes, id: \.self){ recipe in
-                      RecipeCardLarge(recipe: recipe)
+                    ScrollView{
+                      VStack{
+                        ForEach(recommendedRecipes, id: \.self){ recipe in
+                          RecipeCardLarge(recipe: recipe)
+                        }
+                      }
+                    }
+                    .scrollIndicators(.hidden)
+                    .task {
+                      if isInitialLoad{
+                        await searchRecs.executeRandomSearch()
+                        recommendedRecipes = searchRecs.getRecommendedRecipes()
+                        isInitialLoad = false
+                      }
                     }
                   }
                 }
-                .refreshable {
-                  await searchRecs.executeRandomSearch()
-                  recommendedRecipes = searchRecs.getRecommendedRecipes()
+              }
+//              .zIndex(1)
+              Spacer()
+            }
+          }
+          .refreshable {
+            await searchRecs.executeRandomSearch()
+            recommendedRecipes = searchRecs.getRecommendedRecipes()
+          }
+          .overlay{
+            if !searchText.isEmpty {
+              List(searchResults, id: \.self){ ingredient in
+                Button(action: {
+                  toggleSelection(ingredient)
+                  searchText = ""
+                }){
+                  HStack{
+                    Text(ingredient)
+                      .foregroundStyle(Color.black)
+                    Spacer()
+                    
+                    if selectedIngredients.contains(ingredient) {
+                      Image(systemName: "checkmark")
+                        .foregroundColor(.blue)
+                    }
+                  }
                 }
-                .listStyle(.plain)
               }
             }
           }
-          
           
         }
         
@@ -109,6 +143,11 @@ struct SearchView: View {
     .ignoresSafeArea(.all)
   }
   var searchResults: [String] {
+    if !search.getIngredientOptions(searchText).isEmpty {
+      print(search.getIngredientOptions(searchText))
+    } else {
+      print("no search results")
+    }
     return search.getIngredientOptions(searchText)
   }
   
@@ -125,6 +164,6 @@ struct SearchView: View {
 
 
 
-#Preview {
-  SearchView()
-}
+//#Preview {
+//  SearchView()
+//}
