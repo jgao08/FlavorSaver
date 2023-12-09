@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct CookingModeView: View {
     @EnvironmentObject var user: User
@@ -17,10 +18,12 @@ struct CookingModeView: View {
     @State var progressValue: Float = 0
     @State var selected: Int = 0
     
+    @ObservedObject var voiceController = VoiceControl()
+    
     var body: some View {
         NavigationView {
             VStack {
-                CookingModeHeader(title: $title, progressValue: $progressValue)
+                CookingModeHeader(title: $title, progressValue: $progressValue).environmentObject(voiceController)
                 TabView (selection: $selected) {
                     CookingModeIntro(recipe: recipe, title: $title, progressValue: $progressValue, selected: $selected)
                         .tag(0)
@@ -38,6 +41,7 @@ struct CookingModeView: View {
         }
         .onAppear {
             title = recipe.name
+            voiceController.startSpeech()
         }
     }
 }
@@ -170,6 +174,7 @@ struct CookingModeStep: View {
 }
 
 struct CookingModeOutro: View {
+  @State private var counter : Int = 0
     @EnvironmentObject var user: User
     @State var recipe : Recipe
     @Environment(\.presentationMode) var presentationMode
@@ -231,11 +236,16 @@ struct CookingModeOutro: View {
                 progressValue = 1
             }
         }
+        .onAppear{
+          counter += 1
+        }
+        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
     }
 }
 
 struct CookingModeHeader: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var voiceController : VoiceControl
     @Binding var title: String
     @Binding var progressValue: Float
     

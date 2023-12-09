@@ -169,6 +169,8 @@ struct RecipeView: View {
       SaveIcon(recipe: recipe, colorMode: false).environmentObject(user)
     })
     .toolbar(.hidden, for: .tabBar)
+    .toolbarBackground(.visible, for: .navigationBar)
+    .toolbarBackground(.white.opacity(0.25), for: .navigationBar)
     
     .edgesIgnoringSafeArea(.all)
   }

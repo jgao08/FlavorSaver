@@ -12,6 +12,9 @@
 		0865DAEB2B1D8BBD005DDC02 /* AddFolderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */; };
 		0871EB7B2B24FEE90045EF93 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB7A2B24FEE90045EF93 /* Colors.swift */; };
 		0871EB7F2B24FF600045EF93 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */; };
+		271AF5EA2B24ED2800594183 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271AF5E92B24ED2800594183 /* Launch Screen.storyboard */; };
+		271AF5ED2B24EF1600594183 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */; };
+		271AF5EF2B24F80B00594183 /* CreatorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */; };
 		274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274CEFDB2B1D0D31008F77DD /* ContentView.swift */; };
 		27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED482AF49214002904FE /* RecipeView.swift */; };
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
@@ -90,6 +93,8 @@
 		0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderButton.swift; sourceTree = "<group>"; };
 		0871EB7A2B24FEE90045EF93 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		271AF5E92B24ED2800594183 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorProfileView.swift; sourceTree = "<group>"; };
 		274CEFDB2B1D0D31008F77DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27DAED482AF49214002904FE /* RecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 				F9ECAB4B2AEEF6BD00F951B0 /* FirebaseAnalyticsSwift in Frameworks */,
 				F9ECAB472AEEF6BD00F951B0 /* FirebaseAnalytics in Frameworks */,
 				F9ECAB492AEEF6BD00F951B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				271AF5ED2B24EF1600594183 /* ConfettiSwiftUI in Frameworks */,
 				F9ECAB6F2AEEF6BD00F951B0 /* FirebaseMLModelDownloader in Frameworks */,
 				F9ECAB632AEEF6BD00F951B0 /* FirebaseFirestoreSwift in Frameworks */,
 				F9ECAB4F2AEEF6BD00F951B0 /* FirebaseAppCheck in Frameworks */,
@@ -260,24 +266,26 @@
 		F9ECAB7E2AEEFA9100F951B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
-				27DAED482AF49214002904FE /* RecipeView.swift */,
-				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
+				0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */,
 				F9ECAB332AEEF04600F951B0 /* App.swift */,
 				274CEFDB2B1D0D31008F77DD /* ContentView.swift */,
-				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
-				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
-				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
-				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
-				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
-				F991A8942AEF87B900200104 /* SaveIcon.swift */,
-				F991A8962AEF87C000200104 /* SaveButton.swift */,
-				27FA5D912B1955EC00973173 /* SignInView.swift */,
-				27FA5D922B1955EC00973173 /* SignUpView.swift */,
-				27FA5D952B19561800973173 /* OnboardingView.swift */,
+				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
 				0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */,
 				0865DAE82B1D8310005DDC02 /* FolderView.swift */,
-				0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */,
+				27FA5D952B19561800973173 /* OnboardingView.swift */,
+				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
+				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
+				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
+				27DAED482AF49214002904FE /* RecipeView.swift */,
+				F991A8962AEF87C000200104 /* SaveButton.swift */,
+				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
+				F991A8942AEF87B900200104 /* SaveIcon.swift */,
+				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
+				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
+				27FA5D912B1955EC00973173 /* SignInView.swift */,
+				27FA5D922B1955EC00973173 /* SignUpView.swift */,
+				271AF5E92B24ED2800594183 /* Launch Screen.storyboard */,
+				271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,6 +352,7 @@
 				F9ECAB762AEEF6BD00F951B0 /* FirebaseRemoteConfigSwift */,
 				F9ECAB782AEEF6BD00F951B0 /* FirebaseStorage */,
 				F9ECAB7A2AEEF6BD00F951B0 /* FirebaseStorageCombine-Community */,
+				271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */,
 			);
 			productName = FlavorSaver;
 			productReference = F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */;
@@ -379,6 +388,7 @@
 			mainGroup = F9ECAB272AEEF04600F951B0;
 			packageReferences = (
 				F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				271AF5EB2B24EF1600594183 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = F9ECAB312AEEF04600F951B0 /* Products */;
 			projectDirPath = "";
@@ -405,6 +415,7 @@
 				F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */,
 				F94070292B1D10AE0002AC27 /* ingredients.txt in Resources */,
 				27DAED4F2AF49351002904FE /* GoogleService-Info.plist in Resources */,
+				271AF5EA2B24ED2800594183 /* Launch Screen.storyboard in Resources */,
 				F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F991A8992AEF89E400200104 /* Search.swift in Sources */,
+				271AF5EF2B24F80B00594183 /* CreatorProfileView.swift in Sources */,
 				274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */,
 				F97EB6452B24D8AF0089AA42 /* VoiceCommand.swift in Sources */,
 				0865DAE92B1D8310005DDC02 /* FolderView.swift in Sources */,
@@ -637,9 +649,12 @@
 				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -667,9 +682,12 @@
 				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -719,6 +737,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		271AF5EB2B24EF1600594183 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -730,6 +756,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 271AF5EB2B24EF1600594183 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
 		F9ECAB462AEEF6BD00F951B0 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
