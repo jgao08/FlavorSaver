@@ -52,6 +52,7 @@ struct RecipeCardLarge: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.leading)
+
                             
                             Spacer()
                             SaveIcon(recipe: recipe).environmentObject(user)
@@ -66,21 +67,25 @@ struct RecipeCardLarge: View {
                                 .lineLimit(1)
                         }
                         .font(.caption)
+
                         
                         Spacer()
                         
                         Text(recipe.author)
                             .font(.caption)
+
                     }
                     .shadow(color: .black, radius: 8)
+                    .foregroundColor(.white)
+
                     
                     Spacer()
                 }
                 .padding(24)
-                .foregroundColor(.white)
                 .frame(width: 300, height: 400)
             }
         })
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
