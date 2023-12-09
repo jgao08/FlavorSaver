@@ -18,10 +18,12 @@ struct CookingModeView: View {
     @State var progressValue: Float = 0
     @State var selected: Int = 0
     
+    @ObservedObject var voiceController = VoiceControl()
+    
     var body: some View {
         NavigationView {
             VStack {
-                CookingModeHeader(title: $title, progressValue: $progressValue)
+                CookingModeHeader(title: $title, progressValue: $progressValue).environmentObject(voiceController)
                 TabView (selection: $selected) {
                     CookingModeIntro(recipe: recipe, title: $title, progressValue: $progressValue, selected: $selected)
                         .tag(0)
@@ -39,6 +41,7 @@ struct CookingModeView: View {
         }
         .onAppear {
             title = recipe.name
+            voiceController.startSpeech()
         }
     }
 }
@@ -213,6 +216,7 @@ struct CookingModeOutro: View {
 
 struct CookingModeHeader: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var voiceController : VoiceControl
     @Binding var title: String
     @Binding var progressValue: Float
     

@@ -68,7 +68,6 @@ struct SearchView: View {
                     .scrollIndicators(.hidden)
                     .task {
                       if isInitialLoad{
-                        await searchRecs.executeRandomSearch()
                         recommendedRecipes = searchRecs.getRecommendedRecipes()
                         isInitialLoad = false
                       }
