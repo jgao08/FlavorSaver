@@ -19,9 +19,9 @@ class Authentication: ObservableObject {
     }
 
     func configureFirebaseAuthStateListener() {
-        auth.addStateDidChangeListener { (_, user) in
-            if let user = user {
-                self.currentUser = User(userID: user.uid, username: user.displayName!)
+        auth.addStateDidChangeListener { (auth, user) in
+            if let user = user{
+                self.currentUser = User(userID: user.uid)
             } else {
                 self.currentUser = nil
             }

@@ -10,9 +10,10 @@ import SwiftUI
 
 struct FolderView: View {
     @EnvironmentObject var user: User
-    @Environment(\.dismiss) private var dismiss
+//    @Environment(\.dismiss) private var dismiss
 
     var folder: Folder
+    @Binding var isShowingFolder: Bool
     
     @State private var showingEditFolder: Bool = false
     
@@ -47,10 +48,10 @@ struct FolderView: View {
         } label: {
             Image(systemName: "ellipsis")
         })
-        .confirmationDialog("Select a color", isPresented: $showingEditFolder) {
+        .confirmationDialog("Folder Settings", isPresented: $showingEditFolder) {
             Button("Delete Folder", role: .destructive) {
                 user.deleteFolder(folderName: folder.name)
-                dismiss()
+                isShowingFolder = false
             }
             .foregroundColor(.red)
         }

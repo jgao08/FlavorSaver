@@ -20,7 +20,7 @@ class User : ObservableObject{
         self.userid = userID
         self.username = username
         self.profileID = profileID
-        dbManager = FirebaseManager(userID: String(userid))
+        dbManager = FirebaseManager(userID: userID)
         savedRecipes = SavedRecipes(db: dbManager)
     }
     
@@ -28,10 +28,22 @@ class User : ObservableObject{
         self.userid = userID
         self.username = username
         self.profileID = 0
-        dbManager = FirebaseManager(userID: String(userid))
+        dbManager = FirebaseManager(userID: userID)
         savedRecipes = SavedRecipes(db: dbManager)
         Task(priority: .high){
             self.profileID = await AccountManager.getProfileID(userID: userID)
+        }
+    }
+    
+    init(userID : String){
+        self.userid = userID
+        self.username = ""
+        self.profileID = 0
+        dbManager = FirebaseManager(userID: userID)
+        savedRecipes = SavedRecipes(db: dbManager)
+        Task(priority: .high){
+            self.profileID = await AccountManager.getProfileID(userID: userID)
+            self.username = await AccountManager.getUsername(userID: userID)
         }
     }
     

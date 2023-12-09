@@ -99,7 +99,8 @@ struct FolderSelectView: View {
                     }
                 }
             }
-        }.foregroundColor(.black)
+        }
+//        .foregroundColor(.black)
         .onAppear {
             folders = user.getSavedRecipeFolders()
         }

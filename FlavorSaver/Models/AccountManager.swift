@@ -18,9 +18,7 @@ class AccountManager {
     static func signUp(username : String, profileID : Int, email : String, password : String) async throws -> User{
         let authInfo = try await auth.createUser(withEmail: email, password: password)
         let userID = authInfo.user.uid
-        let profileChange = authInfo.user.createProfileChangeRequest()
-        profileChange.displayName = username
-        try await profileChange.commitChanges()
+        
         try await db.collection("users").document(userID).setData(["folders" : ["Liked Recipes" : ["name" : "Liked Recipes", "ordering" : "recent", "recipes" : [:]]], "name" : username, "profileID" : profileID])
         
         return User(userID: userID, username: username, profileID: profileID)
@@ -28,18 +26,14 @@ class AccountManager {
     
     static func login(email : String, password : String) async throws -> User{
         let authInfo = try await auth.signIn(withEmail: email, password: password)
-        let userID = authInfo.user.uid
-        let profileName = authInfo.user.displayName!
         
-        let profileID = try await db.collection("users").document(userID).getDocument().data()!["profileID"] as! Int
-        
-        return User(userID: userID, username: profileName, profileID: profileID)
+        return User(userID: authInfo.user.uid)
     }
     
     static func signOut(user : User) throws{
         try auth.signOut()
     }
-  
+    
     static func updateProfileID(userID : String, profileID : Int) {
         Task{
             do{
@@ -58,5 +52,15 @@ class AccountManager {
             print("Error with getting profileID in getProfileID: \(error)")
         }
         return 0
+    }
+    
+    static func getUsername(userID : String) async -> String {
+        do{
+            let username = try await db.collection("users").document(userID).getDocument().data()!["name"] as! String
+            return username
+        }catch{
+            print("Error with getting username in getUsername: \(error)")
+        }
+        return "User"
     }
 }

@@ -69,7 +69,7 @@ struct RecipeSearchNavigation: View {
                             Text(ingredient)
                         })
                         .buttonStyle(.bordered)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(.black)
                     }
                 }
             }

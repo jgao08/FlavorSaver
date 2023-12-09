@@ -23,11 +23,19 @@ struct SaveButton: View {
             folderSelect = true
         }, label: {
             if user.isRecipeSaved(recipeID: recipe.id) {
-                Image(systemName: "heart.fill")
-                Text("Recipe Saved")
+                HStack {
+                    Image(systemName: "heart.fill")
+                    Text("Recipe Saved")
+                }
+                .foregroundColor(.black)
+
             } else {
-                Image(systemName: "heart")
-                Text("Save Recipe")
+                HStack {
+                    Image(systemName: "heart")
+                    Text("Save Recipe")
+                }
+                .foregroundColor(.black)
+
             }
         })
         .sheet(isPresented: $folderSelect, content: {
@@ -36,7 +44,6 @@ struct SaveButton: View {
         .tint(user.isRecipeSaved(recipeID: recipe.id) ? .orange : .white)
         .controlSize(.large)
         .buttonStyle(.borderedProminent)
-        .foregroundColor(.black)
         .shadow(radius: 10)
     }
 }

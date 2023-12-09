@@ -23,7 +23,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct FlavorSaverApp: App {
   // register app delegate for Firebase setup
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
     @StateObject var authentication = Authentication()
 
     var body: some Scene {
