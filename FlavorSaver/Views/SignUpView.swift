@@ -111,7 +111,6 @@ struct SignUpView: View {
           .listRowBackground(Color(UIColor.lightGray).opacity(0.2))
         }
         .scrollContentBackground(.hidden)
-        .scrollDisabled(true)
         
         Spacer()
         HStack{
@@ -158,6 +157,6 @@ struct SignUpView: View {
   }
 }
 
-#Preview{
-  SignUpView()
-}
+//#Preview{
+//  SignUpView()
+//}

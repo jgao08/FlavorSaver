@@ -9,10 +9,25 @@ import SwiftUI
 
 struct CreatorProfileView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+      ScrollView{
+        HStack{
+          Image("rat")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+          VStack{
+            Text("Foodista")
+              .font(.title)
+            Text("Bio: lorem ipsum")
+          }
+        }
+        Divider()
+        
+      }
     }
 }
 
-#Preview {
-    CreatorProfileView()
-}
+//#Preview {
+//    CreatorProfileView()
+//}
