@@ -50,9 +50,10 @@ class VoiceControl: ObservableObject {
                 }
                 
                 let recognizedText = result.bestTranscription.formattedString
-                if recognizedText.lowercased().contains("next") {
+                let strings = recognizedText.split(separator: " ")
+                if strings.last!.lowercased().contains("next") {
                     self.result = .next
-                } else if recognizedText.lowercased().contains("previous") {
+                } else if strings.last!.lowercased().contains("previous") {
                     self.result = .back
                 }
                 print(recognizedText)
