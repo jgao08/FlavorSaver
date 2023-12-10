@@ -108,8 +108,10 @@ struct RecipeView: View {
 
             
             HStack{
-              Text("by " + recipe.author)
-                .font(.caption)
+              NavigationLink(destination: CreatorProfileView(),label: {
+                Text("by " + recipe.author)
+                  .font(.caption)
+              })
               Spacer()
             }
           }

@@ -89,7 +89,7 @@ class Search : ObservableObject{
             self.hasChanged = false;
         }catch{
             if (apiManager.apiVersion == "SPOON_API"){
-                apiManager.apiVersion = "SPOON_API3"
+                apiManager.apiVersion = "SPOON_API2"
                 await executeSearch()
             }else{
                 print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")
