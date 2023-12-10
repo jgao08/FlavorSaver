@@ -85,7 +85,7 @@ struct RecipeCardLarge: View {
                 .frame(width: 300, height: 400)
             }
         })
-        .buttonStyle(PlainButtonStyle())
+//        .buttonStyle(PlainButtonStyle())
     }
 }
 
