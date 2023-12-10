@@ -20,30 +20,31 @@ struct SavedRecipesView: View {
     ]
     
     var body: some View  {
+      NavigationStack{
         ScrollView {
-            VStack (spacing: 32) {
-                //                HStack {
-                //                    Text("My Folders")
-                //                        .font(.headline)
-                //                    Spacer()
-                //                    AddFolderButton(recipe: nil, folders: $folders)
-                //                }
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach($folders, id: \.self) { folder in
-                        FolderCard(folder: folder).environmentObject(user)
-                    }
-                }
+          VStack (spacing: 32) {
+            //                HStack {
+            //                    Text("My Folders")
+            //                        .font(.headline)
+            //                    Spacer()
+            //                    AddFolderButton(recipe: nil, folders: $folders)
+            //                }
+            LazyVGrid(columns: columns, spacing: 16) {
+              ForEach($folders, id: \.self) { folder in
+                FolderCard(folder: folder).environmentObject(user)
+              }
             }
+          }
         }
         .padding(.horizontal)
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
-            print("updating folders from savedRecipesView")
-            folders = user.getSavedRecipeFolders()
+          print("updating folders from savedRecipesView")
+          folders = user.getSavedRecipeFolders()
         }
         .navigationTitle("My Folders")
         .navigationBarItems(trailing: AddFolderButton(recipe: nil, folders: $folders))
-        
+      }
     }
 }
 
@@ -53,7 +54,7 @@ struct FolderCard: View {
     @State var isShowingFolder: Bool = false
     
     var body: some View {
-        NavigationStack {
+      NavigationLink(destination: FolderView(folder: folder, isShowingFolder: $isShowingFolder).environmentObject(user)) {
             
             VStack (alignment: .leading) {
                 if user.getSavedRecipes(folderName: folder.name).count > 0 {
@@ -99,9 +100,6 @@ struct FolderCard: View {
                     .foregroundColor(.gray)
             }
         }
-        .navigationDestination(isPresented: $isShowingFolder){
-            FolderView(folder: folder, isShowingFolder: $isShowingFolder).environmentObject(user)
-        }
     }
 }
 
@@ -117,3 +115,4 @@ struct RoundedEdge: ViewModifier {
             .cornerRadius(cornerRadius)
     }
 }
+

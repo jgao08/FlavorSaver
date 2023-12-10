@@ -19,7 +19,7 @@ struct CreatorProfileView: View {
     var body: some View {
       ScrollView{
         HStack{
-          Image("rat")
+          Image("guy")
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 100, height: 100)
