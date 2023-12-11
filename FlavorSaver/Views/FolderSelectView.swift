@@ -87,25 +87,10 @@ struct FolderSelectView: View {
                             
                             Image(systemName: "checkmark")
                                 .foregroundColor(user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name ? .blue : .clear)
-                            
-//                            if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name {
-//                                Image(systemName: "checkmark")
-//                                    .foregroundColor(.blue)
-//                            }
                         }
                     }
                 }
             }
         }
     }
-    
-//    func createFolder() -> Bool {
-//        let folderCreated = user.createFolder(name: folderName)
-//        print("folder created", folderCreated)
-//        return folderCreated
-//    }
-//
-//    func toggleNamingFolder() {
-//        isNamingFolder.toggle()
-//    }
 }
