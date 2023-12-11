@@ -21,15 +21,17 @@ struct SearchResultsView: View {
         NavigationStack {
             VStack {
                 RecipeSearchNavigation(search: search)
-
-              if recipes.isEmpty && recipeResultsReceived {
+                
+                if recipes.isEmpty && recipeResultsReceived {
                     ContentUnavailableView.search
                 } else if recipeResultsReceived {
-                  ScrollView{
-                    ForEach(recipes, id: \.0){ (tag, taggedRecipes) in
-                      RecipeSearchResultsRow(tag: tag, recipes: taggedRecipes)
+                    ScrollView {
+                        VStack(spacing: 32) {
+                            ForEach(recipes, id: \.0){ (tag, taggedRecipes) in
+                                RecipeSearchResultsRow(tag: tag, recipes: taggedRecipes)
+                            }
+                        }
                     }
-                  }
                 }
                 Spacer()
             }
@@ -83,7 +85,7 @@ struct RecipeSearchResultsRow: View {
     @State var recipes: [Recipe] = []
     var body: some View {
         HStack{
-          Text(tag.firstUppercased)
+            Text(tag.firstUppercased)
                 .font(.title)
             Spacer()
         }
@@ -98,6 +100,7 @@ struct RecipeSearchResultsRow: View {
                     }
                 }
             }
+            .scrollClipDisabled()
         }.padding(.horizontal)
     }
 }

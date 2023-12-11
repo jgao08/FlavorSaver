@@ -19,6 +19,7 @@ struct SaveIcon: View {
     var recipe: Recipe
     @State var colorMode: Bool = true // if true: white, else: black
     @State private var folderSelect = false
+    @State private var isSaved: Bool = false
     
     var body: some View  {
         Group {
@@ -32,7 +33,7 @@ struct SaveIcon: View {
                 //            }
                 folderSelect = true
             } label: {
-                if user.isRecipeSaved(recipeID: recipe.id) {
+                if isSaved {
                     Image(systemName: "heart.fill")
                         .foregroundColor(.red)
                         .font(.system(size: 24))
@@ -46,6 +47,12 @@ struct SaveIcon: View {
         .sheet(isPresented: $folderSelect, content: {
             FolderSelectView(recipe: recipe).environmentObject(user)
         })
+        .onChange(of: folderSelect) {
+            isSaved = user.isRecipeSaved(recipeID: recipe.id)
+        }
+        .onAppear() {
+            isSaved = user.isRecipeSaved(recipeID: recipe.id)
+        }
     }
 }
 
