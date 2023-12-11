@@ -68,16 +68,7 @@ class VoiceControl: ObservableObject {
     func stopSpeech(){
         audioEngine.stop()
         request.endAudio()
-    }
-    
-    func handleVoiceCommand(text: String) {
-        if text.lowercased().contains("next") {
-            result = .next
-        } else if text.lowercased().contains("previous") {
-            result = .back
-        }
-    }
-    
+    }    
 }
 
 
