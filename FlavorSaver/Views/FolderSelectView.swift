@@ -26,7 +26,6 @@ struct FolderSelectView: View {
                 Spacer()
                 Text("Add to Folder")
                     .font(.headline)
-                //                    .foregroundColor(Color.black)
                 Spacer()
                 Button("Done") {
                     presentationMode.wrappedValue.dismiss()
@@ -86,10 +85,13 @@ struct FolderSelectView: View {
                             Text(folder.name)
                             Spacer()
                             
-                            if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.blue)
-                            }
+                            Image(systemName: "checkmark")
+                                .foregroundColor(user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name ? .blue : .clear)
+                            
+//                            if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name {
+//                                Image(systemName: "checkmark")
+//                                    .foregroundColor(.blue)
+//                            }
                         }
                     }
                 }

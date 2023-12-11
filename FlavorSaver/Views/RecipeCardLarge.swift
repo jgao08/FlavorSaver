@@ -56,6 +56,7 @@ struct RecipeCardLarge: View {
                             
                             Spacer()
                             SaveIcon(recipe: recipe).environmentObject(user)
+                                .foregroundColor(.black)
                         }
                         HStack(spacing: 4) {
                             Text(String(recipe.readyInMinutes))

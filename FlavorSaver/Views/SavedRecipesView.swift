@@ -12,8 +12,6 @@ struct SavedRecipesView: View {
     @EnvironmentObject var user: User
         
     private let columns = [
-        //        GridItem(.flexible(), spacing: 16),
-        //        GridItem(.flexible(), spacing: 16)
         GridItem(.adaptive(minimum: 170))
     ]
     
@@ -21,12 +19,6 @@ struct SavedRecipesView: View {
       NavigationStack{
         ScrollView {
           VStack (spacing: 32) {
-            //                HStack {
-            //                    Text("My Folders")
-            //                        .font(.headline)
-            //                    Spacer()
-            //                    AddFolderButton(recipe: nil, folders: $folders)
-            //                }
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
                 FolderCard(folder: folder).environmentObject(user)
@@ -51,26 +43,29 @@ struct FolderCard: View {
     @State var isShowingFolder: Bool = false
     
     var body: some View {
-      NavigationLink(destination: FolderView(folder: folder, isShowingFolder: $isShowingFolder).environmentObject(user)) {
+      NavigationLink(destination: FolderView(folder: $folder, isShowingFolder: $isShowingFolder).environmentObject(user)) {
             
             VStack (alignment: .leading) {
                 if user.getSavedRecipes(folderName: folder.name).count > 0 {
                     AsyncImage(url: URL(string: user.getSavedRecipes(folderName: folder.name).first!.image)) { phase in
                         switch phase {
                         case .empty:
-                            Rectangle()
-                                .fill(.gray)
+                            Image(systemName: "folder")
+                                .font(.title)
+                                .foregroundColor(.gray)
                                 .frame(width: 170, height: 170)
-                                .modifier(RoundedEdge(width: 2, color: .black, cornerRadius: 10))
+                                .modifier(RoundedEdge(width: 2, color: .gray.opacity(0.25), cornerRadius: 10))
                         case .success(let image):
                             image.resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 170, height: 170)
                                 .clipped()
                         case .failure:
-                            Rectangle()
-                                .fill(.gray)
+                            Image(systemName: "folder")
+                                .font(.title)
+                                .foregroundColor(.gray)
                                 .frame(width: 170, height: 170)
+                                .modifier(RoundedEdge(width: 2, color: .gray.opacity(0.25), cornerRadius: 10))
                         @unknown default:
                             // Since the AsyncImagePhase enum isn't frozen,
                             // we need to add this currently unused fallback
@@ -83,11 +78,11 @@ struct FolderCard: View {
                     .cornerRadius(10)
                     
                 } else {
-                    Rectangle()
-                        .fill(.gray)
+                    Image(systemName: "folder")
+                        .font(.title)
+                        .foregroundColor(.gray)
                         .frame(width: 170, height: 170)
-                        .cornerRadius(10)
-                    
+                        .modifier(RoundedEdge(width: 2, color: .gray.opacity(0.25), cornerRadius: 10))
                 }
                 Text(folder.name)
                     .font(.body)

@@ -12,14 +12,12 @@ struct FolderView: View {
     @EnvironmentObject var user: User
 //    @Environment(\.dismiss) private var dismiss
 
-    var folder: Folder
+    @Binding var folder: Folder
     @Binding var isShowingFolder: Bool
     
     @State private var showingEditFolder: Bool = false
     
     private let columns = [
-        //        GridItem(.flexible(), spacing: 16),
-        //        GridItem(.flexible(), spacing: 16)
         GridItem(.adaptive(minimum: 170))
     ]
     
@@ -55,7 +53,6 @@ struct FolderView: View {
             }
             .foregroundColor(.red)
         }
-        
     }
 }
 
