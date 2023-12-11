@@ -19,6 +19,11 @@ struct FirebaseFolder : Codable {
         case name
         case recipeMeta = "recipes"
     }
+    
+    static func toFirebaseFolder(folder : Folder) -> FirebaseFolder {
+        let newRecipeMeta = Dictionary(uniqueKeysWithValues: folder.recipeMeta.map({recipe in (String(recipe.recipe.id), recipe.toFirebaseRecipeMeta())}))
+        return FirebaseFolder(ordering: folder.ordering.toString(), name: folder.name, recipeMeta: newRecipeMeta)
+    }
 }
 
 struct FirebaseRecipeMeta : Codable {
@@ -60,6 +65,14 @@ struct RecipesMetaData: Codable, Identifiable{
         case numberOfRecipes = "number"
         case totalRecipes = "totalResults"
         case recipes = "results"
+    }
+}
+
+struct RandomRecipes : Codable {
+    let recipes : [Recipe]
+    
+    enum CodingKeys: String, CodingKey {
+        case recipes = "recipes"
     }
 }
 

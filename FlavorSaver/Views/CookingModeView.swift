@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//import ConfettiSwiftUI
 
 struct CookingModeView: View {
     @EnvironmentObject var user: User
@@ -17,10 +18,12 @@ struct CookingModeView: View {
     @State var progressValue: Float = 0
     @State var selected: Int = 0
     
+    @ObservedObject var voiceController = VoiceControl()
+    
     var body: some View {
         NavigationView {
             VStack {
-                CookingModeHeader(title: $title, progressValue: $progressValue)
+                CookingModeHeader(title: $title, progressValue: $progressValue).environmentObject(voiceController)
                 TabView (selection: $selected) {
                     CookingModeIntro(recipe: recipe, title: $title, progressValue: $progressValue, selected: $selected)
                         .tag(0)
@@ -38,6 +41,30 @@ struct CookingModeView: View {
         }
         .onAppear {
             title = recipe.name
+            voiceController.startSpeech()
+        }
+        .onChange(of: voiceController.result) {
+            changeTabSelection()
+        }.onDisappear {
+            voiceController.stopSpeech()
+        }
+    }
+    
+    func changeTabSelection() {
+        if voiceController.result == Direction.back {
+            if selected != 0 {
+                selected = selected - 1
+                title = "Step \(selected) of \(recipe.getRecipeStepsWithAmounts().count)"
+                progressValue = (Float(selected)/Float(recipe.getRecipeStepsWithAmounts().count+1))
+            }
+            voiceController.result = Direction.none
+        } else if voiceController.result == Direction.next {
+            if selected != recipe.getRecipeStepsWithAmounts().count+2 {
+                selected = selected + 1
+                title = "Step \(selected) of \(recipe.getRecipeStepsWithAmounts().count)"
+                progressValue = (Float(selected)/Float(recipe.getRecipeStepsWithAmounts().count+1))
+            }
+            voiceController.result = Direction.none
         }
     }
 }
@@ -50,42 +77,70 @@ struct CookingModeIntro: View {
     
     var body: some View {
         VStack {
-            VStack (spacing: 128){
-                Text("Welcome to Cooking Mode!")
-                    .font(.title)
-                    .foregroundStyle(Color.gray)
-                HStack{
-                    Spacer()
-                    VStack (alignment: .trailing) {
-                        HStack {
-                            Text("To go to the next step")
-                                .font(.body)
-                            Image(systemName: "chevron.right")
+            GeometryReader { proxy in
+                ZStack{
+                    AsyncImage(url: URL(string: recipe.image)) { phase in
+                        switch phase {
+                        case .empty:
+                            Image(systemName: "photo")
+                        case .success(let image):
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
+                                .clipped()
+                                .cornerRadius(10)
+                        case .failure:
+                            Image(systemName: "photo")
+                        @unknown default:
+                            EmptyView()
                         }
-                        Text("Swipe left")
-                            .font(.title)
                     }
-                }
-                
-                HStack {
-                    VStack (alignment: .leading) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("To go to the previous step")
-                                .font(.body)
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                            Text(recipe.name)
+                                .font(.largeTitle)
+                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                .foregroundStyle(Color.white)
+                                .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            HStack {
+                                Text("Ready in \(recipe.readyInMinutes) minutes")
+                                    .modifier(Tag())
+                                Text("\(recipe.getRecipeStepsWithAmounts().count) steps")
+                                    .modifier(Tag())
+                            }
                         }
-                        Text("Swipe right")
-                            .font(.title)
+                        Spacer()
                     }
-                    Spacer()
+                    .modifier(TextShadow())
+                    .padding(16)
+                    .padding(.bottom, 32)
+                    .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
+                    
                 }
+                .padding(.top, 16)
                 Spacer()
             }
+            HStack {
+                HStack {
+                    Image(systemName: "chevron.left")
+                    Text("Swipe right \nor say previous")
+                        .font(.body)
+                }
+                Spacer()
+                HStack {
+                    Text("Swipe left \nor say next")
+                        .font(.body)
+                        .multilineTextAlignment(.trailing)
+                    Image(systemName: "chevron.right")
+                }
+            }
             .padding(.horizontal, 16)
-            .padding(.vertical, 32)
-        }.onChange(of: selected) {
+        }
+        .onChange(of: selected) {
             if selected == 0 {
-                title = recipe.name
+                title = "Cooking Mode"
                 progressValue = 0
             }
         }
@@ -133,6 +188,7 @@ struct CookingModeStep: View {
             .padding(.horizontal, 16)
         }
         .onChange(of: selected) {
+            let _ = print("selected: \(selected)")
             if selected == stepIndex {
                 title = "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)"
                 progressValue = (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1))
@@ -142,6 +198,7 @@ struct CookingModeStep: View {
 }
 
 struct CookingModeOutro: View {
+  @State private var counter : Int = 0
     @EnvironmentObject var user: User
     @State var recipe : Recipe
     @Environment(\.presentationMode) var presentationMode
@@ -184,6 +241,7 @@ struct CookingModeOutro: View {
                         }
                         Spacer()
                     }
+                    .modifier(TextShadow())
                     .padding(16)
                     .padding(.bottom, 32)
                     .frame(width: proxy.size.width, height: proxy.size.height / (3/2))
@@ -202,11 +260,16 @@ struct CookingModeOutro: View {
                 progressValue = 1
             }
         }
+        .onAppear{
+          counter += 1
+        }
+//        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
     }
 }
 
 struct CookingModeHeader: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var voiceController : VoiceControl
     @Binding var title: String
     @Binding var progressValue: Float
     

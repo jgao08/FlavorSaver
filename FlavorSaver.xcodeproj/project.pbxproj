@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */; };
+		0865DAE92B1D8310005DDC02 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAE82B1D8310005DDC02 /* FolderView.swift */; };
+		0865DAEB2B1D8BBD005DDC02 /* AddFolderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */; };
+		0871EB7B2B24FEE90045EF93 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB7A2B24FEE90045EF93 /* Colors.swift */; };
+		0871EB7F2B24FF600045EF93 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */; };
+		271AF5EA2B24ED2800594183 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271AF5E92B24ED2800594183 /* Launch Screen.storyboard */; };
+		271AF5ED2B24EF1600594183 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */; };
+		271AF5EF2B24F80B00594183 /* CreatorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */; };
 		274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274CEFDB2B1D0D31008F77DD /* ContentView.swift */; };
 		27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED482AF49214002904FE /* RecipeView.swift */; };
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
@@ -18,11 +26,11 @@
 		F90917302AF7394600DAA43A /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909172F2AF7394600DAA43A /* Ingredients.swift */; };
 		F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E22AF8092C003C2474 /* FirebaseManager.swift */; };
 		F935C4142AF17CB50010BB0C /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C4132AF17CB50010BB0C /* Structs.swift */; };
-		F93CCB2A2B1D511B002E5D55 /* FDSoundActivatedRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = F93CCB292B1D511B002E5D55 /* FDSoundActivatedRecorder */; };
 		F94070292B1D10AE0002AC27 /* ingredients.txt in Resources */ = {isa = PBXBuildFile; fileRef = F94070282B1D10AE0002AC27 /* ingredients.txt */; };
 		F94C7A9F2AF59DEF00155131 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94C7A9E2AF59DEF00155131 /* Recipe.swift */; };
 		F96ABF6A2B06AD1E00C2935F /* SavedRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */; };
 		F96C7E6B2B0071D60094FDE9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */; };
+		F97EB6452B24D8AF0089AA42 /* VoiceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97EB6442B24D8AF0089AA42 /* VoiceCommand.swift */; };
 		F991A88F2AEF879E00200104 /* RecipeCardSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */; };
 		F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8902AEF87A800200104 /* RecipeCardLarge.swift */; };
 		F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8942AEF87B900200104 /* SaveIcon.swift */; };
@@ -30,10 +38,10 @@
 		F991A8992AEF89E400200104 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A8982AEF89E400200104 /* Search.swift */; };
 		F991A89F2AEF8A9D00200104 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991A89E2AEF8A9D00200104 /* User.swift */; };
 		F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595B2AF383DA0080B480 /* SearchTests.swift */; };
-		F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */; };
 		F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6595F2AF42BAB0080B480 /* APIManager.swift */; };
 		F9B9F13E2AFDB3C100EA9FB8 /* UserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92B12E02AF790AA003C2474 /* UserTest.swift */; };
-		F9BAA99C2AF98722004919CC /* RecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BAA99B2AF98722004919CC /* RecipeTests.swift */; };
+		F9E25DEA2B1D93C600076BCA /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E25DE92B1D93C600076BCA /* Authentication.swift */; };
+		F9E25DEE2B1DBD6400076BCA /* Recommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E25DED2B1DBD6400076BCA /* Recommended.swift */; };
 		F9ECAB342AEEF04600F951B0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ECAB332AEEF04600F951B0 /* App.swift */; };
 		F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB372AEEF04800F951B0 /* Assets.xcassets */; };
 		F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9ECAB3A2AEEF04800F951B0 /* Preview Assets.xcassets */; };
@@ -80,6 +88,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectView.swift; sourceTree = "<group>"; };
+		0865DAE82B1D8310005DDC02 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
+		0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderButton.swift; sourceTree = "<group>"; };
+		0871EB7A2B24FEE90045EF93 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		271AF5E92B24ED2800594183 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorProfileView.swift; sourceTree = "<group>"; };
 		274CEFDB2B1D0D31008F77DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27DAED482AF49214002904FE /* RecipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
@@ -96,6 +111,7 @@
 		F94C7A9E2AF59DEF00155131 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		F96ABF692B06AD1E00C2935F /* SavedRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipes.swift; sourceTree = "<group>"; };
 		F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		F97EB6442B24D8AF0089AA42 /* VoiceCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCommand.swift; sourceTree = "<group>"; };
 		F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardSmall.swift; sourceTree = "<group>"; };
 		F991A8902AEF87A800200104 /* RecipeCardLarge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardLarge.swift; sourceTree = "<group>"; };
 		F991A8942AEF87B900200104 /* SaveIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveIcon.swift; sourceTree = "<group>"; };
@@ -104,9 +120,9 @@
 		F991A89E2AEF8A9D00200104 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F9B659522AF382E00080B480 /* FlavorSaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlavorSaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9B6595B2AF383DA0080B480 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
-		F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearch.swift; sourceTree = "<group>"; };
 		F9B6595F2AF42BAB0080B480 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		F9BAA99B2AF98722004919CC /* RecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTests.swift; sourceTree = "<group>"; };
+		F9E25DE92B1D93C600076BCA /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		F9E25DED2B1DBD6400076BCA /* Recommended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommended.swift; sourceTree = "<group>"; };
 		F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlavorSaver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9ECAB332AEEF04600F951B0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F9ECAB372AEEF04800F951B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,11 +146,11 @@
 			files = (
 				F9ECAB592AEEF6BD00F951B0 /* FirebaseDatabase in Frameworks */,
 				F9ECAB672AEEF6BD00F951B0 /* FirebaseFunctionsCombine-Community in Frameworks */,
-				F93CCB2A2B1D511B002E5D55 /* FDSoundActivatedRecorder in Frameworks */,
 				F9ECAB5F2AEEF6BD00F951B0 /* FirebaseFirestore in Frameworks */,
 				F9ECAB4B2AEEF6BD00F951B0 /* FirebaseAnalyticsSwift in Frameworks */,
 				F9ECAB472AEEF6BD00F951B0 /* FirebaseAnalytics in Frameworks */,
 				F9ECAB492AEEF6BD00F951B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				271AF5ED2B24EF1600594183 /* ConfettiSwiftUI in Frameworks */,
 				F9ECAB6F2AEEF6BD00F951B0 /* FirebaseMLModelDownloader in Frameworks */,
 				F9ECAB632AEEF6BD00F951B0 /* FirebaseFirestoreSwift in Frameworks */,
 				F9ECAB4F2AEEF6BD00F951B0 /* FirebaseAppCheck in Frameworks */,
@@ -162,6 +178,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0871EB792B24FED90045EF93 /* StyleGuide */ = {
+			isa = PBXGroup;
+			children = (
+				0871EB7A2B24FEE90045EF93 /* Colors.swift */,
+				0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */,
+			);
+			path = StyleGuide;
+			sourceTree = "<group>";
+		};
 		F96C7C712AF96DD0005B6FA1 /* InternalModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,7 +205,6 @@
 			children = (
 				F9B6595B2AF383DA0080B480 /* SearchTests.swift */,
 				F92B12E02AF790AA003C2474 /* UserTest.swift */,
-				F9BAA99B2AF98722004919CC /* RecipeTests.swift */,
 			);
 			path = FlavorSaverTests;
 			sourceTree = "<group>";
@@ -206,6 +230,7 @@
 		F9ECAB322AEEF04600F951B0 /* FlavorSaver */ = {
 			isa = PBXGroup;
 			children = (
+				0871EB792B24FED90045EF93 /* StyleGuide */,
 				F9ECAB7E2AEEFA9100F951B0 /* Views */,
 				F9ECAB412AEEF27000F951B0 /* Models */,
 				F9ECAB372AEEF04800F951B0 /* Assets.xcassets */,
@@ -227,10 +252,12 @@
 			isa = PBXGroup;
 			children = (
 				F991A8982AEF89E400200104 /* Search.swift */,
+				F9E25DED2B1DBD6400076BCA /* Recommended.swift */,
 				F991A89E2AEF8A9D00200104 /* User.swift */,
 				F94C7A9E2AF59DEF00155131 /* Recipe.swift */,
-				F9B6595D2AF4202C0080B480 /* RecipeSearch.swift */,
 				F96C7E6A2B0071D60094FDE9 /* AccountManager.swift */,
+				F9E25DE92B1D93C600076BCA /* Authentication.swift */,
+				F97EB6442B24D8AF0089AA42 /* VoiceCommand.swift */,
 				F96C7C712AF96DD0005B6FA1 /* InternalModels */,
 			);
 			path = Models;
@@ -239,21 +266,26 @@
 		F9ECAB7E2AEEFA9100F951B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
-				27DAED482AF49214002904FE /* RecipeView.swift */,
-				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
+				0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */,
 				F9ECAB332AEEF04600F951B0 /* App.swift */,
 				274CEFDB2B1D0D31008F77DD /* ContentView.swift */,
-				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
-				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
+				27DAED4A2AF49214002904FE /* CookingModeView.swift */,
+				271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */,
+				0865DAE62B1D1924005DDC02 /* FolderSelectView.swift */,
+				0865DAE82B1D8310005DDC02 /* FolderView.swift */,
+				271AF5E92B24ED2800594183 /* Launch Screen.storyboard */,
+				27FA5D952B19561800973173 /* OnboardingView.swift */,
 				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
-				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
 				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
-				F991A8942AEF87B900200104 /* SaveIcon.swift */,
+				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
+				27DAED482AF49214002904FE /* RecipeView.swift */,
 				F991A8962AEF87C000200104 /* SaveButton.swift */,
+				27DAED492AF49214002904FE /* SavedRecipesView.swift */,
+				F991A8942AEF87B900200104 /* SaveIcon.swift */,
+				F9ECAB812AEF00B800F951B0 /* SearchResultsView.swift */,
+				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
 				27FA5D912B1955EC00973173 /* SignInView.swift */,
 				27FA5D922B1955EC00973173 /* SignUpView.swift */,
-				27FA5D952B19561800973173 /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -320,7 +352,7 @@
 				F9ECAB762AEEF6BD00F951B0 /* FirebaseRemoteConfigSwift */,
 				F9ECAB782AEEF6BD00F951B0 /* FirebaseStorage */,
 				F9ECAB7A2AEEF6BD00F951B0 /* FirebaseStorageCombine-Community */,
-				F93CCB292B1D511B002E5D55 /* FDSoundActivatedRecorder */,
+				271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */,
 			);
 			productName = FlavorSaver;
 			productReference = F9ECAB302AEEF04600F951B0 /* FlavorSaver.app */;
@@ -356,7 +388,7 @@
 			mainGroup = F9ECAB272AEEF04600F951B0;
 			packageReferences = (
 				F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				F93CCB282B1D511B002E5D55 /* XCRemoteSwiftPackageReference "FDSoundActivatedRecorder" */,
+				271AF5EB2B24EF1600594183 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = F9ECAB312AEEF04600F951B0 /* Products */;
 			projectDirPath = "";
@@ -383,6 +415,7 @@
 				F9ECAB3B2AEEF04800F951B0 /* Preview Assets.xcassets in Resources */,
 				F94070292B1D10AE0002AC27 /* ingredients.txt in Resources */,
 				27DAED4F2AF49351002904FE /* GoogleService-Info.plist in Resources */,
+				271AF5EA2B24ED2800594183 /* Launch Screen.storyboard in Resources */,
 				F9ECAB382AEEF04800F951B0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,7 +429,6 @@
 			files = (
 				F9B6595C2AF383DA0080B480 /* SearchTests.swift in Sources */,
 				F9B9F13E2AFDB3C100EA9FB8 /* UserTest.swift in Sources */,
-				F9BAA99C2AF98722004919CC /* RecipeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,27 +437,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				F991A8992AEF89E400200104 /* Search.swift in Sources */,
+				271AF5EF2B24F80B00594183 /* CreatorProfileView.swift in Sources */,
 				274CEFDC2B1D0D31008F77DD /* ContentView.swift in Sources */,
+				F97EB6452B24D8AF0089AA42 /* VoiceCommand.swift in Sources */,
+				0865DAE92B1D8310005DDC02 /* FolderView.swift in Sources */,
 				27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */,
+				0871EB7B2B24FEE90045EF93 /* Colors.swift in Sources */,
 				F9ECAB822AEF00B800F951B0 /* SearchResultsView.swift in Sources */,
 				F9ECAB842AEF00C000F951B0 /* ProfileView.swift in Sources */,
 				F94C7A9F2AF59DEF00155131 /* Recipe.swift in Sources */,
 				F96C7E6B2B0071D60094FDE9 /* AccountManager.swift in Sources */,
 				F991A8972AEF87C000200104 /* SaveButton.swift in Sources */,
+				0871EB7F2B24FF600045EF93 /* ViewModifiers.swift in Sources */,
 				F991A89F2AEF8A9D00200104 /* User.swift in Sources */,
+				0865DAEB2B1D8BBD005DDC02 /* AddFolderButton.swift in Sources */,
 				F90917302AF7394600DAA43A /* Ingredients.swift in Sources */,
 				F991A8912AEF87A800200104 /* RecipeCardLarge.swift in Sources */,
+				F9E25DEA2B1D93C600076BCA /* Authentication.swift in Sources */,
 				F9ECAB802AEF009800F951B0 /* SearchView.swift in Sources */,
 				27FA5D942B1955EC00973173 /* SignUpView.swift in Sources */,
 				F991A8952AEF87B900200104 /* SaveIcon.swift in Sources */,
 				F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */,
-				F9B6595E2AF4202C0080B480 /* RecipeSearch.swift in Sources */,
 				27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */,
 				27FA5D932B1955EC00973173 /* SignInView.swift in Sources */,
 				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
+				F9E25DEE2B1DBD6400076BCA /* Recommended.swift in Sources */,
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,
+				0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */,
 				F96ABF6A2B06AD1E00C2935F /* SavedRecipes.swift in Sources */,
 				F991A88F2AEF879E00200104 /* RecipeCardSmall.swift in Sources */,
 				27FA5D962B19561800973173 /* OnboardingView.swift in Sources */,
@@ -609,9 +649,12 @@
 				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -620,7 +663,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaver;
+				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaverr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -639,9 +682,12 @@
 				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -650,7 +696,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaver;
+				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaverr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -691,12 +737,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F93CCB282B1D511B002E5D55 /* XCRemoteSwiftPackageReference "FDSoundActivatedRecorder" */ = {
+		271AF5EB2B24EF1600594183 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/fulldecent/FDSoundActivatedRecorder";
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.2.1;
+				minimumVersion = 1.1.0;
 			};
 		};
 		F9ECAB452AEEF6BD00F951B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -710,10 +756,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F93CCB292B1D511B002E5D55 /* FDSoundActivatedRecorder */ = {
+		271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F93CCB282B1D511B002E5D55 /* XCRemoteSwiftPackageReference "FDSoundActivatedRecorder" */;
-			productName = FDSoundActivatedRecorder;
+			package = 271AF5EB2B24EF1600594183 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 		F9ECAB462AEEF6BD00F951B0 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

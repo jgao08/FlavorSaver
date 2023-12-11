@@ -52,9 +52,11 @@ struct RecipeCardLarge: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.leading)
+
                             
                             Spacer()
                             SaveIcon(recipe: recipe).environmentObject(user)
+                                .foregroundColor(.black)
                         }
                         HStack(spacing: 4) {
                             Text(String(recipe.readyInMinutes))
@@ -63,23 +65,28 @@ struct RecipeCardLarge: View {
                                 Text("•")
                             }
                             Text(recipe.cuisines.joined(separator: ", "))
+                                .lineLimit(1)
                         }
                         .font(.caption)
+
                         
                         Spacer()
                         
                         Text(recipe.author)
                             .font(.caption)
+
                     }
                     .shadow(color: .black, radius: 8)
+                    .foregroundColor(.white)
+
                     
                     Spacer()
                 }
                 .padding(24)
-                .foregroundStyle(.white)
                 .frame(width: 300, height: 400)
             }
         })
+//        .buttonStyle(PlainButtonStyle())
     }
 }
 

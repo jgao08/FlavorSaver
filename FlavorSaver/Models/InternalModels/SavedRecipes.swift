@@ -9,11 +9,15 @@ import Foundation
 import FirebaseDatabaseSwift
 import FirebaseFirestore
 
-class Folder : ObservableObject, Equatable {
+class Folder : ObservableObject, Equatable, Hashable {
     var ordering : Ordering = .recent
     var name : String
     @Published var recipeMeta : [RecipeMeta] = []
     @Published var recipes : [Recipe] = []
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
     
     init(name: String) {
         self.name = name
@@ -40,11 +44,13 @@ class SavedRecipes : ObservableObject {
     
     init(db : FirebaseManager){
         dbManager = db
-        Task(priority: .high){
-            let folders = await db.retrieveSavedFolders()
-            DispatchQueue.main.async {
-                self.folders = folders
-            }
+    }
+    
+    init(db : FirebaseManager, bool : Bool) async {
+        dbManager = db
+        let folders = await db.retrieveSavedFolders()
+        DispatchQueue.main.async {
+            self.folders = folders
         }
     }
     
@@ -52,18 +58,9 @@ class SavedRecipes : ObservableObject {
         return folders.filter({folder in folder.name == name}).first
     }
     
-    private func updateFolder(folder : Folder){
-        let folderIndex = folders.firstIndex(of: folder)
-        guard folderIndex != nil else {
-            print("Folder is not found in SavedRecipes????")
-            return
-        }
-        folders[folderIndex!] = folder
-        Task(priority: .medium){
-            await dbManager.updateFolders(folders: folders)
-        }
+    func getAllRecipes() -> [Recipe] {
+        return Array(Set(folders.flatMap({folder in folder.recipeMetaToRecipe()})))
     }
-    
     
     ///  Retrieves the recipes in the given folder
     /// - Parameter folderName: the folder to retrieve the recipes of
@@ -144,9 +141,6 @@ class SavedRecipes : ObservableObject {
             print("Foldename is not valid in removeRecipeFromFolder")
             return
         }
-        guard folder.name != "Liked Recipes" else {
-            return
-        }
         let folderIndex = folders.firstIndex(of: folder)
         guard let index = folderIndex else {
             print("Folder is not found in SavedRecipes?")
@@ -159,15 +153,29 @@ class SavedRecipes : ObservableObject {
         }
     }
     
+    func isValidFolderName(name : String) -> String?{
+        let newName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        if newName.count == 0 {
+            return "Folder name cannot be empty"
+        }else if folders.contains(where: {$0.name == name}){
+            return "Folder name is already taken"
+        }else{
+            return nil
+        }
+    }
+    
     
     /// Creates a new folder with the given name
     /// - name: name of the new folder. MUST be unique.
     /// - Returns: true if success, false otherwise (if name is already taken)
-    func createFolder(name : String) -> Bool{
-        if (folders.contains(where: {$0.name == name})){
-            return false;
+    func createFolder(name : String) -> Bool {
+        if isValidFolderName(name: name) != nil{
+            return false
         }
-        folders.append(Folder(name: name))
+        folders.insert(Folder(name: name), at: 1)
+        Task(priority: .medium){
+            await dbManager.updateFolders(folders: folders)
+        }
         return true;
     }
     

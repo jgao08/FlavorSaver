@@ -107,11 +107,13 @@ struct RecipeView: View {
             }
 
             
-            HStack{
-              Text("by " + recipe.author)
-                .font(.caption)
-              Spacer()
-            }
+//            HStack{
+//              NavigationLink(destination: CreatorProfileView(),label: {
+//                Text("by " + recipe.author)
+//                  .font(.caption)
+//              })
+//              Spacer()
+//            }
           }
           
           VStack(spacing: paraSpacing){
@@ -169,6 +171,8 @@ struct RecipeView: View {
       SaveIcon(recipe: recipe, colorMode: false).environmentObject(user)
     })
     .toolbar(.hidden, for: .tabBar)
+    .toolbarBackground(.visible, for: .navigationBar)
+    .toolbarBackground(.white.opacity(0.25), for: .navigationBar)
     
     .edgesIgnoringSafeArea(.all)
   }
