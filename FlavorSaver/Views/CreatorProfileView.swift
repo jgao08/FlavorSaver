@@ -9,9 +9,7 @@ import SwiftUI
 
 struct CreatorProfileView: View {
   var user: User = User(userID: "oWkYfZMRPYYMC3hIAb5pW8jeg1a2")
-  
-  @State var folders: [Folder] = []
-  
+    
   private let columns = [
       GridItem(.adaptive(minimum: 170))
   ]
@@ -46,7 +44,7 @@ struct CreatorProfileView: View {
         ScrollView {
             VStack (spacing: 32) {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach($folders, id: \.self) { folder in
+                    ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
                         FolderCard(folder: folder).environmentObject(user)
                     }
                 }
@@ -54,7 +52,6 @@ struct CreatorProfileView: View {
         }
         .onAppear{
           print(user.getUsername())
-          folders = user.getSavedRecipeFolders()
         }
       }
     }

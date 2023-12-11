@@ -14,7 +14,6 @@ struct FolderSelectView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var recipe: Recipe
-    @State var folders: [Folder] = []
     @State private var selectedFolder: String?
     
     var body: some View {
@@ -51,10 +50,6 @@ struct FolderSelectView: View {
                     case .failure:
                         Image(systemName: "photo")
                     @unknown default:
-                        // Since the AsyncImagePhase enum isn't frozen,
-                        // we need to add this currently unused fallback
-                        // to handle any new cases that might be added
-                        // in the future:
                         EmptyView()
                     }
                 }
@@ -70,10 +65,10 @@ struct FolderSelectView: View {
             
             List {
                 HStack (spacing: 16) {
-                    AddFolderButton(recipe: recipe, folders: $folders).environmentObject(user)
+                    AddFolderButton(recipe: recipe).environmentObject(user)
                     Text("Add Folder")
                 }
-                ForEach(folders, id: \.self) { folder in
+                ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
                     Button(action: {
                         if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
                             user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
@@ -99,10 +94,6 @@ struct FolderSelectView: View {
                     }
                 }
             }
-        }
-//        .foregroundColor(.black)
-        .onAppear {
-            folders = user.getSavedRecipeFolders()
         }
     }
     

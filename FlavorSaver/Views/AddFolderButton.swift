@@ -14,7 +14,6 @@ struct AddFolderButton: View {
     @State private var isNamingFolder: Bool = false
     @State private var folderName: String = ""
     var recipe: Recipe?
-    @Binding var folders: [Folder]
 
     var body: some View  {
         Button {
@@ -27,16 +26,15 @@ struct AddFolderButton: View {
                 .textInputAutocapitalization(.never)
             
             Button("Save") {
-                print("Save button clicked", folderName) // Moved print statement here
+                print("Save button clicked", folderName)
                 if createFolder() && recipe != nil {
                     user.addRecipeToFolder(recipe: recipe!, folderName: folderName)
                     isNamingFolder = false
                     print("Folder created", folderName)
-                    folderName = "" // Reset folderName after successful folder creation
+                    folderName = ""
                 } else if recipe == nil{
                     print("Folder created but recipe not added")
                 } else {
-                    // Optionally handle the case when createFolder() returns false
                     print("Folder creation failed")
                 }
             }
@@ -50,7 +48,6 @@ struct AddFolderButton: View {
     func createFolder() -> Bool {
         let folderCreated = user.createFolder(name: folderName)
         print("folder created", folderCreated)
-        folders = user.getSavedRecipeFolders()
         return folderCreated
     }
     

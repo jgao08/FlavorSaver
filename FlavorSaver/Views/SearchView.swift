@@ -16,7 +16,7 @@ struct SearchView: View {
   @State var selectedIngredients : [String] = []
   @StateObject var search : Search = Search()
   @StateObject var searchRecs : Recommended = Recommended()
-  @State var recommendedRecipes: [Recipe] = []
+  //@State var recommendedRecipes: [Recipe] = []
   @State private var isInitialLoad = true
 
   
@@ -60,18 +60,18 @@ struct SearchView: View {
                   VStack{
                     ScrollView{
                       VStack{
-                        ForEach(recommendedRecipes, id: \.self){ recipe in
+                        ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
                           RecipeCardLarge(recipe: recipe)
                         }
                       }
                     }
                     .scrollIndicators(.hidden)
-                    .task {
-                      if isInitialLoad{
-                        recommendedRecipes = searchRecs.getRecommendedRecipes()
-                        isInitialLoad = false
-                      }
-                    }
+//                    .task {
+//                      if isInitialLoad{
+//                        //recommendedRecipes = searchRecs.getRecommendedRecipes()
+//                        isInitialLoad = false
+//                      }
+//                    }
                   }
                 }
               }
@@ -81,7 +81,7 @@ struct SearchView: View {
           }
           .refreshable {
             await searchRecs.executeRandomSearch()
-            recommendedRecipes = searchRecs.getRecommendedRecipes()
+//            recommendedRecipes = searchRecs.getRecommendedRecipes()
           }
           .overlay{
             if !searchText.isEmpty {
@@ -142,12 +142,7 @@ struct SearchView: View {
     .ignoresSafeArea(.all)
   }
   var searchResults: [String] {
-    if !search.getIngredientOptions(searchText).isEmpty {
-      print(search.getIngredientOptions(searchText))
-    } else {
-      print("no search results")
-    }
-    return search.getIngredientOptions(searchText)
+      return search.getIngredientOptions(searchText)
   }
   
   func toggleSelection(_ ingredient: String) {

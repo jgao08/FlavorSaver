@@ -107,13 +107,13 @@ struct RecipeView: View {
             }
 
             
-            HStack{
-              NavigationLink(destination: CreatorProfileView(),label: {
-                Text("by " + recipe.author)
-                  .font(.caption)
-              })
-              Spacer()
-            }
+//            HStack{
+//              NavigationLink(destination: CreatorProfileView(),label: {
+//                Text("by " + recipe.author)
+//                  .font(.caption)
+//              })
+//              Spacer()
+//            }
           }
           
           VStack(spacing: paraSpacing){

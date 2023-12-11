@@ -44,11 +44,13 @@ class SavedRecipes : ObservableObject {
     
     init(db : FirebaseManager){
         dbManager = db
-        Task(priority: .high){
-            let folders = await db.retrieveSavedFolders()
-            DispatchQueue.main.async {
-                self.folders = folders
-            }
+    }
+    
+    init(db : FirebaseManager, bool : Bool) async {
+        dbManager = db
+        let folders = await db.retrieveSavedFolders()
+        DispatchQueue.main.async {
+            self.folders = folders
         }
     }
     

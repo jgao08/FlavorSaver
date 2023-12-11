@@ -13,7 +13,7 @@ class Recommended : ObservableObject{
     
     init(){
         Task(priority: .high){
-            //await executeRandomSearch()
+            await executeRandomSearch()
         }
     }
     

@@ -45,6 +45,8 @@ struct CookingModeView: View {
         }
         .onChange(of: voiceController.result) {
             changeTabSelection()
+        }.onDisappear {
+            voiceController.stopSpeech()
         }
     }
     
@@ -52,11 +54,15 @@ struct CookingModeView: View {
         if voiceController.result == Direction.back {
             if selected != 0 {
                 selected = selected - 1
+                title = "Step \(selected) of \(recipe.getRecipeStepsWithAmounts().count)"
+                progressValue = (Float(selected)/Float(recipe.getRecipeStepsWithAmounts().count+1))
             }
             voiceController.result = Direction.none
         } else if voiceController.result == Direction.next {
             if selected != recipe.getRecipeStepsWithAmounts().count+2 {
                 selected = selected + 1
+                title = "Step \(selected) of \(recipe.getRecipeStepsWithAmounts().count)"
+                progressValue = (Float(selected)/Float(recipe.getRecipeStepsWithAmounts().count+1))
             }
             voiceController.result = Direction.none
         }
@@ -182,6 +188,7 @@ struct CookingModeStep: View {
             .padding(.horizontal, 16)
         }
         .onChange(of: selected) {
+            let _ = print("selected: \(selected)")
             if selected == stepIndex {
                 title = "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)"
                 progressValue = (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1))

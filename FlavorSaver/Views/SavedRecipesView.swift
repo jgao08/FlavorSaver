@@ -10,9 +10,7 @@ import SwiftUI
 
 struct SavedRecipesView: View {
     @EnvironmentObject var user: User
-    
-    @State var folders: [Folder] = []
-    
+        
     private let columns = [
         //        GridItem(.flexible(), spacing: 16),
         //        GridItem(.flexible(), spacing: 16)
@@ -30,7 +28,7 @@ struct SavedRecipesView: View {
             //                    AddFolderButton(recipe: nil, folders: $folders)
             //                }
             LazyVGrid(columns: columns, spacing: 16) {
-              ForEach($folders, id: \.self) { folder in
+                ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
                 FolderCard(folder: folder).environmentObject(user)
               }
             }
@@ -40,17 +38,16 @@ struct SavedRecipesView: View {
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
           print("updating folders from savedRecipesView")
-          folders = user.getSavedRecipeFolders()
         }
         .navigationTitle("My Folders")
-        .navigationBarItems(trailing: AddFolderButton(recipe: nil, folders: $folders))
+        .navigationBarItems(trailing: AddFolderButton(recipe: nil))
       }
     }
 }
 
 struct FolderCard: View {
     @EnvironmentObject var user: User
-    @Binding var folder: Folder
+    @State var folder: Folder
     @State var isShowingFolder: Bool = false
     
     var body: some View {
