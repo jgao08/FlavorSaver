@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-//import ConfettiSwiftUI
+import ConfettiSwiftUI
 
 struct CookingModeView: View {
     @EnvironmentObject var user: User
@@ -34,13 +34,13 @@ struct CookingModeView: View {
                         }
                     }
                     CookingModeOutro(recipe: recipe, sheetOpen: sheetOpen, title: $title, progressValue: $progressValue, selected: $selected).environmentObject(user)
-                        .tag(100)
+                        .tag(recipe.getRecipeStepsWithAmounts().count + 1)
                 }
                 .tabViewStyle(.page)
             }
         }
         .onAppear {
-            title = recipe.name
+            title = "Cooking Mode"
             voiceController.startSpeech()
         }
         .onChange(of: voiceController.result) {
@@ -52,17 +52,20 @@ struct CookingModeView: View {
     
     func changeTabSelection() {
         if voiceController.result == Direction.back {
-            if selected != 0 {
+            if selected > 0 {
                 selected = selected - 1
                 title = "Step \(selected) of \(recipe.getRecipeStepsWithAmounts().count)"
                 progressValue = (Float(selected)/Float(recipe.getRecipeStepsWithAmounts().count+1))
             }
             voiceController.result = Direction.none
         } else if voiceController.result == Direction.next {
-            if selected != recipe.getRecipeStepsWithAmounts().count+2 {
+            if selected < recipe.getRecipeStepsWithAmounts().count+1 {
                 selected = selected + 1
                 title = "Step \(selected) of \(recipe.getRecipeStepsWithAmounts().count)"
                 progressValue = (Float(selected)/Float(recipe.getRecipeStepsWithAmounts().count+1))
+                if selected == recipe.getRecipeStepsWithAmounts().count+1 {
+                    title = "Recipe Complete!"
+                }
             }
             voiceController.result = Direction.none
         }
@@ -159,7 +162,6 @@ struct CookingModeStep: View {
     
     var body: some View {
         VStack {
-//            CookingModeHeader(title: "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)", progressValue: (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1)))
             VStack {
                 HStack{
                     Text(step)
@@ -249,13 +251,11 @@ struct CookingModeOutro: View {
                 }
                 .padding(.top, 16)
                 Spacer()
-                //            NavigationLink(destination: SavedRecipesView().environmentObject(user), label: {Text("Go to Saved Recipes")})
-                //                .buttonStyle(.borderedProminent)
-                //                .frame(alignment: .trailing)
             }
         }
         .onChange(of: selected) {
-            if selected == 100 {
+            print("getrecipestepscount", recipe.getRecipeStepsWithAmounts().count + 1)
+            if selected == recipe.getRecipeStepsWithAmounts().count + 1 {
                 title = "Recipe Complete!"
                 progressValue = 1
             }
@@ -263,7 +263,7 @@ struct CookingModeOutro: View {
         .onAppear{
           counter += 1
         }
-//        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
+        .confettiCannon(counter: $counter, num: 50, repetitions: 2)
     }
 }
 
