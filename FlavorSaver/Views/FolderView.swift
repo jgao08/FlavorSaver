@@ -44,7 +44,9 @@ struct FolderView: View {
         Button {
             showingEditFolder = true
         } label: {
+          if(user.getUserID() != "oWkYfZMRPYYMC3hIAb5pW8jeg1a2"){
             Image(systemName: "ellipsis")
+          }
         })
         .confirmationDialog("Folder Settings", isPresented: $showingEditFolder) {
             Button("Delete Folder", role: .destructive) {
