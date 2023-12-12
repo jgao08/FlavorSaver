@@ -51,7 +51,7 @@ struct Recipe : Codable, Equatable, Hashable, Identifiable {
                 let stepSentences = step.step
                 var stepIngredients : [String] = []
                 for ingredient in step.ingredients {
-                    if let ingredientWithAmount: String = ingredientsWithAmounts.filter({ $0.lowercased().contains(ingredient.name) }).first {
+                    if let ingredientWithAmount: String = ingredientsWithAmounts.filter({ $0.lowercased().contains(ingredient.name.lowercased())}).first {
                         stepIngredients.append(ingredientWithAmount)
                     }
                 }

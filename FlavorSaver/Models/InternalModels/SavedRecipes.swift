@@ -172,7 +172,11 @@ class SavedRecipes : ObservableObject {
         if isValidFolderName(name: name) != nil{
             return false
         }
-        folders.insert(Folder(name: name), at: 1)
+        if (folders.count > 0){
+            folders.insert(Folder(name: name), at: 1)
+        }else{
+            folders.append(Folder(name: name))
+        }
         Task(priority: .medium){
             await dbManager.updateFolders(folders: folders)
         }

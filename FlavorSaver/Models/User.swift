@@ -141,7 +141,9 @@ class User : ObservableObject{
     /// - Parameter name: name of the new folder
     /// - Returns: true if successful, false otherwise
     func createFolder(name : String) -> Bool{
-        return savedRecipes.createFolder(name: name)
+        let status = savedRecipes.createFolder(name: name)
+        savedFolders = savedRecipes.folders
+        return status
     }
     
     /// Returns nil if the folder name is valid, otherwise returns an error message

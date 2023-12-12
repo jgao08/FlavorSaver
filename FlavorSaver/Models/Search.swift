@@ -21,7 +21,7 @@ class Search : ObservableObject{
     /// Adds an ingredient to the search request. No ingredients are added if the ingredient is already in the list
     /// - Parameter ingredient: the ingredient to add
     func addIngredient(_ ingredient : String) {
-        if (!selectedIngredients.contains(ingredient)){
+        if (!selectedIngredients.contains(ingredient.lowercased())){
             selectedIngredients.append(ingredient.lowercased())
             hasChanged = true
         }
@@ -90,6 +90,9 @@ class Search : ObservableObject{
         }catch{
             if (apiManager.apiVersion == "SPOON_API"){
                 apiManager.apiVersion = "SPOON_API2"
+                await executeSearch()
+            }else if (apiManager.apiVersion == "SPOON_API2"){
+                apiManager.apiVersion = "SPOON_API3"
                 await executeSearch()
             }else{
                 print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")

@@ -11,90 +11,88 @@ import SwiftUI
 
 @MainActor
 final class UserTest: XCTestCase {
-    var user : User = User(userID : "-1", username : "fake user")
-    
+    var user : User = User(userID: "testUser", username: "TestUser", profileID: 0)
+    let testRecipe = Recipe(id: 0, name: "testRecipe", image: "", imageType: "", servings: 0, readyInMinutes: 0, author: "", authorURL: "", spoonURL: "", summary: "", cuisines: [], dishTypes: [], ingredientInfo: [], ingredientSteps: [])
+   
     override func setUpWithError() throws {
-        let _ = user.getSavedRecipes().map {user.removeSavedRecipe(recipe: $0)}
-        print("Successfully removed all SETUP recipes? \(user.getSavedRecipes().count)")
+        let _ = user.createFolder(name: "TestFolder")
     }
     
     override func tearDownWithError() throws {
-        let _ = user.getSavedRecipes().map {user.removeSavedRecipe(recipe: $0)}
-        print("Successfully removed all TEARDOWN recipes? \(user.getSavedRecipes().count)")
+        for folder in user.getSavedRecipeFolders() {
+            user.deleteFolder(folderName: folder.name)
+        }
+    }
+    func testInitializationWithProfileID() {
+        XCTAssertEqual(user.getUserID(), "testUser")
+        XCTAssertEqual(user.getUsername(), "TestUser")
+        XCTAssertEqual(user.getProfileID(), 0)
+        XCTAssertEqual(user.getSavedRecipeFolders().count, 1)
     }
     
-    // Sometimes passes sometimes fails
-    func testExample() async throws {
-        let vodka : Search = Search()
-        vodka.addIngredient("vodka")
+    func testInitializationWithoutProfileID() {
+        let userWithoutProfileID = User(userID: "testUser2", username: "TestUser2")
+        XCTAssertEqual(userWithoutProfileID.getProfileID(), 0)
+    }
         
-        await vodka.executeSearch()
-        let recipes = vodka.getRecipes()
-        
-        XCTAssert(recipes.count == 1)
-        let firstRecipe = recipes.first!
-        
-        // Add this vodka recipe
-        
-        user.addSavedRecipe(recipe: firstRecipe)
-        
-        XCTAssert(user.isRecipeSaved(recipeID: firstRecipe.id))
-        
-        let savedRecipes = user.getSavedRecipes()
-        
-        XCTAssert(recipes.count == 1)
-        let recipeAgain = savedRecipes.first!
-        
-        XCTAssert(recipeAgain == firstRecipe)
+    func testSetProfileID() {
+        user.setProfileID(profileID: 2)
+        XCTAssertEqual(user.getProfileID(), 2)
     }
     
-    func test2() async throws {
-        let bananaAlmond : Search = Search()
-        bananaAlmond.addIngredient("banana")
-        bananaAlmond.addIngredient("almond")
+    
+    func testAddRecipeToFolder() {
+        let recipe = testRecipe
+        user.addRecipeToFolder(recipe: recipe, folderName: "TestFolder")
+        XCTAssertTrue(user.isRecipeSavedInFolder(recipeID: 0, folderName: "TestFolder"))
+    }
+    
+    func testRemoveRecipeFromFolder() {
+        let recipe = testRecipe
+        user.addRecipeToFolder(recipe: recipe, folderName: "TestFolder")
+        user.removeRecipeFromFolder(recipe: recipe, folderName: "TestFolder")
+        XCTAssertFalse(user.isRecipeSavedInFolder(recipeID: 0, folderName: "TestFolder"))
+    }
+    
+    
+    func testCreateFolder() {
+        print (user.getSavedRecipeFolders().count )
+        XCTAssertTrue(user.createFolder(name: "NewFolder"))
+        XCTAssertEqual(user.getSavedRecipeFolders().count, 2)
+    }
+    
+    func testInvalidFolderName() {
+        XCTAssertTrue(user.createFolder(name: "ExistingFolder"))
+        XCTAssertFalse(user.createFolder(name: ""))
+        XCTAssertFalse(user.createFolder(name: "  "))
+        XCTAssertFalse(user.createFolder(name: "ExistingFolder"))
+    }
+    
+    func testDeleteFolder() {
+        XCTAssertTrue(user.createFolder(name: "ToDelete"))
+        XCTAssertEqual(user.getSavedRecipeFolders().count, 2)
+        user.deleteFolder(folderName: "ToDelete")
+        XCTAssertEqual(user.getSavedRecipeFolders().count, 1)
+    }
+    
+    func testGetSavedRecipesInFolder() {
+        let recipe = testRecipe
+        user.addRecipeToFolder(recipe: recipe, folderName: "TestFolder")
+        XCTAssertEqual(user.getSavedRecipes(folderName: "TestFolder").count, 1)
+    }
+    
+    func testChangeFolderOrdering() {
+        XCTAssertTrue(user.createFolder(name: "OrderedFolder"))
+        user.changeFolderOrdering(folderName: "OrderedFolder", ordering: "recent")
+        XCTAssertEqual(user.getSavedRecipeFolders().first(where: {$0.name == "OrderedFolder"})!.ordering, .recent)
         
-        await bananaAlmond.executeSearch()
-        let recipes = bananaAlmond.getRecipes()
+        user.changeFolderOrdering(folderName: "OrderedFolder", ordering: "alphabetical")
+        XCTAssertEqual(user.getSavedRecipeFolders().first(where: {$0.name == "OrderedFolder"})!.ordering, .alphabetical)
         
-        XCTAssert(recipes.count == 5)
+        user.changeFolderOrdering(folderName: "OrderedFolder", ordering: "alphabeticalReverse")
+        XCTAssertEqual(user.getSavedRecipeFolders().first(where: {$0.name == "OrderedFolder"})!.ordering, .alphabeticalReverse)
         
-        
-        // Add both recipes
-        user.addSavedRecipe(recipe: recipes[0])
-        user.addSavedRecipe(recipe: recipes[2])
-        
-        print("real size: \(user.getSavedRecipes().count)")
-        
-        XCTAssert(user.getSavedRecipes().contains(recipes[0]))
-        XCTAssert(user.getSavedRecipes().contains(recipes[2]))
-        
-        XCTAssert(user.isRecipeSaved(recipeID: recipes[0].id))
-        XCTAssert(user.isRecipeSaved(recipeID: recipes[2].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[1].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[3].id))
-        
-        // Remove first one
-        user.removeSavedRecipe(recipe: recipes[0])
-        
-        XCTAssert(!user.getSavedRecipes().contains(recipes[0]))
-        XCTAssert(user.getSavedRecipes().contains(recipes[2]))
-        
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[0].id))
-        XCTAssert(user.isRecipeSaved(recipeID: recipes[2].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[1].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[3].id))
-        
-        // Remove second one
-        user.removeSavedRecipe(recipe: recipes[2])
-        
-        XCTAssert(!user.getSavedRecipes().contains(recipes[0]))
-        XCTAssert(!user.getSavedRecipes().contains(recipes[2]))
-        
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[0].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[2].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[1].id))
-        XCTAssert(!user.isRecipeSaved(recipeID: recipes[3].id))
-        
-        XCTAssert(user.getUserID() == "-1")
+        user.changeFolderOrdering(folderName: "OrderedFolder", ordering: "recentReverse")
+        XCTAssertEqual(user.getSavedRecipeFolders().first(where: {$0.name == "OrderedFolder"})!.ordering, .recentReverse    )
     }
 }

@@ -15,7 +15,6 @@ struct SearchView: View {
     @State private var searchText = ""
     @State var selectedIngredients : [String] = []
     @StateObject var search : Search = Search()
-//    @StateObject var searchSponsored : Recommended = Recommended()
     @StateObject var searchRecs : Recommended = Recommended()
 
 //    @State var recommendedRecipes: [Recipe] = []
@@ -65,7 +64,7 @@ struct SearchView: View {
                                   HStack {
                                       ScrollView (.horizontal, showsIndicators: false ){
                                           HStack{
-                                            ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
+                                              ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
                                                   RecipeCardLarge(recipe: recipe)
                                               }
                                           }
