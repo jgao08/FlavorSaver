@@ -10,150 +10,165 @@ import SwiftUI
 
 
 struct SearchView: View {
-  @EnvironmentObject var user: User
-  @Environment(\.editMode) private var editMode
-  @State private var searchText = ""
-  @State var selectedIngredients : [String] = []
-  @StateObject var search : Search = Search()
-  @StateObject var searchRecs : Recommended = Recommended()
-  //@State var recommendedRecipes: [Recipe] = []
-  @State private var isInitialLoad = true
+    @EnvironmentObject var user: User
+    @Environment(\.editMode) private var editMode
+    @State private var searchText = ""
+    @State var selectedIngredients : [String] = []
+    @StateObject var search : Search = Search()
+    @StateObject var searchSponsored : Recommended = Recommended()
+    @StateObject var searchRecs : Recommended = Recommended()
 
-  
-  var body: some View {
-    NavigationStack {
-      VStack {
-        ZStack{
-          ScrollView{
-            //    MARK: Searched ingredient list
-            List(searchResults, id: \.self){ ingredient in
-              Button(action: {
-                toggleSelection(ingredient)
-                searchText = ""
-              }){
-                HStack{
-                  Text(ingredient)
-                    .foregroundStyle(Color.black)
-                  Spacer()
-                  
-                  if selectedIngredients.contains(ingredient) {
-                    Image(systemName: "checkmark")
-                      .foregroundColor(.blue)
-                  }
-                }
-              }
-            }
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
-            .navigationTitle(Text("Find a recipe"))
-//            .zIndex(1)
-            
-//            Spacer()
-            if searchText.isEmpty {
-              VStack {
-                HStack{
-                  Text("Recommended Recipes")
-                    .font(.title)
-                  Spacer()
-                }
-                .padding()
-                HStack{
-                  VStack{
+    //@State var recommendedRecipes: [Recipe] = []
+    @State private var isInitialLoad = true
+    
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                ZStack{
                     ScrollView{
-                      VStack{
-                        ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
-                          RecipeCardLarge(recipe: recipe)
+                        VStack(spacing: 32) {
+                            //    MARK: Searched ingredient list
+                            List(searchResults, id: \.self){ ingredient in
+                                Button(action: {
+                                    toggleSelection(ingredient)
+                                    searchText = ""
+                                }){
+                                    HStack{
+                                        Text(ingredient)
+                                            .foregroundStyle(Color.black)
+                                        Spacer()
+                                        
+                                        if selectedIngredients.contains(ingredient) {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.blue)
+                                        }
+                                    }
+                                }
+                            }
+                            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by ingredient, dish, or cuisine")
+                            .navigationTitle(Text("Find a recipe"))
+                            
+                            if searchText.isEmpty {
+                                RecipeCardSponsored(recipe: searchSponsored.getRecommendedRecipes().last ?? Recipe(id: 0, name: "", image: "", imageType: "", servings: 0, readyInMinutes: 0, author: "", authorURL: "", spoonURL: "", summary: "", cuisines: [], dishTypes: [], ingredientInfo: [], ingredientSteps: [])).environmentObject(user)
+                                    .padding(.horizontal, 16)
+                                
+                                RecipeSearchResultsRow(tag: "Recommended Recipes", recipes: searchRecs.getRecommendedRecipes())
+                            }
                         }
-                      }
+                        //              VStack {
+                        //                HStack{
+                        //                  Text("Recommended Recipes")
+                        //                    .font(.title)
+                        //                  Spacer()
+                        //                }
+                        //                .padding()
+                        //                HStack{
+                        //                  VStack{
+                        //                    ScrollView{
+                        //                      VStack{
+                        //                        ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
+                        //                          RecipeCardLarge(recipe: recipe)
+                        //                        }
+                        //                      }
+                        //                    }
+                        //                    .scrollIndicators(.hidden)
+                        ////                    .task {
+                        ////                      if isInitialLoad{
+                        ////                        //recommendedRecipes = searchRecs.getRecommendedRecipes()
+                        ////                        isInitialLoad = false
+                        ////                      }
+                        ////                    }
+                        //                  }
+                        //                }
+                        //              }
+                        //              .zIndex(1)
+                        Spacer()
+                        
                     }
-                    .scrollIndicators(.hidden)
-//                    .task {
-//                      if isInitialLoad{
-//                        //recommendedRecipes = searchRecs.getRecommendedRecipes()
-//                        isInitialLoad = false
-//                      }
-//                    }
-                  }
-                }
-              }
-//              .zIndex(1)
-              Spacer()
-            }
-          }
-          .refreshable {
-            await searchRecs.executeRandomSearch()
-//            recommendedRecipes = searchRecs.getRecommendedRecipes()
-          }
-          .overlay{
-            if !searchText.isEmpty {
-              List(searchResults, id: \.self){ ingredient in
-                Button(action: {
-                  toggleSelection(ingredient)
-                  searchText = ""
-                }){
-                  HStack{
-                    Text(ingredient)
-                      .foregroundStyle(Color.black)
-                    Spacer()
-                    
-                    if selectedIngredients.contains(ingredient) {
-                      Image(systemName: "checkmark")
-                        .foregroundColor(.blue)
+                    .refreshable {
+                        await searchRecs.executeRandomSearch()
+                        await searchSponsored.executeRandomSearch()
+
                     }
-                  }
+                    .task {
+                        await searchRecs.executeRandomSearch()
+                        await searchSponsored.executeRandomSearch()
+
+                    }
+                    .overlay{
+                        if !searchText.isEmpty {
+                            List(searchResults, id: \.self){ ingredient in
+                                Button(action: {
+                                    toggleSelection(ingredient)
+                                    searchText = ""
+                                }){
+                                    HStack{
+                                        Text(ingredient)
+                                            .foregroundStyle(Color.black)
+                                        Spacer()
+                                        
+                                        if selectedIngredients.contains(ingredient) {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.blue)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              }
+                
             }
-          }
-          
-        }
-        
-        //    MARK: selected ingredients and Done button
-        HStack{
-          ScrollView(.horizontal, showsIndicators: false){
+            
+            //    MARK: selected ingredients and Done button
             HStack{
-              ForEach(selectedIngredients, id: \.self){ ingredient in
-                Button(action: {
-                }, label: {
-                  HStack{
-                    Text(ingredient)
-                    Button(action: {
-                      toggleSelection(ingredient)
-                    }, label: {
-                      Image(systemName: "xmark")
-                    })
-                  }
-                })
-                .buttonStyle(.bordered)
-                .foregroundStyle(Color.black)
-              }
+                ScrollView(.horizontal, showsIndicators: false){
+                    HStack{
+                        ForEach(selectedIngredients, id: \.self){ ingredient in
+                            Button(action: {
+                            }, label: {
+                                HStack{
+                                    Text(ingredient)
+                                    Button(action: {
+                                        toggleSelection(ingredient)
+                                    }, label: {
+                                        Image(systemName: "xmark")
+                                    })
+                                }
+                            })
+                            .buttonStyle(.bordered)
+                            .foregroundStyle(Color.black)
+                        }
+                    }
+                }
+                Spacer()
+                
+                NavigationLink(destination: SearchResultsView(search: search).environmentObject(user), label: {Text("Done")})
+                    .buttonStyle(.borderedProminent)
+                    .frame(alignment: .trailing)
+                    .disabled(selectedIngredients.isEmpty)
             }
-          }
-          Spacer()
-          
-          NavigationLink(destination: SearchResultsView(search: search).environmentObject(user), label: {Text("Done")})
-            .buttonStyle(.borderedProminent)
-            .frame(alignment: .trailing)
-            .disabled(selectedIngredients.isEmpty)
-        }
-        .padding()
-      }/*.padding(.vertical, 32)*/
+            .padding()
+        }/*.padding(.vertical, 32)*/
+        .navigationBarBackButtonHidden(true)
+        .ignoresSafeArea(.all)
     }
-    .navigationBarBackButtonHidden(true)
-    .ignoresSafeArea(.all)
-  }
-  var searchResults: [String] {
-      return search.getIngredientOptions(searchText)
-  }
-  
-  func toggleSelection(_ ingredient: String) {
+
+
+var searchResults: [String] {
+    return search.getIngredientOptions(searchText)
+}
+
+func toggleSelection(_ ingredient: String) {
     if selectedIngredients.contains(ingredient)  {
-      selectedIngredients = selectedIngredients.filter{ $0 != ingredient }
-      search.removeIngredient(ingredient)
+        selectedIngredients = selectedIngredients.filter{ $0 != ingredient }
+        search.removeIngredient(ingredient)
     } else {
-      selectedIngredients.append(ingredient)
-      search.addIngredient(ingredient)
+        selectedIngredients.append(ingredient)
+        search.addIngredient(ingredient)
     }
-  }
+}
 }
 
 

@@ -15,11 +15,6 @@ struct SaveButton: View {
     
     var body: some View  {
         Button(action: {
-//            if user.isRecipeSaved(recipeID: recipe.id) {
-//                user.removeSavedRecipe(recipe: recipe)
-//            } else {
-//                user.addSavedRecipe(recipe: recipe)
-//            }
             folderSelect = true
         }, label: {
             if user.isRecipeSaved(recipeID: recipe.id) {

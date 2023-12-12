@@ -12,6 +12,7 @@
 		0865DAEB2B1D8BBD005DDC02 /* AddFolderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */; };
 		0871EB7B2B24FEE90045EF93 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB7A2B24FEE90045EF93 /* Colors.swift */; };
 		0871EB7F2B24FF600045EF93 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */; };
+		0871EB812B2790B80045EF93 /* RecipeCardSponsored.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0871EB802B2790B80045EF93 /* RecipeCardSponsored.swift */; };
 		271AF5EA2B24ED2800594183 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271AF5E92B24ED2800594183 /* Launch Screen.storyboard */; };
 		271AF5ED2B24EF1600594183 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 271AF5EC2B24EF1600594183 /* ConfettiSwiftUI */; };
 		271AF5EF2B24F80B00594183 /* CreatorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */; };
@@ -93,6 +94,7 @@
 		0865DAEA2B1D8BBD005DDC02 /* AddFolderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderButton.swift; sourceTree = "<group>"; };
 		0871EB7A2B24FEE90045EF93 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		0871EB7E2B24FF600045EF93 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		0871EB802B2790B80045EF93 /* RecipeCardSponsored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardSponsored.swift; sourceTree = "<group>"; };
 		271AF5E92B24ED2800594183 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		271AF5EE2B24F80B00594183 /* CreatorProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorProfileView.swift; sourceTree = "<group>"; };
 		274CEFDB2B1D0D31008F77DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				27FA5D952B19561800973173 /* OnboardingView.swift */,
 				F9ECAB832AEF00C000F951B0 /* ProfileView.swift */,
 				F991A8902AEF87A800200104 /* RecipeCardLarge.swift */,
+				0871EB802B2790B80045EF93 /* RecipeCardSponsored.swift */,
 				F991A88E2AEF879E00200104 /* RecipeCardSmall.swift */,
 				27DAED482AF49214002904FE /* RecipeView.swift */,
 				F991A8962AEF87C000200104 /* SaveButton.swift */,
@@ -463,6 +466,7 @@
 				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
 				F9E25DEE2B1DBD6400076BCA /* Recommended.swift in Sources */,
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
+				0871EB812B2790B80045EF93 /* RecipeCardSponsored.swift in Sources */,
 				F9ECAB342AEEF04600F951B0 /* App.swift in Sources */,
 				F935C4142AF17CB50010BB0C /* Structs.swift in Sources */,
 				0865DAE72B1D1924005DDC02 /* FolderSelectView.swift in Sources */,

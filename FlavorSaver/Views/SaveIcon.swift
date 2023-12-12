@@ -24,13 +24,6 @@ struct SaveIcon: View {
     var body: some View  {
         Group {
             Button {
-                // Change the saved properties in the backend here
-                //            print("Edit button was tapped")
-                //            if user.isRecipeSaved(recipeID: recipe.id) {
-                //                user.removeSavedRecipe(recipe: recipe)
-                //            } else {
-                //                user.addSavedRecipe(recipe: recipe)
-                //            }
                 folderSelect = true
             } label: {
                 if isSaved {

@@ -81,27 +81,29 @@ struct RecipeSearchNavigation: View {
 }
 
 struct RecipeSearchResultsRow: View {
-    @State var tag: String = ""
-    @State var recipes: [Recipe] = []
+    @State var tag: String
+    @State var recipes: [Recipe]
     var body: some View {
-        HStack{
-            Text(tag.firstUppercased)
-                .font(.title)
-            Spacer()
-        }
-        .padding(.horizontal)
-        
-        
-        HStack {
-            ScrollView (.horizontal, showsIndicators: false ){
-                HStack{
-                    ForEach(recipes, id: \.self){ recipe in
-                        RecipeCardLarge(recipe: recipe)
+        VStack(spacing: 16){
+            HStack{
+                Text(tag.firstUppercased)
+                    .font(.title)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            
+            HStack {
+                ScrollView (.horizontal, showsIndicators: false ){
+                    HStack{
+                        ForEach(recipes, id: \.self){ recipe in
+                            RecipeCardLarge(recipe: recipe)
+                        }
                     }
                 }
-            }
-            .scrollClipDisabled()
-        }.padding(.horizontal)
+                .scrollClipDisabled()
+            }.padding(.horizontal)
+        }
     }
 }
 
