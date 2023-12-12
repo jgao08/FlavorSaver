@@ -26,8 +26,7 @@ struct RecipeCardSponsored: View {
                         image.resizable()
                             .aspectRatio(contentMode: .fill)
                             .clipped()
-                            .frame(height: 450)
-                            .containerRelativeFrame(.horizontal)
+                            .frame(width: UIScreen.main.bounds.width - 32, height: 450)
                             .cornerRadius(10)
                     case .failure:
                         Image(systemName: "photo")
@@ -42,8 +41,9 @@ struct RecipeCardSponsored: View {
                 
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: [.black.opacity(0.1), .black.opacity(0.6)]), startPoint: .top, endPoint: .bottom))
-                    .frame(height: 450)
-                    .containerRelativeFrame(.horizontal)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 450)
+
+//                    .containerRelativeFrame(.horizontal)
 
                     .cornerRadius(10)
                 
@@ -77,13 +77,20 @@ struct RecipeCardSponsored: View {
                         
                         HStack (spacing: 16) {
                             NavigationLink (destination: RecipeView(recipe: recipe).environmentObject(user), label: {
-                                Button("Try Now", systemImage: "arrow.forward") {
-                                    
+                                HStack {
+                                    Image(systemName: "arrow.forward")
+                                    Text("Try Now")
                                 }
-                                .foregroundColor(.black)
-                                .tint(.white)
-                                .controlSize(.large)
                                 .buttonStyle(.borderedProminent)
+
+                                .padding(15)
+                                .background(.white)
+                                .cornerRadius(10)
+//                                Button("Try Now", systemImage: "arrow.forward", action: {})
+                                .foregroundColor(.black)
+//                                .tint(.white)
+//                                .controlSize(.large)
+//                                .buttonStyle(.borderedProminent)
                                 .shadow(radius: 10)
                             })
                             
@@ -115,6 +122,8 @@ struct RecipeCardSponsored: View {
                             .sheet(isPresented: $folderSelect, content: {
                                 FolderSelectView(recipe: recipe).environmentObject(user)
                             })
+                            .foregroundColor(.black)
+
                             
                         }
 
@@ -126,15 +135,9 @@ struct RecipeCardSponsored: View {
                     Spacer()
                 }
                 .padding(24)
-                .frame(height: 450)
-                .containerRelativeFrame(.horizontal)
-                //                .frame(maxWidth: .infinity)
+                .frame(width: UIScreen.main.bounds.width - 32, height: 450)
             }
         })
 //        .buttonStyle(PlainButtonStyle())
     }
 }
-
-//#Preview {
-////    RecipeCardLarge()
-//}

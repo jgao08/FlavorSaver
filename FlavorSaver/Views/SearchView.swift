@@ -17,7 +17,7 @@ struct SearchView: View {
     @StateObject var search : Search = Search()
     @StateObject var searchSponsored : Recommended = Recommended()
     @StateObject var searchRecs : Recommended = Recommended()
-
+    
     //@State var recommendedRecipes: [Recipe] = []
     @State private var isInitialLoad = true
     
@@ -27,7 +27,7 @@ struct SearchView: View {
             VStack {
                 ZStack{
                     ScrollView{
-                        VStack(spacing: 32) {
+                        VStack(spacing: 16) {
                             //    MARK: Searched ingredient list
                             List(searchResults, id: \.self){ ingredient in
                                 Button(action: {
@@ -54,47 +54,20 @@ struct SearchView: View {
                                     .padding(.horizontal, 16)
                                 
                                 RecipeSearchResultsRow(tag: "Recommended Recipes", recipes: searchRecs.getRecommendedRecipes())
+                                    .padding(.top, 16)
                             }
                         }
-                        //              VStack {
-                        //                HStack{
-                        //                  Text("Recommended Recipes")
-                        //                    .font(.title)
-                        //                  Spacer()
-                        //                }
-                        //                .padding()
-                        //                HStack{
-                        //                  VStack{
-                        //                    ScrollView{
-                        //                      VStack{
-                        //                        ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
-                        //                          RecipeCardLarge(recipe: recipe)
-                        //                        }
-                        //                      }
-                        //                    }
-                        //                    .scrollIndicators(.hidden)
-                        ////                    .task {
-                        ////                      if isInitialLoad{
-                        ////                        //recommendedRecipes = searchRecs.getRecommendedRecipes()
-                        ////                        isInitialLoad = false
-                        ////                      }
-                        ////                    }
-                        //                  }
-                        //                }
-                        //              }
-                        //              .zIndex(1)
                         Spacer()
                         
                     }
                     .refreshable {
                         await searchRecs.executeRandomSearch()
                         await searchSponsored.executeRandomSearch()
-
+                        
                     }
                     .task {
                         await searchRecs.executeRandomSearch()
                         await searchSponsored.executeRandomSearch()
-
                     }
                     .overlay{
                         if !searchText.isEmpty {
@@ -149,26 +122,27 @@ struct SearchView: View {
                     .frame(alignment: .trailing)
                     .disabled(selectedIngredients.isEmpty)
             }
-            .padding()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
         }/*.padding(.vertical, 32)*/
         .navigationBarBackButtonHidden(true)
         .ignoresSafeArea(.all)
     }
-
-
-var searchResults: [String] {
-    return search.getIngredientOptions(searchText)
-}
-
-func toggleSelection(_ ingredient: String) {
-    if selectedIngredients.contains(ingredient)  {
-        selectedIngredients = selectedIngredients.filter{ $0 != ingredient }
-        search.removeIngredient(ingredient)
-    } else {
-        selectedIngredients.append(ingredient)
-        search.addIngredient(ingredient)
+    
+    
+    var searchResults: [String] {
+        return search.getIngredientOptions(searchText)
     }
-}
+    
+    func toggleSelection(_ ingredient: String) {
+        if selectedIngredients.contains(ingredient)  {
+            selectedIngredients = selectedIngredients.filter{ $0 != ingredient }
+            search.removeIngredient(ingredient)
+        } else {
+            selectedIngredients.append(ingredient)
+            search.addIngredient(ingredient)
+        }
+    }
 }
 
 

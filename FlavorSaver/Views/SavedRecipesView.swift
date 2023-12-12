@@ -26,6 +26,7 @@ struct SavedRecipesView: View {
             }
           }
         }
+        .scrollIndicators(.hidden)
         .padding(.horizontal)
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
