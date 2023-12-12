@@ -15,11 +15,11 @@ struct SearchView: View {
     @State private var searchText = ""
     @State var selectedIngredients : [String] = []
     @StateObject var search : Search = Search()
-    @StateObject var searchSponsored : Recommended = Recommended()
+//    @StateObject var searchSponsored : Recommended = Recommended()
     @StateObject var searchRecs : Recommended = Recommended()
 
-    //@State var recommendedRecipes: [Recipe] = []
-    @State private var isInitialLoad = true
+    @State var recommendedRecipes: [Recipe] = []
+//    @State private var isInitialLoad = true
     
     
     var body: some View {
@@ -50,10 +50,29 @@ struct SearchView: View {
                             .navigationTitle(Text("Find a recipe"))
                             
                             if searchText.isEmpty {
-                                RecipeCardSponsored(recipe: searchSponsored.getRecommendedRecipes().last ?? Recipe(id: 0, name: "", image: "", imageType: "", servings: 0, readyInMinutes: 0, author: "", authorURL: "", spoonURL: "", summary: "", cuisines: [], dishTypes: [], ingredientInfo: [], ingredientSteps: [])).environmentObject(user)
+                                RecipeCardSponsored(recipe: searchRecs.getRecommendedRecipes().last ?? Recipe(id: 0, name: "", image: "", imageType: "", servings: 0, readyInMinutes: 0, author: "", authorURL: "", spoonURL: "", summary: "", cuisines: [], dishTypes: [], ingredientInfo: [], ingredientSteps: [])).environmentObject(user)
                                     .padding(.horizontal, 16)
                                 
-                                RecipeSearchResultsRow(tag: "Recommended Recipes", recipes: searchRecs.getRecommendedRecipes())
+                              VStack(spacing: 16){
+                                  HStack{
+                                      Text("Recommended Recipes")
+                                          .font(.title)
+                                      Spacer()
+                                  }
+                                  .padding(.horizontal)
+                                  
+                                  
+                                  HStack {
+                                      ScrollView (.horizontal, showsIndicators: false ){
+                                          HStack{
+                                              ForEach(recommendedRecipes, id: \.self){ recipe in
+                                                  RecipeCardLarge(recipe: recipe)
+                                              }
+                                          }
+                                      }
+                                      .scrollClipDisabled()
+                                  }.padding(.horizontal)
+                              }
                             }
                         }
                         //              VStack {
@@ -84,16 +103,20 @@ struct SearchView: View {
                         //              }
                         //              .zIndex(1)
                         Spacer()
-                        
                     }
                     .refreshable {
                         await searchRecs.executeRandomSearch()
-                        await searchSponsored.executeRandomSearch()
-
+//                        await searchSponsored.executeRandomSearch()
+                      recommendedRecipes = searchRecs.getRecommendedRecipes()
+                      print(searchRecs.getRecommendedRecipes().count > 0 ? searchRecs.getRecommendedRecipes()[0] : "sucks")
                     }
                     .task {
-                        await searchRecs.executeRandomSearch()
-                        await searchSponsored.executeRandomSearch()
+//                      if isInitialLoad{
+                      await searchRecs.executeRandomSearch()
+
+                        recommendedRecipes = searchRecs.getRecommendedRecipes()
+//                        isInitialLoad = false
+                        print(searchRecs.getRecommendedRecipes().count > 0 ? searchRecs.getRecommendedRecipes()[0] : "initialload")
 
                     }
                     .overlay{
