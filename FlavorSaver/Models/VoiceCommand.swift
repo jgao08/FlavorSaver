@@ -58,7 +58,6 @@ class VoiceControl: ObservableObject {
                         self.result = .back
                     }
                 }
-                print(recognizedText)
             }
         } catch {
             print("Error setting up audio session: \(error)")

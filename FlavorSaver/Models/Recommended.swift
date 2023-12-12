@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 class Recommended : ObservableObject{
     @Published private var recommendedRecipes : [Recipe] = []
@@ -15,6 +16,10 @@ class Recommended : ObservableObject{
         Task(priority: .high){
             await executeRandomSearch()
         }
+    }
+    
+    init() async {
+        await executeRandomSearch()
     }
     
     /// Returns the current list of recommended recipes
@@ -36,6 +41,9 @@ class Recommended : ObservableObject{
         }catch{
             if (apiManager.apiVersion == "SPOON_API"){
                 apiManager.apiVersion = "SPOON_API2"
+                await executeRandomSearch()
+            }else if (apiManager.apiVersion == "SPOON_API2"){
+                apiManager.apiVersion = "SPOON_API3"
                 await executeRandomSearch()
             }else{
                 print("Error retrieving the recipes in Search.executeRandomSearch(). Error: \(error)")
