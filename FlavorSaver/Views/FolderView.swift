@@ -16,6 +16,7 @@ struct FolderView: View {
     @Binding var isShowingFolder: Bool
     
     @State private var showingEditFolder: Bool = false
+    @State private var ordering: String = "recent"
     
     private let columns = [
         GridItem(.adaptive(minimum: 170))
@@ -40,14 +41,57 @@ struct FolderView: View {
                 .padding(.horizontal)
             }
         }
-        .navigationBarItems(trailing:
-        Button {
-            showingEditFolder = true
-        } label: {
-          if(user.getUserID() != "oWkYfZMRPYYMC3hIAb5pW8jeg1a2"){
-            Image(systemName: "ellipsis")
+        .toolbar{
+          ToolbarItem{
+            Menu{
+              Button{
+                user.changeFolderOrdering(folderName: folder.name, ordering: "recentReverse")
+                ordering = "recentReverse"
+                print("AAAAAAA")
+                print(ordering == "recentReverse")
+              } label: {
+                Text("Date created: newest")
+                Image(systemName: "checkmark")
+                  .foregroundColor(ordering == "recentReverse" ? .blue : .clear)
+              }
+              Button{
+                user.changeFolderOrdering(folderName: folder.name, ordering: "recent")
+                ordering = "recent"
+              } label: {
+                Text("Date created: oldest")
+                Image(systemName: "checkmark")
+                  .foregroundColor(ordering == "recent" ? .blue : .clear)
+              }
+              Button{
+                user.changeFolderOrdering(folderName: folder.name, ordering: "alphabeticalReverse")
+                ordering = "alphabeticalReverse"
+              } label: {
+                Text("Alphabetical A-Z")
+                Image(systemName: "checkmark")
+                  .foregroundColor(ordering == "alphabeticalReverse" ? .blue : .clear)
+              }
+              Button{
+                user.changeFolderOrdering(folderName: folder.name, ordering: "alphabetical")
+                ordering = "alphabetical"
+              } label: {
+                Text("Alphabetical Z-A")
+                Image(systemName: "checkmark")
+                  .foregroundColor(ordering == "alphabetical" ? .blue : .clear)
+              }
+            } label: {
+              Text("Sort")
+            }
           }
-        })
+          ToolbarItem{
+            Button {
+                showingEditFolder = true
+            } label: {
+              if(user.getUserID() != "oWkYfZMRPYYMC3hIAb5pW8jeg1a2"){
+                Image(systemName: "ellipsis")
+              }
+            }
+          }
+        }
         .confirmationDialog("Folder Settings", isPresented: $showingEditFolder) {
             Button("Delete Folder", role: .destructive) {
                 user.deleteFolder(folderName: folder.name)

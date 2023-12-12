@@ -18,8 +18,8 @@ struct SearchView: View {
 //    @StateObject var searchSponsored : Recommended = Recommended()
     @StateObject var searchRecs : Recommended = Recommended()
 
-    @State var recommendedRecipes: [Recipe] = []
-//    @State private var isInitialLoad = true
+//    @State var recommendedRecipes: [Recipe] = []
+    @State private var isInitialLoad = true
     
     
     var body: some View {
@@ -65,7 +65,7 @@ struct SearchView: View {
                                   HStack {
                                       ScrollView (.horizontal, showsIndicators: false ){
                                           HStack{
-                                              ForEach(recommendedRecipes, id: \.self){ recipe in
+                                            ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
                                                   RecipeCardLarge(recipe: recipe)
                                               }
                                           }
@@ -79,18 +79,14 @@ struct SearchView: View {
                     }
                     .refreshable {
                         await searchRecs.executeRandomSearch()
-//                        await searchSponsored.executeRandomSearch()
-                      recommendedRecipes = searchRecs.getRecommendedRecipes()
                       print(searchRecs.getRecommendedRecipes().count > 0 ? searchRecs.getRecommendedRecipes()[0] : "sucks")
                     }
                     .task {
-//                      if isInitialLoad{
-                      await searchRecs.executeRandomSearch()
-
-                        recommendedRecipes = searchRecs.getRecommendedRecipes()
-//                        isInitialLoad = false
+                      if isInitialLoad{
+                        await searchRecs.executeRandomSearch()
+                        isInitialLoad = false
                         print(searchRecs.getRecommendedRecipes().count > 0 ? searchRecs.getRecommendedRecipes()[0] : "initialload")
-
+                      }
                     }
                     .overlay{
                         if !searchText.isEmpty {
