@@ -41,7 +41,9 @@ struct CookingModeView: View {
         }
         .onAppear {
             title = "Cooking Mode"
-//            voiceController.startSpeech()
+#if !targetEnvironment(simulator)
+            voiceController.startSpeech()
+#endif
         }
         .onChange(of: voiceController.result) {
             changeTabSelection()
@@ -185,7 +187,7 @@ struct CookingModeStep: View {
                     }
                 }
                 Spacer()
-            }   
+            }
             .padding(.top, 16)
             .padding(.horizontal, 16)
         }

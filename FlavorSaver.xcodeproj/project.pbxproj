@@ -662,7 +662,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FlavorSaver/Preview Content\"";
-				DEVELOPMENT_TEAM = HFUS3M42J2;
+				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
@@ -679,7 +679,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaver;
+				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaverr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -695,7 +695,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FlavorSaver/Preview Content\"";
-				DEVELOPMENT_TEAM = HFUS3M42J2;
+				DEVELOPMENT_TEAM = 635TDZDDV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We will need permission to access your microphone to process hands-free cooking mode.";
@@ -712,7 +712,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaver;
+				PRODUCT_BUNDLE_IDENTIFIER = class.FlavorSaverr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

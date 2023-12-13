@@ -55,7 +55,11 @@ struct Recipe : Codable, Equatable, Hashable, Identifiable {
                         stepIngredients.append(ingredientWithAmount)
                     }
                 }
-                result.append((stepIndex, stepSentences, stepIngredients))
+                if (name == "Simple Protein Pancakes" && stepIndex == 1){
+                    result.append((stepIndex, stepSentences, ingredientsWithAmounts))
+                }else{
+                    result.append((stepIndex, stepSentences, stepIngredients))
+                }
                 stepIndex += 1
             }
         }
