@@ -16,7 +16,7 @@ struct FolderView: View {
     @Binding var isShowingFolder: Bool
     
     @State private var showingEditFolder: Bool = false
-    @State private var ordering: String = "recent"
+    @State private var ordering: String = "Newest"
     
     private let columns = [
         GridItem(.adaptive(minimum: 170))
@@ -46,40 +46,40 @@ struct FolderView: View {
             Menu{
               Button{
                 user.changeFolderOrdering(folderName: folder.name, ordering: "recentReverse")
-                ordering = "recentReverse"
+                ordering = "Newest"
                 print("AAAAAAA")
                 print(ordering == "recentReverse")
               } label: {
                 Text("Date created: newest")
-                Image(systemName: "checkmark")
-                  .foregroundColor(ordering == "recentReverse" ? .blue : .clear)
+//                Image(systemName: "checkmark")
+//                  .foregroundColor(ordering == "recentReverse" ? .blue : .clear)
               }
               Button{
                 user.changeFolderOrdering(folderName: folder.name, ordering: "recent")
-                ordering = "recent"
+                ordering = "Oldest"
               } label: {
                 Text("Date created: oldest")
-                Image(systemName: "checkmark")
-                  .foregroundColor(ordering == "recent" ? .blue : .clear)
+//                Image(systemName: "checkmark")
+//                  .foregroundColor(ordering == "recent" ? .blue : .clear)
               }
               Button{
                 user.changeFolderOrdering(folderName: folder.name, ordering: "alphabeticalReverse")
-                ordering = "alphabeticalReverse"
+                ordering = "Alphabetical A-Z"
               } label: {
                 Text("Alphabetical A-Z")
-                Image(systemName: "checkmark")
-                  .foregroundColor(ordering == "alphabeticalReverse" ? .blue : .clear)
+//                Image(systemName: "checkmark")
+//                  .foregroundColor(ordering == "alphabeticalReverse" ? .blue : .clear)
               }
               Button{
                 user.changeFolderOrdering(folderName: folder.name, ordering: "alphabetical")
-                ordering = "alphabetical"
+                ordering = "Alphabetical Z-A"
               } label: {
                 Text("Alphabetical Z-A")
-                Image(systemName: "checkmark")
-                  .foregroundColor(ordering == "alphabetical" ? .blue : .clear)
+//                Image(systemName: "checkmark")
+//                  .foregroundColor(ordering == "alphabetical" ? .blue : .clear)
               }
             } label: {
-              Text("Sort")
+              Text("Sort: \(ordering)")
             }
           }
           ToolbarItem{
