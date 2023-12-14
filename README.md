@@ -47,9 +47,6 @@ Reasons for lacking test coverage in some models:
 
 Disregarding these points, we do achieve above 90% test coverage for all of the models.
 
-#### Bugs
-There is one bug we were unable to fix - the "x" button to close out of cooking mode does not work on a device. However, it works in all scenarios in the simulator. We did not know how to debug this due to this disparity, and online sources did not help us either.
-
 ## Final Words
 Enjoy cooking and exploring delicious recipes with FlavorSaver!
 
