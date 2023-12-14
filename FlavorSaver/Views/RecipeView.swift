@@ -46,6 +46,7 @@ struct RecipeView: View {
                                 .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                             Spacer()
                         }
+                        .modifier(TextShadow())
                         .padding(.horizontal)
                         
                         
@@ -57,12 +58,12 @@ struct RecipeView: View {
                                     Image(systemName: "play.fill")
                                     Text("Cooking Mode")
                                 }
-                                .tint(.white)
-                                .controlSize(.large)
-                                .buttonStyle(.borderedProminent)
-                                .modifier(TextShadow())
-                                .foregroundStyle(Color.black)
                             })
+                            .tint(.white)
+                            .controlSize(.large)
+                            .buttonStyle(.borderedProminent)
+                            .foregroundStyle(Color.black)
+                            .modifier(TextShadow())
                             .sheet(isPresented: $cookingMode, content: {
                                 CookingModeView(recipe: recipe, sheetOpen: $cookingMode).environmentObject(user)
                             })
@@ -70,7 +71,6 @@ struct RecipeView: View {
                         }
                         .padding(.horizontal)
                     }
-                    .modifier(TextShadow())
                     .padding(.bottom, sectionSpacing)
                 }
                 

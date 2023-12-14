@@ -182,10 +182,12 @@ class SavedRecipes : ObservableObject {
         guard let folder = getFolder(name: oldName) else {
             return "Old folder name does not currently exist"
         }
-        if let error = isValidFolderName(name: newName)  {
+        if isValidFolderName(name: newName) != nil {
             return "New folder name is not valid"
         }
-        folder.name = newName
+        folders.removeAll(where: {$0.name == oldName})
+        let newFolder = Folder(recipeMeta: folder.recipeMeta, ordering: folder.ordering, name: newName)
+        folders.append(newFolder)
         Task(priority: .medium){
             await dbManager.updateFolders(folders: folders)
         }

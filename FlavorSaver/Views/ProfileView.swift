@@ -44,7 +44,7 @@ struct ProfileView: View {
                 NavigationLink(destination: SavedRecipesView(), label: {
                     VStack{
                         HStack{
-                            Text("Saved Recipes")
+                            Text("Saved Folders")
                                 .font(.title)
                             Spacer()
                             Image(systemName: "chevron.right")
