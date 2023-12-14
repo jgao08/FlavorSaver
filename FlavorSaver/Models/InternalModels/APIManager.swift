@@ -31,7 +31,7 @@ class APIManager {
         let decoder = JSONDecoder()
         
         let apiRequest = URL(string: url.replacingOccurrences(of: " ", with: "%20"))
-
+        
         let (data, _) = try await URLSession.shared.data(from: apiRequest!)
         let result = try decoder.decode(type, from: data)
         return result

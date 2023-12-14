@@ -12,9 +12,6 @@ import SwiftUI
 struct ProfileView: View {
     @EnvironmentObject var user: User
     @State var signOut : Bool = false
-    @State var folders: [Folder] = []
-    @State var savedRecipes: [Recipe] = []
-    
     
     var body: some View{
         NavigationStack{
@@ -47,7 +44,7 @@ struct ProfileView: View {
                 NavigationLink(destination: SavedRecipesView(), label: {
                     VStack{
                         HStack{
-                            Text("Saved Recipes")
+                            Text("Saved Folders")
                                 .font(.title)
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -59,7 +56,7 @@ struct ProfileView: View {
                         HStack {
                             ScrollView (.horizontal, showsIndicators: false ){
                                 HStack{
-                                    ForEach(savedRecipes, id: \.self){ recipe in
+                                    ForEach(user.getSavedRecipes(), id: \.self){ recipe in
                                         RecipeCardLarge(recipe: recipe)
                                     }
                                 }
@@ -71,7 +68,7 @@ struct ProfileView: View {
                 })
             }
             .navigationBarItems(trailing:
-            Button{
+                                    Button{
                 signOut = true
             } label: {
                 Image(systemName: "ellipsis")
@@ -81,21 +78,10 @@ struct ProfileView: View {
                     do{
                         try AccountManager.signOut(user: user)
                     } catch {
-                        print("signout failed")
-                        print(error)
+                        print("signout failed with error \(error)")
                     }
                 }
-            }
-            .onAppear() {
-                savedRecipes = user.getSavedRecipes()
-            }
-            .onChange(of: user.getSavedRecipes()) {
-                savedRecipes = user.getSavedRecipes()
             }
         }
     }
 }
-
-//#Preview {
-//  ProfileView()
-//}

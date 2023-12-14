@@ -13,11 +13,11 @@ import FirebaseAuth
 class Authentication: ObservableObject {
     @Published var currentUser: User?
     private var auth = Auth.auth()
-
+    
     init() {
         configureFirebaseAuthStateListener()
     }
-
+    
     func configureFirebaseAuthStateListener() {
         auth.addStateDidChangeListener { (auth, user) in
             if let user = user{

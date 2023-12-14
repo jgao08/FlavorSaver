@@ -17,11 +17,11 @@ class Search : ObservableObject{
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
     private var apiManager = APIManager()
-        
+    
     /// Adds an ingredient to the search request. No ingredients are added if the ingredient is already in the list
     /// - Parameter ingredient: the ingredient to add
     func addIngredient(_ ingredient : String) {
-        if (!selectedIngredients.contains(ingredient)){
+        if (!selectedIngredients.contains(ingredient.lowercased())){
             selectedIngredients.append(ingredient.lowercased())
             hasChanged = true
         }
@@ -63,7 +63,7 @@ class Search : ObservableObject{
         let queryRequest : String = selectedIngredients.joined(separator: ",")
         let cuisineRequest : String = selectedIngredients.filter({ingredientFinder.cuisines.contains($0)}).joined(separator: ",")
         let mealTypeRequest : String = selectedIngredients.filter({ingredientFinder.mealTypes.contains($0)}).joined(separator: ",")
-                
+        
         let urlRequest = "\(apiManager.complexSearchParams)&query=\(queryRequest)&cuisine=\(cuisineRequest)&type=\(mealTypeRequest)"
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)
@@ -90,6 +90,9 @@ class Search : ObservableObject{
         }catch{
             if (apiManager.apiVersion == "SPOON_API"){
                 apiManager.apiVersion = "SPOON_API2"
+                await executeSearch()
+            }else if (apiManager.apiVersion == "SPOON_API2"){
+                apiManager.apiVersion = "SPOON_API3"
                 await executeSearch()
             }else{
                 print("Error retrieving the recipes in Search.getRecipes(). Error: \(error.localizedDescription)")

@@ -59,7 +59,11 @@ class SavedRecipes : ObservableObject {
     }
     
     func getAllRecipes() -> [Recipe] {
-        return Array(Set(folders.flatMap({folder in folder.recipeMetaToRecipe()})))
+        let flatMapped = folders.flatMap({folder in folder.recipeMeta})
+        let removeDups = Array(Set(flatMapped))
+        let sorted = removeDups.sorted(by: {$0.firstAdded.seconds > $1.firstAdded.seconds})
+        
+        return sorted.map({meta in meta.recipe})
     }
     
     ///  Retrieves the recipes in the given folder
@@ -89,8 +93,18 @@ class SavedRecipes : ObservableObject {
         default:
             recipes = recipes.sorted(by: {$0.firstAdded.seconds > $1.firstAdded.seconds})
         }
-    
+        
         return recipes.map({meta in meta.recipe})
+    }
+    
+    func refreshFolders() -> [Folder] {
+        guard let likedFolder = getFolder(name: "Liked Recipes") else{
+            return folders.sorted(by: {$0.name < $1.name})
+        }
+        folders.removeAll(where: {$0.name == "Liked Recipes"})
+        folders.sort(by: {$0.name < $1.name})
+        folders.insert(likedFolder, at: 0)
+        return folders
     }
     
     /// Changes the ordering of the given folder
@@ -164,6 +178,22 @@ class SavedRecipes : ObservableObject {
         }
     }
     
+    func renameFolder(oldName : String, newName : String) -> String? {
+        guard let folder = getFolder(name: oldName) else {
+            return "Old folder name does not currently exist"
+        }
+        if isValidFolderName(name: newName) != nil {
+            return "New folder name is not valid"
+        }
+        folders.removeAll(where: {$0.name == oldName})
+        let newFolder = Folder(recipeMeta: folder.recipeMeta, ordering: folder.ordering, name: newName)
+        folders.append(newFolder)
+        Task(priority: .medium){
+            await dbManager.updateFolders(folders: folders)
+        }
+        return nil
+    }
+    
     
     /// Creates a new folder with the given name
     /// - name: name of the new folder. MUST be unique.
@@ -172,7 +202,11 @@ class SavedRecipes : ObservableObject {
         if isValidFolderName(name: name) != nil{
             return false
         }
-        folders.insert(Folder(name: name), at: 1)
+        if (folders.count > 0){
+            folders.insert(Folder(name: name), at: 1)
+        }else{
+            folders.append(Folder(name: name))
+        }
         Task(priority: .medium){
             await dbManager.updateFolders(folders: folders)
         }

@@ -46,7 +46,7 @@ class AccountManager {
     
     static func getProfileID(userID : String) async -> Int {
         do{
-            let profileID = try await db.collection("users").document(userID).getDocument().data()!["profileID"] as! Int
+            let profileID = try await db.collection("users").document(userID).getDocument().data()?["profileID"] as? Int ?? 0
             return profileID
         }catch{
             print("Error with getting profileID in getProfileID: \(error)")

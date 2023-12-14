@@ -14,7 +14,7 @@ import SwiftUI
 struct RecipeCardSmall: View {
     @EnvironmentObject var user: User
     var recipe: Recipe
-  
+    
     var body: some View  {
         NavigationLink (destination: RecipeView(recipe: recipe).environmentObject(user), label: {
             
@@ -32,10 +32,6 @@ struct RecipeCardSmall: View {
                     case .failure:
                         Image(systemName: "photo")
                     @unknown default:
-                        // Since the AsyncImagePhase enum isn't frozen,
-                        // we need to add this currently unused fallback
-                        // to handle any new cases that might be added
-                        // in the future:
                         EmptyView()
                     }
                 }
@@ -52,7 +48,7 @@ struct RecipeCardSmall: View {
                             .font(.headline)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.leading)
-
+                        
                         HStack(spacing: 4) {
                             Text(String(recipe.readyInMinutes))
                             Text("mins")
@@ -63,13 +59,12 @@ struct RecipeCardSmall: View {
                                 .lineLimit(1)
                         }
                         .font(.caption)
-                        
                         Spacer()
                         
                         Text(recipe.author)
                             .font(.caption)
                     }
-                    .shadow(color: .black, radius: 8)
+                    .modifier(TextShadow())
                     
                     Spacer()
                 }
@@ -80,10 +75,6 @@ struct RecipeCardSmall: View {
         })
     }
 }
-
-//#Preview {
-//    RecipeCardSmall()
-//}
 
 func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
     URLSession.shared.dataTask(with: url, completionHandler: completion).resume()

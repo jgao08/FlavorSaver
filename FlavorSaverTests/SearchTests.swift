@@ -10,112 +10,93 @@ import XCTest
 
 @MainActor
 final class SearchTests: XCTestCase {
-        
+    var search: Search!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         APIManager.maxNumberRecipes = 5
+        search = Search()
+    }
+
+    func testAddIngredient() {
+        let ingredient = "Tomato"
+        search.addIngredient(ingredient)
+        XCTAssertTrue(search.getCurrentSelectedIngredients().contains(ingredient.lowercased()))
     }
     
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testAddExistingIngredient() {
+        let ingredient = "Tomato"
+        search.addIngredient(ingredient)
+        search.addIngredient(ingredient)
+        XCTAssertEqual(search.getCurrentSelectedIngredients().filter { $0 == ingredient.lowercased() }.count, 1)
     }
     
-    func testExample() async throws {
-        let bananaAlmond : Search = Search()
-        bananaAlmond.addIngredient("banana")
-        bananaAlmond.addIngredient("almond")
-        
-        await bananaAlmond.executeSearch()
-        var recipes = bananaAlmond.getRecipes()
-        
-        var recipe_meta = bananaAlmond.getMetaData()
-        
-        XCTAssert(recipe_meta.numberOfRecipes == 5)
-        XCTAssert(recipe_meta.totalRecipes == 21)
-        XCTAssert(recipe_meta.offset == 0)
-        
-        for i in 0...4 {
-            XCTAssert(recipe_meta.recipes[i].id == recipes[i].id, "Failed because \(recipe_meta.recipes[i].id) != \(recipes[i].id)")
-            XCTAssert(recipe_meta.recipes[i].imageType == recipes[i].imageType, "Failed because \(recipe_meta.recipes[i].imageType) != \(recipes[i].imageType)")
-        }
-        
-        // should already exist and stored, so not necessary to reask. Should be instant.
-        
-        await bananaAlmond.executeSearch()
-        recipes = bananaAlmond.getRecipes()
-        
-        recipe_meta = bananaAlmond.getMetaData()
-        
-        XCTAssert(recipe_meta.numberOfRecipes == 5)
-        XCTAssert(recipe_meta.totalRecipes == 21)
-        XCTAssert(recipe_meta.offset == 0)
-        
-        for i in 0...4 {
-            XCTAssert(recipe_meta.recipes[i].id == recipes[i].id, "Failed because \(recipe_meta.recipes[i].id) != \(recipes[i].id)")
-            XCTAssert(recipe_meta.recipes[i].imageType == recipes[i].imageType, "Failed because \(recipe_meta.recipes[i].imageType) != \(recipes[i].imageType)")
-        }
+    
+    func testRemoveIngredient() {
+        let ingredient = "Onion"
+        search.addIngredient(ingredient)
+        search.removeIngredient(ingredient)
+        XCTAssertFalse(search.getCurrentSelectedIngredients().contains(ingredient.lowercased()))
     }
     
-    func test2() async throws {
-        let vodka : Search = Search()
-        vodka.addIngredient("vodka")
-        
-        await vodka.executeSearch()
-        let recipes = vodka.getRecipes()
-        let recipe_meta = vodka.getMetaData()
-        
-        
-        XCTAssert(recipe_meta.numberOfRecipes == 5)
-        XCTAssert(recipe_meta.totalRecipes == 1)
-        XCTAssert(recipe_meta.offset == 0)
-        
-        
-        for i in 0...0 {
-            XCTAssert(recipe_meta.recipes[i].id == recipes[i].id, "Failed because \(recipe_meta.recipes[i].id) != \(recipes[i].id)")
-            XCTAssert(recipe_meta.recipes[i].imageType == recipes[i].imageType, "Failed because \(recipe_meta.recipes[i].imageType) != \(recipes[i].imageType)")
-        }
+    func testRemoveNonexistentIngredient() {
+        let ingredient = "Garlic"
+        search.removeIngredient(ingredient)
+        XCTAssertFalse(search.getCurrentSelectedIngredients().contains(ingredient.lowercased()))
     }
     
-    func testIngredients(){
-        let sampleSearch : Search = Search()
+    func testRemoveMultipleIngredients() {
+        let ingredient1 = "Tomato"
+        let ingredient2 = "Garlic"
+        search.addIngredient(ingredient1)
+        search.addIngredient(ingredient2)
+        search.removeIngredient(ingredient2)
         
-        XCTAssert(sampleSearch.getCurrentSelectedIngredients().count == 0)
+        XCTAssertTrue(search.getCurrentSelectedIngredients().contains(ingredient1.lowercased()))
+        XCTAssertFalse(search.getCurrentSelectedIngredients().contains(ingredient2.lowercased()))
         
-        sampleSearch.addIngredient("potato")
-        XCTAssert(sampleSearch.getCurrentSelectedIngredients().contains("potato"))
+        search.removeIngredient(ingredient2)
         
-        sampleSearch.addIngredient("banana")
-        XCTAssert(sampleSearch.getCurrentSelectedIngredients().contains("potato"))
-        XCTAssert(sampleSearch.getCurrentSelectedIngredients().contains("banana"))
+        XCTAssertTrue(search.getCurrentSelectedIngredients().contains(ingredient1.lowercased()))
+        XCTAssertFalse(search.getCurrentSelectedIngredients().contains(ingredient2.lowercased()))
         
-        sampleSearch.removeIngredient("potato")
-        XCTAssert(!sampleSearch.getCurrentSelectedIngredients().contains("potato"))
-        XCTAssert(sampleSearch.getCurrentSelectedIngredients().contains("banana"))
+        search.removeIngredient(ingredient1)
         
-        sampleSearch.removeIngredient("banana")
-        XCTAssert(!sampleSearch.getCurrentSelectedIngredients().contains("potato"))
-        XCTAssert(!sampleSearch.getCurrentSelectedIngredients().contains("banana"))
-        
-        XCTAssert(sampleSearch.getCurrentSelectedIngredients().count == 0)
+        XCTAssertFalse(search.getCurrentSelectedIngredients().contains(ingredient1.lowercased()))
+        XCTAssertFalse(search.getCurrentSelectedIngredients().contains(ingredient2.lowercased()))
     }
     
-    func testIngredientSearch(){
-        let sampleSearch : Search = Search()
-        let ingredients : Ingredients = Ingredients()
+    func testExecuteSearch() async {
+        let ingredient1 = "Tomato"
+        let ingredient2 = "Garlic"
+        search.addIngredient(ingredient1)
+        search.addIngredient(ingredient2)
+    
+        await search.executeSearch()
         
-        let aIngredients = sampleSearch.getIngredientOptions("a")
-        let cIngredients = sampleSearch.getIngredientOptions("c")
+        XCTAssertEqual(search.getRecipes().count, 4)
         
-        let aMoreIngredients = sampleSearch.getIngredientOptions("app")
-        let cMoreIngredients = sampleSearch.getIngredientOptions("cat")
+        XCTAssertTrue(search.getRecipesWithTags().count > 0)
+    }
         
-        XCTAssert(aIngredients.sorted() == ingredients.ingredients["a"]!.sorted())
-        XCTAssert(cIngredients.sorted() == ingredients.ingredients["c"]!.sorted())
-        
-        XCTAssert(aMoreIngredients == ["appetizer", "apple", "apple butter", "apple cider", "apple cider vinegar", "apple jelly", "apple juice", "apple pie filling", "apple pie spice", "app"])
-        XCTAssert(cMoreIngredients == ["catalina dressing", "catfish fillets", "cat"])
-        
-        let nothing = sampleSearch.getIngredientOptions("")
-        XCTAssert(nothing.count == 0)
+    func testGetIngredientOptions() {
+        let input = "to"
+        let options = search.getIngredientOptions(input)
+        print(options)
+        XCTAssertTrue(options.contains("tomatoes"))
+        XCTAssertTrue(options.contains("tofu"))
+        XCTAssertFalse(options.contains("onion"))
+    }
+    
+    func testGetIngredientOptionsEmpty() {
+        let input = ""
+        let options = search.getIngredientOptions(input)
+        XCTAssertEqual(options.count, 0)
+    }
+    
+    func testGetIngredientOptionsNoMatches() {
+        let input = "z"
+        let options = search.getIngredientOptions(input)
+        XCTAssertEqual(options.count, 1)
+        XCTAssertEqual(options[0], "z")
     }
 }

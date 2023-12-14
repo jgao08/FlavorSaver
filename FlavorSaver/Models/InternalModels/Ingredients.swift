@@ -7,10 +7,8 @@
 
 import Foundation
 
-// TODO: Figure out a more efficient way to approach this (26 buckets for each starting letter?)
 class Ingredients {
-    // REQUIRES: Input is comprised of all lowercase letters
-    //           Input is non-empty
+    
     func filterIngredients(_ input : String) -> [String]{
         let firstCharacter : Character = input.first!
         

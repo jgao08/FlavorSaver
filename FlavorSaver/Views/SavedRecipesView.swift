@@ -10,30 +10,28 @@ import SwiftUI
 
 struct SavedRecipesView: View {
     @EnvironmentObject var user: User
-        
+    
     private let columns = [
         GridItem(.adaptive(minimum: 170))
     ]
     
     var body: some View  {
-      NavigationStack{
-        ScrollView {
-          VStack (spacing: 32) {
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
-                FolderCard(folder: folder).environmentObject(user)
-              }
+        NavigationStack{
+            ScrollView {
+                VStack (spacing: 32) {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(user.getSavedRecipeFolders(), id: \.self) { folder in
+                            FolderCard(folder: folder).environmentObject(user)
+                        }
+                    }
+                }
             }
-          }
+            .scrollIndicators(.hidden)
+            .padding(.horizontal)
+            .toolbar(.hidden, for: .tabBar)
+            .navigationTitle("My Folders")
+            .navigationBarItems(trailing: AddFolderButton(recipe: nil))
         }
-        .padding(.horizontal)
-        .toolbar(.hidden, for: .tabBar)
-        .onAppear {
-          print("updating folders from savedRecipesView")
-        }
-        .navigationTitle("My Folders")
-        .navigationBarItems(trailing: AddFolderButton(recipe: nil))
-      }
     }
 }
 
@@ -43,7 +41,7 @@ struct FolderCard: View {
     @State var isShowingFolder: Bool = false
     
     var body: some View {
-      NavigationLink(destination: FolderView(folder: $folder, isShowingFolder: $isShowingFolder).environmentObject(user)) {
+        NavigationLink(destination: FolderView(folder: $folder, isShowingFolder: $isShowingFolder).environmentObject(user)) {
             
             VStack (alignment: .leading) {
                 if user.getSavedRecipes(folderName: folder.name).count > 0 {
@@ -67,10 +65,6 @@ struct FolderCard: View {
                                 .frame(width: 170, height: 170)
                                 .modifier(RoundedEdge(width: 2, color: .gray.opacity(0.25), cornerRadius: 10))
                         @unknown default:
-                            // Since the AsyncImagePhase enum isn't frozen,
-                            // we need to add this currently unused fallback
-                            // to handle any new cases that might be added
-                            // in the future:
                             EmptyView()
                         }
                     }

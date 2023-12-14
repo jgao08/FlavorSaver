@@ -33,7 +33,7 @@ struct FolderSelectView: View {
                 .buttonStyle(.automatic)
                 
             }.padding(.vertical, 16)
-            .padding(.horizontal, 16)
+                .padding(.horizontal, 16)
             
             HStack (spacing: 16) {
                 AsyncImage(url: URL(string: recipe.image)) { phase in
@@ -72,13 +72,10 @@ struct FolderSelectView: View {
                         if !user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) {
                             user.addRecipeToFolder(recipe: recipe, folderName: folder.name)
                             selectedFolder = folder.name
-                            print("recipe added to folder", folder.name)
                         } else {
                             user.removeRecipeFromFolder(recipe: recipe, folderName: folder.name)
                             selectedFolder = folder.name
                             selectedFolder = nil
-                            print("recipe removed from folder", folder.name)
-
                         }
                     }){
                         HStack{
@@ -87,25 +84,10 @@ struct FolderSelectView: View {
                             
                             Image(systemName: "checkmark")
                                 .foregroundColor(user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name ? .blue : .clear)
-                            
-//                            if user.isRecipeSavedInFolder(recipeID: recipe.id, folderName: folder.name) || selectedFolder == folder.name {
-//                                Image(systemName: "checkmark")
-//                                    .foregroundColor(.blue)
-//                            }
                         }
                     }
                 }
             }
-        }
+        }.tint(.blue)
     }
-    
-//    func createFolder() -> Bool {
-//        let folderCreated = user.createFolder(name: folderName)
-//        print("folder created", folderCreated)
-//        return folderCreated
-//    }
-//
-//    func toggleNamingFolder() {
-//        isNamingFolder.toggle()
-//    }
 }

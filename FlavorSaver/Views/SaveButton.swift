@@ -15,11 +15,6 @@ struct SaveButton: View {
     
     var body: some View  {
         Button(action: {
-//            if user.isRecipeSaved(recipeID: recipe.id) {
-//                user.removeSavedRecipe(recipe: recipe)
-//            } else {
-//                user.addSavedRecipe(recipe: recipe)
-//            }
             folderSelect = true
         }, label: {
             if user.isRecipeSaved(recipeID: recipe.id) {
@@ -28,14 +23,14 @@ struct SaveButton: View {
                     Text("Recipe Saved")
                 }
                 .foregroundColor(.black)
-
+                
             } else {
                 HStack {
                     Image(systemName: "heart")
                     Text("Save Recipe")
                 }
                 .foregroundColor(.black)
-
+                
             }
         })
         .sheet(isPresented: $folderSelect, content: {
@@ -47,7 +42,3 @@ struct SaveButton: View {
         .shadow(radius: 10)
     }
 }
-
-//#Preview {
-//    SaveButton()
-//}

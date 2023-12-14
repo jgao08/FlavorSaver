@@ -16,6 +16,7 @@ class User : ObservableObject{
     
     private var savedRecipes : SavedRecipes
     @Published private var savedFolders : [Folder] = []
+    @Published private var allSavedRecipes : [Recipe] = []
     
     init(userID : String, username : String, profileID : Int){
         self.userid = userID
@@ -26,7 +27,7 @@ class User : ObservableObject{
         Task(priority: .high){
             savedRecipes = await SavedRecipes(db: dbManager, bool: true)
             DispatchQueue.main.async {
-                self.savedFolders = self.savedRecipes.folders
+                self.updatePublishedVars()
             }
         }
     }
@@ -40,7 +41,7 @@ class User : ObservableObject{
         Task(priority: .high){
             savedRecipes = await SavedRecipes(db: dbManager, bool: true)
             DispatchQueue.main.async {
-                self.savedFolders = self.savedRecipes.folders
+                self.updatePublishedVars()
             }
         }
         Task(priority: .high){
@@ -57,7 +58,7 @@ class User : ObservableObject{
         Task(priority: .high){
             savedRecipes = await SavedRecipes(db: dbManager, bool: true)
             DispatchQueue.main.async {
-                self.savedFolders = self.savedRecipes.folders
+                self.updatePublishedVars()
             }
         }
         Task(priority: .high){
@@ -94,7 +95,7 @@ class User : ObservableObject{
     /// Retrieves all saved recipes
     /// - Returns: all saved recipes
     func getSavedRecipes() -> [Recipe]{
-        return savedRecipes.getAllRecipes()
+        return allSavedRecipes
     }
     
     /// Returns whether a recipe is saved by the user
@@ -125,7 +126,7 @@ class User : ObservableObject{
     ///   - folder: the folder to add the recipe to
     func addRecipeToFolder(recipe : Recipe, folderName : String){
         savedRecipes.addRecipeToFolder(recipe: recipe, folderName: folderName)
-        savedFolders = savedRecipes.folders
+        updatePublishedVars()
     }
     
     /// Removes the given recipe from the given folder
@@ -134,14 +135,16 @@ class User : ObservableObject{
     ///   - folder: the folder to remove the recipe from
     func removeRecipeFromFolder(recipe : Recipe, folderName : String){
         savedRecipes.removeRecipeFromFolder(recipe: recipe, folderName: folderName)
-        savedFolders = savedRecipes.folders
+        updatePublishedVars()
     }
     
     /// Attempts to create a new folder of the given name. Returns true if successful, false otherwise. Creating a folder with the same name as an existing folder will fail.
     /// - Parameter name: name of the new folder
     /// - Returns: true if successful, false otherwise
     func createFolder(name : String) -> Bool{
-        return savedRecipes.createFolder(name: name)
+        let status = savedRecipes.createFolder(name: name)
+        updatePublishedVars()
+        return status
     }
     
     /// Returns nil if the folder name is valid, otherwise returns an error message
@@ -155,7 +158,18 @@ class User : ObservableObject{
     /// - Parameter folderName: name of the folder to delete
     func deleteFolder(folderName : String){
         savedRecipes.deleteFolder(folderName: folderName)
-        savedFolders = savedRecipes.folders
+        updatePublishedVars()
+    }
+    
+    /// Renames a folder to a new name. If the new folder name already exists the folder will not be renamed.
+    /// - Parameters:
+    ///   - oldName: old name of the folder
+    ///   - newName: new name of the folder
+    /// - Returns: True if successful, false otherwise
+    func renameFolder(oldName : String, newName : String) -> Bool {
+        let status = savedRecipes.renameFolder(oldName: oldName, newName: newName)
+        updatePublishedVars()
+        return status == nil
     }
     
     /// Retrieves the saved recipes from a given folder name
@@ -171,6 +185,11 @@ class User : ObservableObject{
     ///   - ordering: ordering (recent, alphabetical, etc.)
     func changeFolderOrdering(folderName : String, ordering : String){
         savedRecipes.changeFolderOrder(folderName: folderName, order: Ordering.fromString(ordering: ordering))
-        savedFolders = savedRecipes.folders
+        updatePublishedVars()
+    }
+    
+    private func updatePublishedVars(){
+        savedFolders = savedRecipes.refreshFolders()
+        allSavedRecipes = savedRecipes.getAllRecipes()
     }
 }

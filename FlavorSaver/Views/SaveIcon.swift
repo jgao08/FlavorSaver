@@ -9,12 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SaveIcon: View {
-    //  @Binding var RecipeInfo: Recipe_Info
-    //
-    //    @State var saved: Bool = false
-    //    @State var favorites: [String] = ["banana almond cake", "cheeseburger"]
-    //    var recipeName = "cheeseburger"
-    
     @EnvironmentObject var user: User
     var recipe: Recipe
     @State var colorMode: Bool = true // if true: white, else: black
@@ -24,13 +18,6 @@ struct SaveIcon: View {
     var body: some View  {
         Group {
             Button {
-                // Change the saved properties in the backend here
-                //            print("Edit button was tapped")
-                //            if user.isRecipeSaved(recipeID: recipe.id) {
-                //                user.removeSavedRecipe(recipe: recipe)
-                //            } else {
-                //                user.addSavedRecipe(recipe: recipe)
-                //            }
                 folderSelect = true
             } label: {
                 if isSaved {
@@ -55,8 +42,4 @@ struct SaveIcon: View {
         }
     }
 }
-
-//#Preview {
-//    SaveIcon()
-//}
 

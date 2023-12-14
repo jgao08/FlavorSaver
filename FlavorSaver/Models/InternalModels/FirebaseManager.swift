@@ -20,34 +20,6 @@ class FirebaseManager {
         userDocument = db.collection("users").document(userID)
     }
     
-    func retrieveSavedRecipes() async -> [Recipe] {
-        var result : [Recipe] = []
-        do{
-            let document = try await userDocument.getDocument()
-            guard document.exists else {
-                try await userDocument.setData(["savedRecipeIDs" : []])
-                return result
-            }
-            let data = document.data()
-            let savedRecipes = data?["savedRecipeIDs"] as? [String] ?? []
-            
-            guard (savedRecipes.count > 0) else {
-                return result
-            }
-            let querySnapshot = try await recipeCollection.whereField(FieldPath.documentID(), in: savedRecipes).getDocuments()
-            
-            for document in querySnapshot.documents {
-                let recipe = try document.data(as: Recipe.self)
-                result.append(recipe)
-            }
-            return result
-            
-        }catch{
-            print("Error with retrieving saved recipes in retrieveSavedRecipes: \(error)")
-        }
-        return result
-    }
-    
     func retrieveSavedFolders() async -> [Folder] {
         var result : [Folder] = []
         do{
@@ -71,7 +43,7 @@ class FirebaseManager {
                 }
                 let firebaseRecipeMeta = folder.recipeMeta
                 
-    
+                
                 result.append(Folder(recipeMeta: firebaseRecipeMeta.values.map({firebaseRecipe in firebaseRecipe.toRecipeMeta(recipe: recipes.first(where: {String($0.id) == firebaseRecipe.recipeID})!)}),
                                      ordering: Ordering.fromString(ordering: folder.ordering),
                                      name: name))
@@ -85,11 +57,7 @@ class FirebaseManager {
     }
     
     private func getFolders() async throws -> [String : FirebaseFolder]{
-        var document = try await userDocument.getDocument()
-        if !document.exists {
-            try await userDocument.setData(["folders" : ["Liked Recipes": ["Liked Recipes" : ["name" : "Liked Recipes", "ordering" : "recent", "recipes" : [:]]]]])
-            document = try await userDocument.getDocument()
-        }
+        let document = try await userDocument.getDocument()
         if let foldersData = document["folders"] as? [String: Any] {
             let convertedData = try Firestore.Decoder().decode([String: FirebaseFolder].self, from: foldersData)
             return convertedData
@@ -113,7 +81,7 @@ class FirebaseManager {
         data?["folders"] = encodedValue
         try await userDocument.setData(data!)
     }
-        
+    
     func addRecipe(recipe : Recipe) async {
         do {
             let document = try await recipeCollection.document(String(recipe.id)).getDocument()
