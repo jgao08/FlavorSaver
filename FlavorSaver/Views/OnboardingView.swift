@@ -55,8 +55,10 @@ struct OnboardingView: View {
                 })
             }
             .foregroundColor(.white)
-            .background(Color.orange)
+            .background(
+                Color(red: 0.89, green: 0.50, blue: 0.21))
             
         }
     }
 }
+
