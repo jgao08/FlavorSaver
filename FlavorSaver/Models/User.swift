@@ -161,6 +161,12 @@ class User : ObservableObject{
         updatePublishedVars()
     }
     
+    func renameFolder(oldName : String, newName : String) -> Bool {
+        let status = savedRecipes.renameFolder(oldName: oldName, newName: newName)
+        updatePublishedVars()
+        return status == nil
+    }
+    
     /// Retrieves the saved recipes from a given folder name
     /// - Parameter folderName: name of the folder
     /// - Returns: list of recipes in that folder

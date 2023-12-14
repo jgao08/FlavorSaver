@@ -174,6 +174,20 @@ class SavedRecipes : ObservableObject {
         }
     }
     
+    func renameFolder(oldName : String, newName : String) -> String? {
+        guard let folder = getFolder(name: oldName) else {
+            return "Old folder name does not currently exist"
+        }
+        if let error = isValidFolderName(name: newName)  {
+            return "New folder name is not valid"
+        }
+        folder.name = newName
+        Task(priority: .medium){
+            await dbManager.updateFolders(folders: folders)
+        }
+        return nil
+    }
+    
     
     /// Creates a new folder with the given name
     /// - name: name of the new folder. MUST be unique.

@@ -20,7 +20,6 @@ struct RecipeView: View {
       VStack{
         ZStack{
           AsyncImage(url: URL(string: recipe.image)) { phase in
-              let _ = print(recipe.image)
             switch phase {
             case .empty:
               Image(systemName: "photo")
