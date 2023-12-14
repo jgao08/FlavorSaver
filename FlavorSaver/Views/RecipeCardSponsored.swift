@@ -100,7 +100,7 @@ struct RecipeCardSponsored: View {
                                 if user.isRecipeSaved(recipeID: recipe.id) {
                                     HStack {
                                         Image(systemName: "heart.fill")
-                                        Text("Recipe Saved")
+                                        Text("Saved")
                                     }
                                     .foregroundColor(.white)
 

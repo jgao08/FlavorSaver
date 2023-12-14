@@ -12,10 +12,7 @@ import SwiftUI
 struct ProfileView: View {
     @EnvironmentObject var user: User
     @State var signOut : Bool = false
-    @State var folders: [Folder] = []
-    @State var savedRecipes: [Recipe] = []
-    
-    
+        
     var body: some View{
         NavigationStack{
             
@@ -59,7 +56,7 @@ struct ProfileView: View {
                         HStack {
                             ScrollView (.horizontal, showsIndicators: false ){
                                 HStack{
-                                    ForEach(savedRecipes, id: \.self){ recipe in
+                                    ForEach(user.getSavedRecipes(), id: \.self){ recipe in
                                         RecipeCardLarge(recipe: recipe)
                                     }
                                 }
@@ -81,16 +78,9 @@ struct ProfileView: View {
                     do{
                         try AccountManager.signOut(user: user)
                     } catch {
-                        print("signout failed")
-                        print(error)
+                        print("signout failed with error \(error)")
                     }
                 }
-            }
-            .onAppear() {
-                savedRecipes = user.getSavedRecipes()
-            }
-            .onChange(of: user.getSavedRecipes()) {
-                savedRecipes = user.getSavedRecipes()
             }
         }
     }

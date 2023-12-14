@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreatorProfileView: View {
-  var user: User = User(userID: "oWkYfZMRPYYMC3hIAb5pW8jeg1a2")
+  @StateObject var user: User = User(userID: "oWkYfZMRPYYMC3hIAb5pW8jeg1a2")
     
   private let columns = [
       GridItem(.adaptive(minimum: 170))

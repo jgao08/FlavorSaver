@@ -17,10 +17,6 @@ struct SearchView: View {
     @StateObject var search : Search = Search()
     @StateObject var searchRecs : Recommended = Recommended()
 
-//    @State var recommendedRecipes: [Recipe] = []
-    @State private var isInitialLoad = true
-    
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -78,14 +74,6 @@ struct SearchView: View {
                     }
                     .refreshable {
                         await searchRecs.executeRandomSearch()
-                      print(searchRecs.getRecommendedRecipes().count > 0 ? searchRecs.getRecommendedRecipes()[0] : "sucks")
-                    }
-                    .task {
-                      if isInitialLoad{
-                        await searchRecs.executeRandomSearch()
-                        isInitialLoad = false
-                        print(searchRecs.getRecommendedRecipes().count > 0 ? searchRecs.getRecommendedRecipes()[0] : "initialload")
-                      }
                     }
                     .overlay{
                         if !searchText.isEmpty {

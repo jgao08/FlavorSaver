@@ -192,7 +192,6 @@ struct CookingModeStep: View {
             .padding(.horizontal, 16)
         }
         .onChange(of: selected) {
-            let _ = print("selected: \(selected)")
             if selected == stepIndex {
                 title = "Step \(stepIndex) of \(recipe.getRecipeStepsWithAmounts().count)"
                 progressValue = (Float(stepIndex)/Float(recipe.getRecipeStepsWithAmounts().count+1))

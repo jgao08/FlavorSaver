@@ -47,8 +47,6 @@ struct FolderView: View {
               Button{
                 user.changeFolderOrdering(folderName: folder.name, ordering: "recentReverse")
                 ordering = "Newest"
-                print("AAAAAAA")
-                print(ordering == "recentReverse")
               } label: {
                 Text("Date created: newest")
 //                Image(systemName: "checkmark")

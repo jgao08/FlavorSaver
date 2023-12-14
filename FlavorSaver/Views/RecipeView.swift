@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import SwiftUITrackableScrollView
 
 struct RecipeView: View {
   @EnvironmentObject var user: User
@@ -21,6 +20,7 @@ struct RecipeView: View {
       VStack{
         ZStack{
           AsyncImage(url: URL(string: recipe.image)) { phase in
+              let _ = print(recipe.image)
             switch phase {
             case .empty:
               Image(systemName: "photo")
@@ -33,10 +33,6 @@ struct RecipeView: View {
             case .failure:
               Image(systemName: "photo")
             @unknown default:
-              // Since the AsyncImagePhase enum isn't frozen,
-              // we need to add this currently unused fallback
-              // to handle any new cases that might be added
-              // in the future:
               EmptyView()
             }
           }
@@ -107,13 +103,13 @@ struct RecipeView: View {
             }
 
             
-//            HStack{
-//              NavigationLink(destination: CreatorProfileView(),label: {
-//                Text("by " + recipe.author)
-//                  .font(.caption)
-//              })
-//              Spacer()
-//            }
+            HStack{
+              NavigationLink(destination: CreatorProfileView(),label: {
+                Text("by " + recipe.author)
+                  .font(.caption)
+              })
+              Spacer()
+            }
           }
           
           VStack(spacing: paraSpacing){

@@ -93,6 +93,16 @@ class SavedRecipes : ObservableObject {
         return recipes.map({meta in meta.recipe})
     }
     
+    func refreshFolders() -> [Folder] {
+        guard let likedFolder = getFolder(name: "Liked Recipes") else{
+            return folders.sorted(by: {$0.name < $1.name})
+        }
+        folders.removeAll(where: {$0.name == "Liked Recipes"})
+        folders.sort(by: {$0.name < $1.name})
+        folders.insert(likedFolder, at: 0)
+        return folders
+    }
+    
     /// Changes the ordering of the given folder
     /// - Parameters:
     ///   - folder: the folder to change the ordering of

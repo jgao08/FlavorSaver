@@ -91,6 +91,6 @@ struct FolderSelectView: View {
                     }
                 }
             }
-        }
+        }.tint(.blue)
     }
 }
