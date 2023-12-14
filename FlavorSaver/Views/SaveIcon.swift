@@ -9,12 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SaveIcon: View {
-    //  @Binding var RecipeInfo: Recipe_Info
-    //
-    //    @State var saved: Bool = false
-    //    @State var favorites: [String] = ["banana almond cake", "cheeseburger"]
-    //    var recipeName = "cheeseburger"
-    
     @EnvironmentObject var user: User
     var recipe: Recipe
     @State var colorMode: Bool = true // if true: white, else: black
@@ -48,8 +42,4 @@ struct SaveIcon: View {
         }
     }
 }
-
-//#Preview {
-//    SaveIcon()
-//}
 

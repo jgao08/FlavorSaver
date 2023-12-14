@@ -13,15 +13,10 @@ final class SearchTests: XCTestCase {
     var search: Search!
     
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         APIManager.maxNumberRecipes = 5
         search = Search()
     }
-    
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
+
     func testAddIngredient() {
         let ingredient = "Tomato"
         search.addIngredient(ingredient)

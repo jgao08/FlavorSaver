@@ -12,7 +12,7 @@ import SwiftUI
 struct ProfileView: View {
     @EnvironmentObject var user: User
     @State var signOut : Bool = false
-        
+    
     var body: some View{
         NavigationStack{
             
@@ -68,7 +68,7 @@ struct ProfileView: View {
                 })
             }
             .navigationBarItems(trailing:
-            Button{
+                                    Button{
                 signOut = true
             } label: {
                 Image(systemName: "ellipsis")
@@ -85,7 +85,3 @@ struct ProfileView: View {
         }
     }
 }
-
-//#Preview {
-//  ProfileView()
-//}

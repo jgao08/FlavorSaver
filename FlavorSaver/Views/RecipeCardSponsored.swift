@@ -31,10 +31,6 @@ struct RecipeCardSponsored: View {
                     case .failure:
                         Image(systemName: "photo")
                     @unknown default:
-                        // Since the AsyncImagePhase enum isn't frozen,
-                        // we need to add this currently unused fallback
-                        // to handle any new cases that might be added
-                        // in the future:
                         EmptyView()
                     }
                 }
@@ -42,9 +38,6 @@ struct RecipeCardSponsored: View {
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: [.black.opacity(0.1), .black.opacity(0.6)]), startPoint: .top, endPoint: .bottom))
                     .frame(width: UIScreen.main.bounds.width - 32, height: 450)
-
-//                    .containerRelativeFrame(.horizontal)
-
                     .cornerRadius(10)
                 
                 
@@ -55,7 +48,7 @@ struct RecipeCardSponsored: View {
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.leading)
-
+                            
                             
                             Spacer()
                         }
@@ -72,7 +65,7 @@ struct RecipeCardSponsored: View {
                         
                         Text(recipe.author)
                             .font(.body)
-
+                        
                         Spacer()
                         
                         HStack (spacing: 16) {
@@ -82,7 +75,7 @@ struct RecipeCardSponsored: View {
                                     Text("Try Now")
                                 }
                                 .buttonStyle(.borderedProminent)
-
+                                
                                 .padding(15)
                                 .background(.white)
                                 .cornerRadius(10)
@@ -99,7 +92,7 @@ struct RecipeCardSponsored: View {
                                         Text("Saved")
                                     }
                                     .foregroundColor(.white)
-
+                                    
                                 } else {
                                     HStack {
                                         Image(systemName: "heart")
@@ -112,19 +105,19 @@ struct RecipeCardSponsored: View {
                             .controlSize(.large)
                             .buttonStyle(.borderedProminent)
                             .modifier(TextShadow())
-
+                            
                             .sheet(isPresented: $folderSelect, content: {
                                 FolderSelectView(recipe: recipe).environmentObject(user)
                             })
                             .foregroundColor(.black)
-
+                            
                             
                         }
-
+                        
                     }
                     .modifier(TextShadow())
                     .foregroundColor(.white)
-
+                    
                     
                     Spacer()
                 }
@@ -132,6 +125,6 @@ struct RecipeCardSponsored: View {
                 .frame(width: UIScreen.main.bounds.width - 32, height: 450)
             }
         })
-//        .buttonStyle(PlainButtonStyle())
+        //        .buttonStyle(PlainButtonStyle())
     }
 }

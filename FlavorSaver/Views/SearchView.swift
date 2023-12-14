@@ -16,7 +16,7 @@ struct SearchView: View {
     @State var selectedIngredients : [String] = []
     @StateObject var search : Search = Search()
     @StateObject var searchRecs : Recommended = Recommended()
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -48,26 +48,26 @@ struct SearchView: View {
                                 RecipeCardSponsored(recipe: searchRecs.getRecommendedRecipes().last ?? Recipe(id: 0, name: "", image: "", imageType: "", servings: 0, readyInMinutes: 0, author: "", authorURL: "", spoonURL: "", summary: "", cuisines: [], dishTypes: [], ingredientInfo: [], ingredientSteps: [])).environmentObject(user)
                                     .padding(.horizontal, 16)
                                 
-                              VStack(spacing: 16){
-                                  HStack{
-                                      Text("Recommended Recipes")
-                                          .font(.title)
-                                      Spacer()
-                                  }
-                                  .padding(.horizontal)
-                                  
-                                  
-                                  HStack {
-                                      ScrollView (.horizontal, showsIndicators: false ){
-                                          HStack{
-                                              ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
-                                                  RecipeCardLarge(recipe: recipe)
-                                              }
-                                          }
-                                      }
-                                      .scrollClipDisabled()
-                                  }.padding(.horizontal)
-                              }
+                                VStack(spacing: 16){
+                                    HStack{
+                                        Text("Recommended Recipes")
+                                            .font(.title)
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
+                                    
+                                    
+                                    HStack {
+                                        ScrollView (.horizontal, showsIndicators: false ){
+                                            HStack{
+                                                ForEach(searchRecs.getRecommendedRecipes(), id: \.self){ recipe in
+                                                    RecipeCardLarge(recipe: recipe)
+                                                }
+                                            }
+                                        }
+                                        .scrollClipDisabled()
+                                    }.padding(.horizontal)
+                                }
                             }
                         }
                         Spacer()
@@ -130,7 +130,7 @@ struct SearchView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-        }/*.padding(.vertical, 32)*/
+        }
         .navigationBarBackButtonHidden(true)
         .ignoresSafeArea(.all)
     }
@@ -151,8 +151,3 @@ struct SearchView: View {
     }
 }
 
-
-
-//#Preview {
-//  SearchView()
-//}

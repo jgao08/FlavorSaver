@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SearchResultsView: View {
-    
     @EnvironmentObject var user: User
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var search: Search

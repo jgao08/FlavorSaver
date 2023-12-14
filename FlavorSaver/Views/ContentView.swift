@@ -8,31 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-  @StateObject var user: User
-  
-  var body: some View {
-    NavigationView {
-      TabView {
-        SearchView()
-          .environmentObject(user)
-          .tabItem {
-            Image(systemName: "magnifyingglass")
-            Text("Search")
-          }
-        ProfileView()
-          .environmentObject(user)
-          .tabItem {
-            Image(systemName: "person.fill")
-            Text("Profile")
-          }
-        
-      }
+    @StateObject var user: User
+    
+    var body: some View {
+        NavigationView {
+            TabView {
+                SearchView()
+                    .environmentObject(user)
+                    .tabItem {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search")
+                    }
+                ProfileView()
+                    .environmentObject(user)
+                    .tabItem {
+                        Image(systemName: "person.fill")
+                        Text("Profile")
+                    }
+                
+            }
+        }
+        .preferredColorScheme(.light)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
-    .preferredColorScheme(.light)
-    .navigationViewStyle(StackNavigationViewStyle())    
-  }
 }
-
-//#Preview {
-//    ContentView()
-//}

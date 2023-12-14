@@ -17,7 +17,7 @@ class Search : ObservableObject{
     private var ingredientFinder : Ingredients = Ingredients()
     private var hasChanged : Bool = true
     private var apiManager = APIManager()
-        
+    
     /// Adds an ingredient to the search request. No ingredients are added if the ingredient is already in the list
     /// - Parameter ingredient: the ingredient to add
     func addIngredient(_ ingredient : String) {
@@ -63,7 +63,7 @@ class Search : ObservableObject{
         let queryRequest : String = selectedIngredients.joined(separator: ",")
         let cuisineRequest : String = selectedIngredients.filter({ingredientFinder.cuisines.contains($0)}).joined(separator: ",")
         let mealTypeRequest : String = selectedIngredients.filter({ingredientFinder.mealTypes.contains($0)}).joined(separator: ",")
-                
+        
         let urlRequest = "\(apiManager.complexSearchParams)&query=\(queryRequest)&cuisine=\(cuisineRequest)&type=\(mealTypeRequest)"
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RecipesMetaData.self)

@@ -23,14 +23,14 @@ struct SaveButton: View {
                     Text("Recipe Saved")
                 }
                 .foregroundColor(.black)
-
+                
             } else {
                 HStack {
                     Image(systemName: "heart")
                     Text("Save Recipe")
                 }
                 .foregroundColor(.black)
-
+                
             }
         })
         .sheet(isPresented: $folderSelect, content: {
@@ -42,7 +42,3 @@ struct SaveButton: View {
         .shadow(radius: 10)
     }
 }
-
-//#Preview {
-//    SaveButton()
-//}

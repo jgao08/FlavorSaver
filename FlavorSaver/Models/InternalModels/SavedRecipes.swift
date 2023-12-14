@@ -62,7 +62,7 @@ class SavedRecipes : ObservableObject {
         let flatMapped = folders.flatMap({folder in folder.recipeMeta})
         let removeDups = Array(Set(flatMapped))
         let sorted = removeDups.sorted(by: {$0.firstAdded.seconds > $1.firstAdded.seconds})
-       
+        
         return sorted.map({meta in meta.recipe})
     }
     
@@ -93,7 +93,7 @@ class SavedRecipes : ObservableObject {
         default:
             recipes = recipes.sorted(by: {$0.firstAdded.seconds > $1.firstAdded.seconds})
         }
-    
+        
         return recipes.map({meta in meta.recipe})
     }
     

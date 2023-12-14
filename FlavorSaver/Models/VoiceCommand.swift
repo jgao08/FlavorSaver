@@ -23,9 +23,9 @@ class VoiceControl: ObservableObject {
     func startSpeechRecognition() {
         SFSpeechRecognizer.requestAuthorization { authStatus in
             if authStatus == .authorized {
-                print("Authorized")
+                print("Speech Authorized")
             }else{
-                print("Not authorized")
+                print("Speech not authorized")
             }
         }
     }

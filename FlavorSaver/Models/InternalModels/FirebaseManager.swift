@@ -43,7 +43,7 @@ class FirebaseManager {
                 }
                 let firebaseRecipeMeta = folder.recipeMeta
                 
-    
+                
                 result.append(Folder(recipeMeta: firebaseRecipeMeta.values.map({firebaseRecipe in firebaseRecipe.toRecipeMeta(recipe: recipes.first(where: {String($0.id) == firebaseRecipe.recipeID})!)}),
                                      ordering: Ordering.fromString(ordering: folder.ordering),
                                      name: name))
@@ -57,7 +57,7 @@ class FirebaseManager {
     }
     
     private func getFolders() async throws -> [String : FirebaseFolder]{
-        var document = try await userDocument.getDocument()
+        let document = try await userDocument.getDocument()
         if let foldersData = document["folders"] as? [String: Any] {
             let convertedData = try Firestore.Decoder().decode([String: FirebaseFolder].self, from: foldersData)
             return convertedData
@@ -81,7 +81,7 @@ class FirebaseManager {
         data?["folders"] = encodedValue
         try await userDocument.setData(data!)
     }
-        
+    
     func addRecipe(recipe : Recipe) async {
         do {
             let document = try await recipeCollection.document(String(recipe.id)).getDocument()

@@ -10,29 +10,8 @@ import XCTest
 import FirebaseAuth
 
 final class AccountManagerTests: XCTestCase {
-    
-    
-//    func testSignUp() async throws {
-//        // Ensure that the user does not already exist with the given email
-//        try Auth.auth().signOut()
-//        
-//        let username = "testUser"
-//        let profileID = 1
-//        let email = "test@example.com"
-//        let password = "testPassword"
-//        
-//        do {
-//            let user = try await AccountManager.signUp(username: username, profileID: profileID, email: email, password: password)
-//            XCTAssertEqual(user.getUsername(), username)
-//            XCTAssertEqual(user.getProfileID(), profileID)
-//            XCTAssertNotNil(user.getUserID())
-//        } catch {
-//            XCTFail("Error during signUp: \(error.localizedDescription)")
-//        }
-//    }
-    
+        
     func testLogin() async throws {
-        // Ensure that the user is signed out before attempting login
         try Auth.auth().signOut()
         
         let email = "test@example.com"

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct FolderView: View {
     @EnvironmentObject var user: User
-    //    @Environment(\.dismiss) private var dismiss
     
     @Binding var folder: Folder
     @Binding var isShowingFolder: Bool
@@ -51,32 +50,24 @@ struct FolderView: View {
                         ordering = "Newest"
                     } label: {
                         Text("Date created: newest")
-                        //                Image(systemName: "checkmark")
-                        //                  .foregroundColor(ordering == "recentReverse" ? .blue : .clear)
                     }
                     Button{
                         user.changeFolderOrdering(folderName: folder.name, ordering: "recent")
                         ordering = "Oldest"
                     } label: {
                         Text("Date created: oldest")
-                        //                Image(systemName: "checkmark")
-                        //                  .foregroundColor(ordering == "recent" ? .blue : .clear)
                     }
                     Button{
                         user.changeFolderOrdering(folderName: folder.name, ordering: "alphabeticalReverse")
                         ordering = "Alphabetical A-Z"
                     } label: {
                         Text("Alphabetical A-Z")
-                        //                Image(systemName: "checkmark")
-                        //                  .foregroundColor(ordering == "alphabeticalReverse" ? .blue : .clear)
                     }
                     Button{
                         user.changeFolderOrdering(folderName: folder.name, ordering: "alphabetical")
                         ordering = "Alphabetical Z-A"
                     } label: {
                         Text("Alphabetical Z-A")
-                        //                Image(systemName: "checkmark")
-                        //                  .foregroundColor(ordering == "alphabetical" ? .blue : .clear)
                     }
                 } label: {
                     Text("Sort: \(ordering)")

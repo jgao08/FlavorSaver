@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 struct RecipeCardLarge: View {
-    //  @Binding var RecipeInfo: Recipe_Info
-    
     @EnvironmentObject var user: User
     var recipe: Recipe
     
@@ -31,10 +29,6 @@ struct RecipeCardLarge: View {
                     case .failure:
                         Image(systemName: "photo")
                     @unknown default:
-                        // Since the AsyncImagePhase enum isn't frozen,
-                        // we need to add this currently unused fallback
-                        // to handle any new cases that might be added
-                        // in the future:
                         EmptyView()
                     }
                 }
@@ -52,7 +46,7 @@ struct RecipeCardLarge: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.leading)
-
+                            
                             
                             Spacer()
                             SaveIcon(recipe: recipe).environmentObject(user)
@@ -68,17 +62,17 @@ struct RecipeCardLarge: View {
                                 .lineLimit(1)
                         }
                         .font(.caption)
-
+                        
                         
                         Spacer()
                         
                         Text(recipe.author)
                             .font(.caption)
-
+                        
                     }
                     .modifier(TextShadow())
                     .foregroundColor(.white)
-
+                    
                     
                     Spacer()
                 }
@@ -86,10 +80,5 @@ struct RecipeCardLarge: View {
                 .frame(width: 300, height: 400)
             }
         })
-//        .buttonStyle(PlainButtonStyle())
     }
 }
-
-//#Preview {
-////    RecipeCardLarge()
-//}

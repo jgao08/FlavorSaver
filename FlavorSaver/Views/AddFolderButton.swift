@@ -14,10 +14,10 @@ struct AddFolderButton: View {
     @State private var isNamingFolder: Bool = false
     @State private var folderName: String = ""
     var recipe: Recipe?
-
+    
     var body: some View  {
         Button {
-            toggleNamingFolder()
+            isNamingFolder.toggle()
         } label: {
             Image(systemName: "plus")
         }
@@ -26,16 +26,10 @@ struct AddFolderButton: View {
                 .textInputAutocapitalization(.never)
             
             Button("Save") {
-                print("Save button clicked", folderName)
-                if createFolder() && recipe != nil {
+                if user.createFolder(name: folderName) && recipe != nil {
                     user.addRecipeToFolder(recipe: recipe!, folderName: folderName)
                     isNamingFolder = false
-                    print("Folder created", folderName)
                     folderName = ""
-                } else if recipe == nil{
-                    print("Folder created but recipe not added")
-                } else {
-                    print("Folder creation failed")
                 }
             }
             
@@ -43,15 +37,5 @@ struct AddFolderButton: View {
         } message: {
             Text("Enter a name for this folder")
         }
-    }
-    
-    func createFolder() -> Bool {
-        let folderCreated = user.createFolder(name: folderName)
-        print("folder created", folderCreated)
-        return folderCreated
-    }
-    
-    func toggleNamingFolder() {
-        isNamingFolder.toggle()
     }
 }

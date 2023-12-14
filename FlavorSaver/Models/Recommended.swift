@@ -30,7 +30,6 @@ class Recommended : ObservableObject{
     
     /// Executes a request to update the random recommended recipes
     func executeRandomSearch() async {
-        print("Executing random search")
         let urlRequest = "\(apiManager.randomSearchParams)"
         do{
             let request = try await apiManager.sendAPIRequest(urlRequest, RandomRecipes.self)

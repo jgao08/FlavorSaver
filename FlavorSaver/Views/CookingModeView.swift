@@ -11,7 +11,6 @@ import ConfettiSwiftUI
 struct CookingModeView: View {
     @EnvironmentObject var user: User
     @State var recipe : Recipe
-//    @Environment(\.presentationMode) var presentationMode
     @Binding var sheetOpen: Bool
     
     @State var title: String = ""
@@ -160,7 +159,7 @@ struct CookingModeStep: View {
     @Binding var title: String
     @Binding var progressValue: Float
     @Binding var selected: Int
-
+    
     
     var body: some View {
         VStack {
@@ -201,14 +200,14 @@ struct CookingModeStep: View {
 }
 
 struct CookingModeOutro: View {
-  @State private var counter : Int = 0
+    @State private var counter : Int = 0
     @EnvironmentObject var user: User
     @State var recipe : Recipe
     @Environment(\.presentationMode) var presentationMode
     @Binding var title: String
     @Binding var progressValue: Float
     @Binding var selected: Int
-
+    
     
     var body: some View {
         VStack {
@@ -254,21 +253,19 @@ struct CookingModeOutro: View {
             }
         }
         .onChange(of: selected) {
-            print("getrecipestepscount", recipe.getRecipeStepsWithAmounts().count + 1)
             if selected == recipe.getRecipeStepsWithAmounts().count + 1 {
                 title = "Recipe Complete!"
                 progressValue = 1
             }
         }
         .onAppear{
-          counter += 1
+            counter += 1
         }
         .confettiCannon(counter: $counter, num: 50, repetitions: 2)
     }
 }
 
 struct CookingModeHeader: View {
-//    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var voiceController : VoiceControl
     @Binding var title: String
     @Binding var progressValue: Float
@@ -280,7 +277,6 @@ struct CookingModeHeader: View {
                 Text(title)
                 Spacer()
                 Button {
-//                    presentationMode.wrappedValue.dismiss()
                     sheetOpen = false
                 } label: {
                     Image(systemName: "x.circle.fill")
