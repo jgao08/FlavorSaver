@@ -95,4 +95,11 @@ final class UserTest: XCTestCase {
         user.changeFolderOrdering(folderName: "OrderedFolder", ordering: "recentReverse")
         XCTAssertEqual(user.getSavedRecipeFolders().first(where: {$0.name == "OrderedFolder"})!.ordering, .recentReverse    )
     }
+    
+    func testChangeFolderName() {
+        XCTAssertTrue(user.createFolder(name: "ToRename"))
+        XCTAssertTrue(user.getSavedRecipeFolders().contains(where: {$0.name == "ToRename"}))
+        XCTAssertTrue(user.renameFolder(oldName: "ToRename", newName: "Renamed"))
+        XCTAssertTrue(user.getSavedRecipeFolders().contains(where: {$0.name == "Renamed"}))
+    }
 }

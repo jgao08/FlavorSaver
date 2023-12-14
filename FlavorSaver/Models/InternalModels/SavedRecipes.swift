@@ -59,7 +59,11 @@ class SavedRecipes : ObservableObject {
     }
     
     func getAllRecipes() -> [Recipe] {
-        return Array(Set(folders.flatMap({folder in folder.recipeMetaToRecipe()})))
+        let flatMapped = folders.flatMap({folder in folder.recipeMeta})
+        let removeDups = Array(Set(flatMapped))
+        let sorted = removeDups.sorted(by: {$0.firstAdded.seconds > $1.firstAdded.seconds})
+       
+        return sorted.map({meta in meta.recipe})
     }
     
     ///  Retrieves the recipes in the given folder

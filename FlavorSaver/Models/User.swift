@@ -161,6 +161,11 @@ class User : ObservableObject{
         updatePublishedVars()
     }
     
+    /// Renames a folder to a new name. If the new folder name already exists the folder will not be renamed.
+    /// - Parameters:
+    ///   - oldName: old name of the folder
+    ///   - newName: new name of the folder
+    /// - Returns: True if successful, false otherwise
     func renameFolder(oldName : String, newName : String) -> Bool {
         let status = savedRecipes.renameFolder(oldName: oldName, newName: newName)
         updatePublishedVars()
