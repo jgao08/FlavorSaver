@@ -21,6 +21,7 @@
 		27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED492AF49214002904FE /* SavedRecipesView.swift */; };
 		27DAED4D2AF49214002904FE /* CookingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DAED4A2AF49214002904FE /* CookingModeView.swift */; };
 		27DAED4F2AF49351002904FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27DAED4E2AF49351002904FE /* GoogleService-Info.plist */; };
+		27E9CEFC2B2A5A650081D319 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9CEFB2B2A5A650081D319 /* LaunchScreenView.swift */; };
 		27FA5D932B1955EC00973173 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA5D912B1955EC00973173 /* SignInView.swift */; };
 		27FA5D942B1955EC00973173 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA5D922B1955EC00973173 /* SignUpView.swift */; };
 		27FA5D962B19561800973173 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA5D952B19561800973173 /* OnboardingView.swift */; };
@@ -105,6 +106,7 @@
 		27DAED492AF49214002904FE /* SavedRecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesView.swift; sourceTree = "<group>"; };
 		27DAED4A2AF49214002904FE /* CookingModeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookingModeView.swift; sourceTree = "<group>"; };
 		27DAED4E2AF49351002904FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		27E9CEFB2B2A5A650081D319 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		27FA5D912B1955EC00973173 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		27FA5D922B1955EC00973173 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		27FA5D952B19561800973173 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				F9ECAB7F2AEF009800F951B0 /* SearchView.swift */,
 				27FA5D912B1955EC00973173 /* SignInView.swift */,
 				27FA5D922B1955EC00973173 /* SignUpView.swift */,
+				27E9CEFB2B2A5A650081D319 /* LaunchScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				F92B12E32AF8092C003C2474 /* FirebaseManager.swift in Sources */,
 				27DAED4C2AF49214002904FE /* SavedRecipesView.swift in Sources */,
 				27FA5D932B1955EC00973173 /* SignInView.swift in Sources */,
+				27E9CEFC2B2A5A650081D319 /* LaunchScreenView.swift in Sources */,
 				27DAED4B2AF49214002904FE /* RecipeView.swift in Sources */,
 				F9E25DEE2B1DBD6400076BCA /* Recommended.swift in Sources */,
 				F9B659602AF42BAB0080B480 /* APIManager.swift in Sources */,
