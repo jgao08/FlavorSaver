@@ -86,12 +86,8 @@ struct RecipeCardSponsored: View {
                                 .padding(15)
                                 .background(.white)
                                 .cornerRadius(10)
-//                                Button("Try Now", systemImage: "arrow.forward", action: {})
                                 .foregroundColor(.black)
-//                                .tint(.white)
-//                                .controlSize(.large)
-//                                .buttonStyle(.borderedProminent)
-                                .shadow(radius: 10)
+                                .modifier(TextShadow())
                             })
                             
                             Button(action: {
@@ -110,15 +106,13 @@ struct RecipeCardSponsored: View {
                                         Text("Save Recipe")
                                     }
                                     .foregroundColor(.white)
-
-
                                 }
                             })
                             .tint(.gray)
                             .controlSize(.large)
                             .buttonStyle(.borderedProminent)
-                            .shadow(radius: 10)
-                            
+                            .modifier(TextShadow())
+
                             .sheet(isPresented: $folderSelect, content: {
                                 FolderSelectView(recipe: recipe).environmentObject(user)
                             })
@@ -128,7 +122,7 @@ struct RecipeCardSponsored: View {
                         }
 
                     }
-                    .shadow(color: .black, radius: 8)
+                    .modifier(TextShadow())
                     .foregroundColor(.white)
 
                     

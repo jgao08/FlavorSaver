@@ -53,21 +53,24 @@ struct RecipeView: View {
               Button(action: {
                 cookingMode.toggle()
               }, label: {
-                Image(systemName: "play.fill")
-                Text("Cooking Mode")
+                  HStack {
+                      Image(systemName: "play.fill")
+                      Text("Cooking Mode")
+                  }
+                  .tint(.white)
+                  .controlSize(.large)
+                  .buttonStyle(.borderedProminent)
+                  .modifier(TextShadow())
+                  .foregroundStyle(Color.black)
               })
-              .tint(.white)
-              .controlSize(.large)
-              .buttonStyle(.borderedProminent)
-              .foregroundStyle(Color.black)
-              .shadow(radius: 10)
               .sheet(isPresented: $cookingMode, content: {
-                CookingModeView(recipe: recipe, sheetOpen: cookingMode).environmentObject(user)
+                  CookingModeView(recipe: recipe, sheetOpen: $cookingMode).environmentObject(user)
               })
               Spacer()
             }
             .padding(.horizontal)
           }
+          .modifier(TextShadow())
           .padding(.bottom, sectionSpacing)
         }
         

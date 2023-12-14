@@ -11,8 +11,8 @@ import ConfettiSwiftUI
 struct CookingModeView: View {
     @EnvironmentObject var user: User
     @State var recipe : Recipe
-    @Environment(\.presentationMode) var presentationMode
-    @State var sheetOpen: Bool
+//    @Environment(\.presentationMode) var presentationMode
+    @Binding var sheetOpen: Bool
     
     @State var title: String = ""
     @State var progressValue: Float = 0
@@ -23,7 +23,7 @@ struct CookingModeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                CookingModeHeader(title: $title, progressValue: $progressValue).environmentObject(voiceController)
+                CookingModeHeader(title: $title, progressValue: $progressValue, sheetOpen: $sheetOpen ).environmentObject(voiceController)
                 TabView (selection: $selected) {
                     CookingModeIntro(recipe: recipe, title: $title, progressValue: $progressValue, selected: $selected)
                         .tag(0)
@@ -33,7 +33,7 @@ struct CookingModeView: View {
                                 .tag(stepIndex)
                         }
                     }
-                    CookingModeOutro(recipe: recipe, sheetOpen: sheetOpen, title: $title, progressValue: $progressValue, selected: $selected).environmentObject(user)
+                    CookingModeOutro(recipe: recipe, title: $title, progressValue: $progressValue, selected: $selected).environmentObject(user)
                         .tag(recipe.getRecipeStepsWithAmounts().count + 1)
                 }
                 .tabViewStyle(.page)
@@ -205,7 +205,6 @@ struct CookingModeOutro: View {
     @EnvironmentObject var user: User
     @State var recipe : Recipe
     @Environment(\.presentationMode) var presentationMode
-    @State var sheetOpen: Bool
     @Binding var title: String
     @Binding var progressValue: Float
     @Binding var selected: Int
@@ -269,10 +268,11 @@ struct CookingModeOutro: View {
 }
 
 struct CookingModeHeader: View {
-    @Environment(\.presentationMode) var presentationMode
+//    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var voiceController : VoiceControl
     @Binding var title: String
     @Binding var progressValue: Float
+    @Binding var sheetOpen: Bool
     
     var body: some View {
         VStack {
@@ -280,7 +280,8 @@ struct CookingModeHeader: View {
                 Text(title)
                 Spacer()
                 Button {
-                    presentationMode.wrappedValue.dismiss()
+//                    presentationMode.wrappedValue.dismiss()
+                    sheetOpen = false
                 } label: {
                     Image(systemName: "x.circle.fill")
                         .foregroundColor(.black)

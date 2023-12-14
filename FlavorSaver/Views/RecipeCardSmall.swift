@@ -69,7 +69,7 @@ struct RecipeCardSmall: View {
                         Text(recipe.author)
                             .font(.caption)
                     }
-                    .shadow(color: .black, radius: 8)
+                    .modifier(TextShadow())
                     
                     Spacer()
                 }

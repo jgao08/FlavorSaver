@@ -44,25 +44,6 @@ struct SignInView: View {
             .foregroundStyle(loginFailed ? Color.red : Color.clear)
           Spacer()
         }
-        //        NavigationLink(destination: ContentView(), label: {
-        //          HStack{
-        //            Text("Sign In")
-        //              .font(.title2)
-        //              .bold()
-        //              .foregroundColor(isSignInButtonDisabled ? .black : .white)
-        //          }
-        //          .frame(height: 50)
-        //          .frame(maxWidth: .infinity) // how to make a button fill all the space available horizontally
-        //          .background(
-        //            isSignInButtonDisabled ?
-        //            Color.gray.opacity(0.25) : Color.blue
-        //          )
-        //          .cornerRadius(20)
-        //          .disabled(isSignInButtonDisabled)
-        //          .padding(.horizontal)
-        //          .padding(.bottom)
-        //
-        //        })
         
         Button {
           print("do login action")
@@ -85,7 +66,6 @@ struct SignInView: View {
         } label: {
           Text("Sign In")
             .font(.title2)
-            .bold()
             .foregroundColor(isSignInButtonDisabled ? .black : .white)
         }
         .frame(height: 50)
@@ -94,7 +74,7 @@ struct SignInView: View {
           isSignInButtonDisabled ?
           Color.gray.opacity(0.25) : Color.blue
         )
-        .cornerRadius(20)
+        .cornerRadius(8)
         .disabled(isSignInButtonDisabled)
         .padding(.horizontal)
         .padding(.bottom)

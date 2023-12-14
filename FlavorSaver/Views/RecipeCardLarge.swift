@@ -76,7 +76,7 @@ struct RecipeCardLarge: View {
                             .font(.caption)
 
                     }
-                    .shadow(color: .black, radius: 8)
+                    .modifier(TextShadow())
                     .foregroundColor(.white)
 
                     

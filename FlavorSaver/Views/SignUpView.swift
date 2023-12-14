@@ -140,7 +140,6 @@ struct SignUpView: View {
         } label: {
           Text("Sign Up")
             .font(.title2)
-            .bold()
             .foregroundColor(.white)
         }
         .frame(height: 50)
@@ -148,7 +147,7 @@ struct SignUpView: View {
         .background(
           Color.blue
         )
-        .cornerRadius(20)
+        .cornerRadius(8)
         .padding(.horizontal)
         .padding(.bottom)
       }
